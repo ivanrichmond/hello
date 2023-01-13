@@ -1,0 +1,16 @@
+{
+  "name": "hello-server",
+  "version": "1.0.0",
+  "description": "back-end for everything you need to a Node/React app",
+  "main": "dist/index.js",
+  "author": "Ivan Richmond",
+  "license": "MIT",
+  "scripts": {
+    "build": "babel src/ -d dist/",
+    "prepublish": "yarn run build"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.12"
+  }
+}

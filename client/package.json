@@ -1,0 +1,21 @@
+{
+  "name": "hello",
+  "version": "1.0.0",
+  "description": "Everything you need for a Node/React app",
+  "main": "dist/index.js",
+  "author": "Ivan Richmond",
+  "license": "MIT",
+  "scripts": {
+    "build": "babel src/ -d dist/",
+    "prepublish": "yarn run build"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-redux": "^8.0.5"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.12",
+    "@babel/preset-env": "^7.20.2"
+  }
+}
