@@ -10,8 +10,9 @@
         "prepublish": "yarn run build"
     },
     "dependencies": {
-        "react": "^18.2.0",
         "express": "^4.18.2",
+        "flow-typed": "^3.8.0",
+        "react": "^18.2.0",
         "react-redux": "^8.0.5"
     },
     "description": "Everything you need for a Node/React app",
