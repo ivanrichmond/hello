@@ -17,7 +17,7 @@ dbConnect(); // placeholder for DB connection.
 
 // Placeholder for initial endpoint.
 app.get('/api', (req, res) => {
-    res.send({ api: "Connected to React." });
+    res.send({ message: "Successfully connected to server." });
 })
 
 // Listen at port.
