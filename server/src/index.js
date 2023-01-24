@@ -5,7 +5,7 @@ import express from 'express';
 
 // Internal Modules
 import * as config from '../config.json';
-import { counter, countUp } from './helpers/count.js';
+import { count } from './helpers/count.js';
 import dbConnect from './db.js';
 
 // Application Variables
@@ -23,8 +23,8 @@ app.get('/api', (req, res) => {
 
 // Placeholder for initial endpoint.
 app.get('/count', (req, res) => {
-    countUp();
-    res.send({ message: `This endpoint has been hit ${counter} times since the server started.` });
+    const trafficCount = count();
+    res.send({ message: `This endpoint has been hit ${trafficCount.countUp()} times since the server started.` });
 })
 
 // Listen at port.
