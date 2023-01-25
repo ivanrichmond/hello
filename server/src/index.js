@@ -48,9 +48,9 @@ app.get('/count', (request, response) => {
     });
 })
 
-// Uses bubble sort.
+// Sorter backend.
+//TODO: Currently, only bubble sort is supported for array of scalars.  Add additional sorts.
 app.post('/sort', jsonParser, (request, response) => {
-    console.debug('request.body', request.body);
     const array = request.body?.payload;
     const arraySorted = bubbleSort(array);
     response.send({ 
