@@ -11,7 +11,7 @@ export const bubbleSort = (array: Array < number | string > ) => {
         // than if it is.
         done = true;
         array.forEach((element, i) => {
-            if (array[i - 1] > array[i]) {
+            if (array[i - 1] && array[i - 1] > array[i]) {
                 done = false; // Set done to false, because we know the array is not sorted.
                 let tempArray = array[i - 1];
                 array[i - 1] = array[i];
