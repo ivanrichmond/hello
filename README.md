@@ -1,6 +1,8 @@
 # hello
 A springboard for a Javascript app, containing everything needed front-end, back-end, DB, etc. to create a new JS app.  It says "hello" to you, or someone, maybe the world.
 
+**NOTE:** This is still a work in progress.  There's a lot more to do.
+
 ## Technologies
 
 - DB TBD
