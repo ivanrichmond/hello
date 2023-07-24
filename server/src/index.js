@@ -22,7 +22,7 @@ import bodyParser from 'body-parser';
 import * as config from '../config.json';
 import { bubbleSort } from './helpers/sort';
 import { count } from './helpers/count';
-import dbConnect from './db.js';
+// import dbConnect from './db.js';
 
 // Application Variables
 const app = express();
@@ -30,8 +30,7 @@ const jsonParser = bodyParser.json();
 const port = config.serverPort;
 
 // Database
-dbConnect(); // placeholder for DB connection.
-
+// dbConnect(); // placeholder for DB connection.
 
 // Placeholder for initial endpoint.
 app.get('/api', (request, response) => {
@@ -49,7 +48,6 @@ app.get('/count', (request, response) => {
 })
 
 // Sorter backend.
-//TODO: Currently, only bubble sort is supported for array of scalars.  Add additional sorts.
 app.post('/sort', jsonParser, (request, response) => {
     const array = request.body?.payload;
     const arraySorted = bubbleSort(array);
