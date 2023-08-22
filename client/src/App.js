@@ -12,22 +12,12 @@ import {
   useOutlet
 } from "react-router-dom";
 
-import { useLocalStorage } from './useLocalStorage'
-import { useAuth } from './useAuth'
+import Login from './Login'
+import { ProtectedRoute } from './ProtectedRoute'
 import logo from './logo.svg';
 import './App.css';
 
-const AuthContext = React.createContext()
-
-const ProtectedRoute = ({children}) => {
-  const { user } = useAuth()
-  // console.debug('useAuth(), user',useAuth(), user)
-
-  if(!user){
-    return <Navigate to='/'/>
-  }
-  return children
-}
+export const AuthContext = React.createContext()
 
 const dataLoader = async () => {
     const res = await fetch("/api")
@@ -63,18 +53,23 @@ const dataPoster = async () => {
   })
 
   const json = await res.json()
-  console.log(json)
   return json
 }
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path='/' element = {<ProtectedRoute> <Root /> </ProtectedRoute>}>
-    <Route index loader={dataLoader} element = {<Home/>} />
-    <Route path='/login'  loader={dataPoster} 
+    <Route element = {<ProtectedRoute />} >
+      <Route path='/' element = {<Root />}>
+      <Route index element = {<Home/>} />
+      <Route path='/home' element = {<Home/>} />
+      <Route path='/data' element = {<Data/>} />
+
+      {/* <Route index loader={dataLoader} element = {<Home/>} />
+      <Route path='/home' loader={dataLoader} element = {<Home/>} />
+      <Route path='/data' loader={dataPoster} element = {<Data/>} /> */}
+    </Route>
+    <Route path='/login'  
       element = {<Login />} />
-      {/* element = {<Login login = {userName => setUser(userName)} />} /> */}
-    <Route path='/data'  loader={dataPoster} element = {<Data/>} />
     </Route>
   )
 )
@@ -139,27 +134,7 @@ function Home() {
   )
 }
 
-function Login() {
-  const { login } = useAuth();
-  const [user, setUser] = React.useState("");
-
-  return (
-    <form onSubmit={() => login(user)}>
-      <input
-        placeholder="Tell me your name."
-        required="required"
-        onChange={e => setUser(e.target.value)}
-        value={user}
-      />
-      <button type="submit">
-        Login
-      </button>
-    </form>
-  )
-}
-
 function App() {
-  const [user, setUser] = React.useState(null)
   return (
     <div className="App">
       <RouterProvider router = {router}/>
