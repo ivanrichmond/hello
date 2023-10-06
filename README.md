@@ -1,4 +1,14 @@
 # hello
+
+**Hello is _not_ about saying hello.**  
+**It's built around the concept that even the simplest professional application has many needs**
+**that are not directly related to the goal of the application, such as logging, error handling,**
+**routing, server-side DB, client-side DB, etc., etc.**
+**As such, Hello is an application that has _everything but_ a main goal,**
+**_so that_ all someone who wants a Node/React application would have to do is install Hello,**
+**and then get on with building the main goal of _their_ application.**
+**Hello uses saying hello as a _placeholder_ for whatever goal engineers put it to.**
+
 A springboard for a Javascript app, containing everything needed front-end, back-end, DB, etc. to create a new JS app.  It says "hello" to you, or someone, maybe the world.
 
 **NOTE:** This is still a work in progress.  There's a lot more to do.
