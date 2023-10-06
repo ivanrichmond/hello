@@ -29,7 +29,7 @@ This section will grow, as I'm designing each piece.
 
 Routing should allow for several things:
 
-1. Main page.  This is handled in <Route />, which is preliminary at this point, but will evolve.
+1. Main page.  **DONE: This is handled in <Route />, which is preliminary at this point, but will evolve.**
 2. User Settings: logged in user can set things like their name.  Unavailable unless logged in.
 3. Login Page: users login with username and password.
 4. Error Page: display meaningful errors.
