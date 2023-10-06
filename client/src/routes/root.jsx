@@ -4,9 +4,10 @@ import logo from '../media/logo.svg';
 import '../css/Root.css';
 
 function Root() {
+  // eslint-disable-next-line
   const [data, setData] = React.useState(null);
 
-  // TODO: Get data from /api.
+  // TODO: Get data from /api / delete eslint-disable, above.
 
   return (
     <div className="Root">
