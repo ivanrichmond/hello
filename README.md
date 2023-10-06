@@ -21,7 +21,25 @@ A springboard for a Javascript app, containing everything needed front-end, back
 - Typescript
 - Less
 
+## Plan
+
+The overall design of Hello is done, but kept in a local document.  
+This section will grow, as I'm designing each piece.
+### Routing
+
+Routing should allow for several things:
+
+1. Main page.  This is handled in <Route />, which is preliminary at this point, but will evolve.
+2. User Settings: logged in user can set things like their name.  Unavailable unless logged in.
+3. Login Page: users login with username and password.
+4. Error Page: display meaningful errors.
+5. Rerouting of User Settings to Login for non-logged in users.
+
 ## Technical Debt
+
+### React Router 6
+
+* In `router`, need to add fetch `/api` back in.
 
 ### Monorepo'ish architecture
 
