@@ -1,4 +1,14 @@
 # hello
+
+**Hello is _not_ about saying hello.**  
+**It's built around the concept that even the simplest professional application has many needs**
+**that are not directly related to the goal of the application, such as logging, error handling,**
+**routing, server-side DB, client-side DB, etc., etc.**
+**As such, Hello is an application that has _everything but_ a main goal,**
+**_so that_ all someone who wants a Node/React application would have to do is install Hello,**
+**and then get on with building the main goal of _their_ application.**
+**Hello uses saying hello as a _placeholder_ for whatever goal engineers put it to.**
+
 A springboard for a Javascript app, containing everything needed front-end, back-end, DB, etc. to create a new JS app.  It says "hello" to you, or someone, maybe the world.
 
 **NOTE:** This is still a work in progress.  There's a lot more to do.
@@ -11,7 +21,25 @@ A springboard for a Javascript app, containing everything needed front-end, back
 - Typescript
 - Less
 
+## Plan
+
+The overall design of Hello is done, but kept in a local document.  
+This section will grow, as I'm designing each piece.
+### Routing
+
+Routing should allow for several things:
+
+1. Main page.  **DONE PRELIMINARY**
+2. User Settings: logged in user can set things like their name.  Unavailable unless logged in.  **DONE PRELIMINARY**
+3. Login Page: users login with username and password.  
+4. Error Page: display meaningful errors.  **DONE PRELIMINARY**
+5. Rerouting of User Settings to Login for non-logged in users.
+
 ## Technical Debt
+
+### React Router 6
+
+* In `router`, need to add fetch `/api` back in.
 
 ### Monorepo'ish architecture
 
