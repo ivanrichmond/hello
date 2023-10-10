@@ -27,7 +27,7 @@ export default function User() {
     const { user } = useLoaderData();
 
     return (
-        <div id="user">
+        <div id="User">
             <h1>
                 {user.name ? (
                 <>
