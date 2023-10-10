@@ -23,7 +23,7 @@ export async function loader({ params }) {
     return { user };
 }
   
-export default function user() {
+export default function User() {
     const { user } = useLoaderData();
 
     return (
