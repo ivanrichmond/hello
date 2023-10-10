@@ -29,10 +29,10 @@ This section will grow, as I'm designing each piece.
 
 Routing should allow for several things:
 
-1. Main page.  **DONE: This is handled in <Route />, which is preliminary at this point, but will evolve.**
-2. User Settings: logged in user can set things like their name.  Unavailable unless logged in.
-3. Login Page: users login with username and password.
-4. Error Page: display meaningful errors.
+1. Main page.  **DONE PRELIMINARY**
+2. User Settings: logged in user can set things like their name.  Unavailable unless logged in.  **DONE PRELIMINARY**
+3. Login Page: users login with username and password.  
+4. Error Page: display meaningful errors.  **DONE PRELIMINARY**
 5. Rerouting of User Settings to Login for non-logged in users.
 
 ## Technical Debt
