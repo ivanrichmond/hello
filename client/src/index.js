@@ -6,13 +6,43 @@ import './css/index.css'
 import reportWebVitals from './reportWebVitals'
 
 // Routes
-import Root from "./routes/root.jsx"
+//TODO: Should I consolidate destroyUser into user?
+import { action as destroyAction } from './routes/destroyUser.jsx'
+import ErrorPage from './routes/errorPage.jsx'
+import Index from './routes/index.jsx'
+import Root from './routes/root.jsx'
+import User, {
+  loader as userLoader,
+  action as userAction,
+} from "./routes/user.jsx";
 
 // Router
+//TODO: Add <Index> and <EditContact>.
 const router = createBrowserRouter([
   {
     element: <Root />,
-    path: "/",
+    errorElement: <ErrorPage />,
+    path: '/',
+    children: [
+      { index: true, element: <Index /> },
+      {
+        path: "users/:userId",
+        element: <User />, 
+        loader: userLoader,
+        action: userAction,
+      },
+      // {
+      //   path: "users/:userId/edit",
+      //   element: <EditContact />,
+      //   loader: userLoader,
+      //   action: editAction,
+      // },
+      {
+        path: "users/:userId/destroy",
+        action: destroyAction,
+        errorElement: <div>Oops!  There was an error.</div>
+      },
+    ]
   },
 ])
 
