@@ -1,70 +1,51 @@
-# Getting Started with Create React App
+# hello
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Hello is _not_ about saying hello.**  
+**It's built around the concept that even the simplest professional application has many needs**
+**that are not directly related to the goal of the application, such as logging, error handling,**
+**routing, server-side DB, client-side DB, etc., etc.**
+**As such, Hello is an application that has _everything but_ a main goal,**
+**_so that_ all someone who wants a Node/React application would have to do is install Hello,**
+**and then get on with building the main goal of _their_ application.**
+**Hello uses saying hello as a _placeholder_ for whatever goal engineers put it to.**
 
-## Available Scripts
+A springboard for a Javascript app, containing everything needed front-end, back-end, DB, etc. to create a new JS app.  It says "hello" to you, or someone, maybe the world.
 
-In the project directory, you can run:
+**NOTE:** This is still a work in progress.  There's a lot more to do.
 
-### `npm start`
+## Technologies
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- DB TBD
+- Node
+- React
+- Typescript
+- Less
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Plan
 
-### `npm test`
+The overall design of Hello is done, but kept in a local document.  
+This section will grow, as I'm designing each piece.
+### Routing
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Routing should allow for several things:
 
-### `npm run build`
+1. Main page.  **DONE: This is handled in <Route />, which is preliminary at this point, but will evolve.**
+2. User Settings: logged in user can set things like their name.  Unavailable unless logged in.
+3. Login Page: users login with username and password.
+4. Error Page: display meaningful errors.
+5. Rerouting of User Settings to Login for non-logged in users.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Technical Debt
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### React Router 6
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+* In `router`, need to add fetch `/api` back in.
 
-### `npm run eject`
+### Monorepo'ish architecture
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+It would be nice to have both `/client` and `/server` use as much overlap as possible in a 
+"monorepo"-ish style.  These could still be in the same single repo, but share certain basics.  They might not want to share `package.json`, since those are likely to diverge.  But they might want to share technologies used by both client and server.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+* Babel config -- SHOULD ALREADY BE DONE WITH `babel.config.json` AT ROOT.
+* Flow config -- Flow does not really have a good way to do this.  SEE: https://github.com/flow-typed/flow-typed/issues/1391.  This might be the solution: https://medium.com/inato/how-to-use-flow-in-a-mono-repo-8947d43d50fb
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
