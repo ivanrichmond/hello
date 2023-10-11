@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import './css/index.css'
+import 'semantic-ui-css/semantic.min.css'
 import reportWebVitals from './reportWebVitals'
 
 // Routes
 //TODO: Should I consolidate destroyUser into user?
 import { action as destroyAction } from './routes/destroyUser.jsx'
 import ErrorPage from './routes/errorPage.jsx'
+import Login from './routes/login.jsx'
 import Index from './routes/index.jsx'
 import Root from './routes/root.jsx'
 import User, {
@@ -44,6 +46,10 @@ const router = createBrowserRouter([
       },
     ]
   },
+  {
+    path: 'login',
+    element: <Login />,
+  }
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(

@@ -1,21 +1,23 @@
+import { Form as UIForm, Input } from 'semantic-ui-react'
+import React from 'react'
 import { 
     Form, 
 } from "react-router-dom";
 
+import AppButton from '../styleLibrary/AppButton'
+
 export default function Login() {
     return (
         <div id="Login">
-            <h1>Login</h1>
-
-            <div>
-                <Form method="post" >
+            <Form method="post" className="ui form">
+                <UIForm.Group inline>
                     <label htmlFor="username">
                         Username:
-                        <input type="text" name='username' />
                     </label>
-                    <button type="submit">Login</button>
-                </Form>
-            </div>
+                    <UIForm.Input type="text" name='username' />
+                    <UIForm.Button inline primary type="submit">Login</UIForm.Button>
+                </UIForm.Group>
+            </Form>
         </div>
     );
 }
