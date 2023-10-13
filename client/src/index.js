@@ -2,13 +2,14 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-import './css/index.css'
 import 'semantic-ui-css/semantic.min.css'
+import './css/index.css'
 import reportWebVitals from './reportWebVitals'
 
 // Routes
 //TODO: Should I consolidate destroyUser into user?
-import { action as destroyAction } from './routes/destroyUser.jsx'
+import { action as destroyUserAction } from './routes/destroyUser.jsx'
+import EditUser, { action as editUserAction } from './routes/editUser.jsx'
 import ErrorPage from './routes/errorPage.jsx'
 import Login from './routes/login.jsx'
 import Index from './routes/index.jsx'
@@ -33,21 +34,21 @@ const router = createBrowserRouter([
         loader: userLoader,
         action: userAction,
       },
-      // {
-      //   path: "users/:userId/edit",
-      //   element: <EditContact />,
-      //   loader: userLoader,
-      //   action: editAction,
-      // },
+      {
+        path: "users/:userId/edit",
+        element: <EditUser />,
+        loader: userLoader,
+        action: editUserAction,
+      },
       {
         path: "users/:userId/destroy",
-        action: destroyAction,
+        action: destroyUserAction,
         errorElement: <div>Oops!  There was an error.</div>
       },
     ]
   },
   {
-    path: 'login',
+    path: 'login/',
     element: <Login />,
   }
 ])
