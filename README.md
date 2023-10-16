@@ -37,8 +37,15 @@ Routing should allow for several things:
 
 #### TODO
 
-1. /login is not a child route of /.  Should it be?
-2. Should /login be just at the top of / if not logged in?
+1. Make /admin section.
+2. Make user list under /admin/users
+3. Pretty everything up into a real app, not the ugly one we'll have at this point. 
+    a. A Create Account button should on home page should take you to New User.
+    b. Login should be at the top of the home page.
+    c. Everything should just be prettied up.  I should design this.
+4. Add login / auth
+    a. /login is not a child route of /.  Should it be?
+    b. Should /login be just at the top of / if not logged in?
 
 ## Technical Debt
 
