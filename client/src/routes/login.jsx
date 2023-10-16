@@ -1,4 +1,4 @@
-import { Form as AppForm, Input } from 'semantic-ui-react'
+import { Form as AppForm } from 'semantic-ui-react'
 import React from 'react'
 import { 
     Form, 
