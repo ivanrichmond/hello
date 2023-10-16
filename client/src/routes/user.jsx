@@ -53,7 +53,7 @@ export default function User() {
                     }
                 }}
                 >
-                <button type="submit">Delete</button>
+                    <button type="submit">Delete</button>
                 </Form>
             </div>
         </div>

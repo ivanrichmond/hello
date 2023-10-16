@@ -5,7 +5,7 @@ import {
     useNavigate,
 } from "react-router-dom";
 
-import AppForm from '../styleLibrary/AppForm'
+// import AppForm from '../styleLibrary/AppForm'
 import { updateUser } from "../data/users.js";
 
 export async function action({ request, params }) {
@@ -23,14 +23,15 @@ function userNotFoundError(){
 
 export default function EditUser() {
   const { user } = useLoaderData();
+  console.debug(user)
   if(!user) userNotFoundError();
   const navigate = useNavigate();
 
   return (
     <Form method="post" id="user-form">
       <p>
-        <label forHmtl={'name'}>Name</label>
-        <Form.Input
+        <label htmlFor={'name'}>Name</label>
+        <input
           placeholder="Name"
           aria-label="Name"
           type="text"
@@ -40,8 +41,8 @@ export default function EditUser() {
         />
       </p>
       <p>
-        <label forHmtl={'username'}>Username</label>
-        <Form.Input
+        <label htmlFor={'username'}>Username</label>
+        <input
           placeholder="Username"
           aria-label="Username"
           type="text"
@@ -51,8 +52,8 @@ export default function EditUser() {
         />
       </p>
       <p>
-        <label forHmtl={'password'}>Password</label>
-        <Form.Input
+        <label htmlFor={'password'}>Password</label>
+        <input
           placeholder="Password"
           aria-label="Password"
           type="password"
@@ -62,12 +63,12 @@ export default function EditUser() {
         /> 
       </p>
       <p>
-        <Form.Button type="submit">Save</Form.Button>
-        <Form.Button 
-        type="Form.Button"
+        <button type="submit">Save</button>
+        <button 
+        type="button"
         onClick={() => {
             navigate(-1)
-        }}>Cancel</Form.Button>
+        }}>Cancel</button>
       </p>
     </Form>
   );
