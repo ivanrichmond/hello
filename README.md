@@ -25,16 +25,7 @@ A springboard for a Javascript app, containing everything needed front-end, back
 
 The overall design of Hello is done, but kept in a local document.  
 This section will grow, as I'm designing each piece.
-### Routing
-
-Routing should allow for several things:
-
-1. Main page.  **DONE PRELIMINARY**
-2. User Settings: logged in user can set things like their name.  Unavailable unless logged in.  **DONE PRELIMINARY**
-3. Login Page: users login with username and password.  **MOCK-UP DONE**
-4. Error Page: display meaningful errors.  **DONE PRELIMINARY**
-5. Rerouting of User Settings to Login for non-logged in users.
-
+logged in users.
 #### TODO
 
 1. Make /admin section.
@@ -53,6 +44,15 @@ Routing should allow for several things:
    
     ii. Should /login be just at the top of / if not logged in?
 
+### Routing
+
+Routing should allow for several things:
+
+1. Main page.  **DONE PRELIMINARY**
+2. User Settings: logged in user can set things like their name.  Unavailable unless logged in.  **DONE PRELIMINARY**
+3. Login Page: users login with username and password.  **MOCK-UP DONE**
+4. Error Page: display meaningful errors.  **DONE PRELIMINARY**
+5. Rerouting of User Settings to Login for non-
 ## Technical Debt
 
 ### React Router 6
