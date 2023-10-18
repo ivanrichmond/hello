@@ -5,7 +5,6 @@ import {
     redirect,
 } from "react-router-dom";
 
-import logo from '../media/logo.svg';
 import '../css/Root.css';
 import { createUser } from '../data/users.js'
 import AppButton from '../styleLibrary/AppButton'
