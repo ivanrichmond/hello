@@ -34,7 +34,7 @@ logged in users.
    
     i. A Create Account button should on home page should take you to New User.
    
-    ii. Login should be at the top of the home page.
+    ii. Login should be at the top of the home page. **DONE**
    
     iii. Everything should just be prettied up.  I should design this.
    
@@ -42,8 +42,6 @@ logged in users.
    
     i. /login is not a child route of /.  Should it be?
    
-    ii. Should /login be just at the top of / if not logged in?
-
 ### Routing
 
 Routing should allow for several things:

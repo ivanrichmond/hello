@@ -15,7 +15,7 @@ export default function Login() {
                     <label htmlFor="username">
                         Username:
                     </label>
-                    <AppForm.Input focus autofocus name='username' id='username' />
+                    <AppForm.Input focus autoFocus name='username' id='username' />
                     <label htmlFor="password">
                         Password:
                     </label>
