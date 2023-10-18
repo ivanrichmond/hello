@@ -2,3 +2,4 @@ client/build/
 node_modules/
 server/coverage/
 server/dist/
+.DS_Store
