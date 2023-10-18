@@ -8,7 +8,6 @@ import reportWebVitals from './reportWebVitals'
 
 // Routes
 //TODO: Should I consolidate destroyUser into user?
-import { action as createUserAction } from './routes/root.jsx'
 import { action as destroyUserAction } from './routes/destroyUser.jsx'
 import EditUser, { action as editUserAction } from './routes/editUser.jsx'
 import ErrorPage from './routes/errorPage.jsx'
@@ -27,31 +26,35 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     path: '/',
-    action: createUserAction,
     children: [
       // { index: true, element: <Index /> },
       {
-        path: "users/:userId",
+        path: 'login',
+        element: <Login />,
+      },
+    ]
+  },
+  {
+    path: "user/",
+    children: [
+      {
+        path: ":userId",
         element: <User />, 
         loader: userLoader,
         action: userAction,
       },
       {
-        path: "users/:userId/edit",
+        path: ":userId/edit",
         element: <EditUser />,
         loader: userLoader,
         action: editUserAction,
       },
       {
-        path: "users/:userId/destroy",
+        path: ":userId/destroy",
         action: destroyUserAction,
         errorElement: <div>Oops!  There was an error.</div>
       },
     ]
-  },
-  {
-    path: 'login/',
-    element: <Login />,
   }
 ])
 
