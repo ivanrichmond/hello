@@ -59,9 +59,10 @@ const router = createBrowserRouter([
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>,
+  // NOTE: Not using strict mode, because I'll get this warning from Semantic UI:
+  // Warning: findDOMNode is deprecated in StrictMode.
+  // Not sure how to fix this without forking SUI, which I don't want to do.
+  <RouterProvider router={router} />
 )
 
 // If you want to start measuring performance in your app, pass a function
