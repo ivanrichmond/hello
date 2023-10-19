@@ -32,16 +32,15 @@ logged in users.
 2. Make user list under /admin/users
 3. Pretty everything up into a real app, not the ugly one we'll have at this point.
    
-    i. A Create Account button should on home page should take you to New User.
+    i. A Create Account button should on home page should take you to New User. **DONE**
    
     ii. Login should be at the top of the home page. **DONE**
    
     iii. Everything should just be prettied up.  I should design this.
-   
-5. Add login / auth
-   
-    i. /login is not a child route of /.  Should it be?
-   
+
+4. As I have it now, a new account creation will reroute to /users/123.  This is appropriate for 
+an existing user editing user settings, or an admit changing user settings, but not for a new account.
+Figure out a way to know if it's a new account and change redirect to / in that case.
 ### Routing
 
 Routing should allow for several things:
@@ -50,7 +49,7 @@ Routing should allow for several things:
 2. User Settings: logged in user can set things like their name.  Unavailable unless logged in.  **DONE PRELIMINARY**
 3. Login Page: users login with username and password.  **MOCK-UP DONE**
 4. Error Page: display meaningful errors.  **DONE PRELIMINARY**
-5. Rerouting of User Settings to Login for non-
+5. Rerouting of User Settings to Login for non-logged in user. **DONE**
 ## Technical Debt
 
 ### React Router 6

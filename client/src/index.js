@@ -32,30 +32,25 @@ const router = createBrowserRouter([
         path: 'login',
         element: <Login />,
       },
-    ]
-  },
-  {
-    path: "user/",
-    children: [
       {
-        path: ":userId",
+        path: "users/:userId",
         element: <User />, 
         loader: userLoader,
         action: userAction,
       },
       {
-        path: ":userId/edit",
+        path: "users/:userId/edit",
         element: <EditUser />,
         loader: userLoader,
         action: editUserAction,
       },
       {
-        path: ":userId/destroy",
+        path: "users/:userId/destroy",
         action: destroyUserAction,
-        errorElement: <div>Oops!  There was an error.</div>
+        errorElement: <div>Oops!  There was an error.</div>,
       },
     ]
-  }
+  },
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
