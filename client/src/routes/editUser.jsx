@@ -12,6 +12,7 @@ export async function action({ request, params }) {
     const formData = await request.formData();
     const updates = Object.fromEntries(formData);
     await updateUser(params.userId, updates);
+    //TODO: If it's a new user, from Create Account, reroute to /.
     return redirect(`/users/${params.userId}`);
 }
 
