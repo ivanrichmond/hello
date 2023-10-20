@@ -30,7 +30,7 @@ logged in users.
 
 1. Add login/auth.
 1. Make /admin section. **DONE**
-2. Make user list under /admin/users
+2. Make user list under /admin **DONE**
 3. Pretty everything up into a real app, not the ugly one we'll have at this point.
    
     i. A Create Account button should on home page should take you to New User. **DONE**
@@ -54,6 +54,8 @@ Routing should allow for several things:
 5. Rerouting of User Settings to Login for non-logged in user. **DONE**
 ## Technical Debt
 1. Put /admin under admin privs, so that only someone logged in as an admin can get to it.
+2. `<Admin>` has several components directly out of Semantic UI.  Pull these out and put them under wrappers, then use the wrappers, so that I can be almost totally independent of SUI.  That way, if I decide to change CSS libraries, 
+I can easily change just these libraries.
 
 ### React Router 6
 
