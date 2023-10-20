@@ -26,9 +26,10 @@ A springboard for a Javascript app, containing everything needed front-end, back
 The overall design of Hello is done, but kept in a local document.  
 This section will grow, as I'm designing each piece.
 logged in users.
-#### TODO
+### TODO
 
-1. Make /admin section.
+1. Add login/auth.
+1. Make /admin section. **DONE**
 2. Make user list under /admin/users
 3. Pretty everything up into a real app, not the ugly one we'll have at this point.
    
@@ -41,7 +42,8 @@ logged in users.
 4. As I have it now, a new account creation will reroute to /users/123.  This is appropriate for 
 an existing user editing user settings, or an admit changing user settings, but not for a new account.
 Figure out a way to know if it's a new account and change redirect to / in that case.
-### Routing
+
+#### Routing
 
 Routing should allow for several things:
 
@@ -51,6 +53,7 @@ Routing should allow for several things:
 4. Error Page: display meaningful errors.  **DONE PRELIMINARY**
 5. Rerouting of User Settings to Login for non-logged in user. **DONE**
 ## Technical Debt
+1. Put /admin under admin privs, so that only someone logged in as an admin can get to it.
 
 ### React Router 6
 
