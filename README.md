@@ -42,6 +42,7 @@ logged in users.
 4. As I have it now, a new account creation will reroute to /users/123.  This is appropriate for 
 an existing user editing user settings, or an admit changing user settings, but not for a new account.
 Figure out a way to know if it's a new account and change redirect to / in that case.
+
 #### Routing
 
 Routing should allow for several things:
