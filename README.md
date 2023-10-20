@@ -52,6 +52,7 @@ Routing should allow for several things:
 4. Error Page: display meaningful errors.  **DONE PRELIMINARY**
 5. Rerouting of User Settings to Login for non-logged in user. **DONE**
 ## Technical Debt
+1. Put /admin under admin privs, so that only someone logged in as an admin can get to it.
 
 ### React Router 6
 
