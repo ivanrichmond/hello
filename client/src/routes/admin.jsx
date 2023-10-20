@@ -27,17 +27,21 @@ function Admin() {
         )
     })
 
+    const userTable = (
+        <Table size='small' striped compact celled selectable>
+            <Table.Header> <th>Name</th> <th>username</th> <th>Action</th> </Table.Header>
+            <Table.Body>
+                {userList}
+            </Table.Body>
+        </Table>
+    )
+
     const panes = [
         { 
             menuItem: 'Manage Users', render: () => (
                 <Tab.Pane>
                     <h2>Users</h2>
-                    <Table size='small' striped compact celled selectable>
-                        <Table.Header> <th>Name</th> <th>username</th> <th>Action</th> </Table.Header>
-                        <Table.Body>
-                            {userList}
-                        </Table.Body>
-                    </Table>
+                    {userTable}
                 </Tab.Pane>
             )
         },
