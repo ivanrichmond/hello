@@ -9,7 +9,7 @@ import reportWebVitals from './reportWebVitals'
 // Routes
 //TODO: Should I consolidate destroyUser into user?
 import { action as destroyUserAction } from './routes/destroyUser.jsx'
-import Admin from './routes/admin.jsx'
+import Admin, { loader as adminLoader } from './routes/admin.jsx'
 import EditUser, { action as editUserAction } from './routes/editUser.jsx'
 import ErrorPage from './routes/errorPage.jsx'
 import Login from './routes/login.jsx'
@@ -55,6 +55,7 @@ const router = createBrowserRouter([
     path: "/admin",
     element: <Admin />,
     errorElement: <ErrorPage />, /* TODO: Make this more DRY with /'s errorElement. */
+    loader: adminLoader,
   }
 ])
 
