@@ -11,8 +11,8 @@ function Root() {
   const location = useLocation()
 
   // Redirect to /login if not logged in.
-  const isLoggedIn = true // placeholder for real datum
-  if( isLoggedIn && location.pathname === '/' ){
+  const isLoggedIn = false // placeholder for real datum
+  if( !isLoggedIn && location.pathname === '/' ){
     return <Navigate to = '/login' />
   }
 

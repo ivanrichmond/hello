@@ -44,16 +44,21 @@ export default function User() {
                     <button type="submit">Edit</button>
                 </Form>
                 <Form
-                method="post"
+                method="delete"
                 action="destroy"
                 onSubmit={(event) => {
                     if ( !window.confirm( "Please confirm you want to delete this record." ) ) {
-                    // if ( false ) {
                         event.preventDefault();
                     }
                 }}
                 >
-                    <button type="submit">Delete</button>
+                    <button 
+                    name="from"
+                    value="user"
+                    type="submit"
+                    >
+                        Delete
+                    </button>
                 </Form>
             </div>
         </div>
