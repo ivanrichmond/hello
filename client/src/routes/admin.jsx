@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLoaderData } from 'react-router-dom'
+import { Form, useLoaderData } from 'react-router-dom'
 import { Tab, Table } from 'semantic-ui-react'
 
 import AppButton from '../styleLibrary/AppButton'
@@ -12,6 +12,7 @@ export async function loader() {
 }
 
 function Admin() {
+    console.log(document.location.href)
     const { users } = useLoaderData();
 
     const userList = users.map((user,index) => {
@@ -20,8 +21,29 @@ function Admin() {
                 <Table.Cell>{user.name || "<no name given>"}</Table.Cell>
                 <Table.Cell>{user.username || "<username left blank>"}</Table.Cell>
                 <Table.Cell>
-                    <AppButton icon = 'pencil' color = 'blue' />
-                    <AppButton icon = 'trash' color = 'red' />
+                    <Form 
+                    style = {{display: 'inline'}}
+                    action={`/users/${user.id}/edit`}
+                    >
+                        <AppButton icon='pencil' type="submit" />
+                    </Form>
+
+                    <Form
+                    style = {{display: 'inline'}}
+                    method="delete"
+                    action={`/users/${user.id}/destroy`}
+                    onSubmit={(event) => {
+                        //TODO: Not DRY with user.jsx.
+                        if ( !window.confirm( "Please confirm you want to delete this record." ) ) {
+                            event.preventDefault();
+                        }
+                    }} >
+                        <AppButton
+                        icon='trash'
+                        type="submit"
+                        name="from"
+                        value="admin" />
+                    </Form>
                 </Table.Cell>
             </Table.Row>
         )
@@ -29,7 +51,11 @@ function Admin() {
 
     const userTable = (
         <Table size='small' striped compact celled selectable>
-            <Table.Header> <th>Name</th> <th>username</th> <th>Action</th> </Table.Header>
+            <Table.Header>
+                <Table.Row>
+                    <Table.HeaderCell>Name</Table.HeaderCell><Table.HeaderCell>username</Table.HeaderCell><Table.HeaderCell>Action</Table.HeaderCell>
+                </Table.Row>
+            </Table.Header>
             <Table.Body>
                 {userList}
             </Table.Body>
