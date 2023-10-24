@@ -12,7 +12,6 @@ export async function loader() {
 }
 
 function Admin() {
-    console.log(document.location.href)
     const { users } = useLoaderData();
 
     const userList = users.map((user,index) => {
@@ -21,6 +20,7 @@ function Admin() {
                 <Table.Cell>{user.name || "<no name given>"}</Table.Cell>
                 <Table.Cell>{user.username || "<username left blank>"}</Table.Cell>
                 <Table.Cell>
+
                     <Form 
                     style = {{display: 'inline'}}
                     action={`/users/${user.id}/edit`}
@@ -44,6 +44,7 @@ function Admin() {
                         name="from"
                         value="admin" />
                     </Form>
+
                 </Table.Cell>
             </Table.Row>
         )
