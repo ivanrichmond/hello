@@ -33,23 +33,23 @@ const router = createBrowserRouter([
         path: 'login',
         element: <Login />,
       },
-      {
-        path: "users/:userId",
-        element: <User />, 
-        loader: userLoader,
-        action: userAction,
-      },
-      {
-        path: "users/:userId/edit",
-        element: <EditUser />,
-        loader: userLoader,
-        action: editUserAction,
-      },
-      {
-        path: "users/:userId/destroy",
-        action: destroyUserAction,
-      },
     ]
+  },
+  {
+    path: "users/:userId",
+    element: <User />, 
+    loader: userLoader,
+    action: userAction,
+  },
+  {
+    path: "users/:userId/edit",
+    element: <EditUser />,
+    loader: userLoader,
+    action: editUserAction,
+  },
+  {
+    path: "users/:userId/destroy",
+    action: destroyUserAction,
   },
   {
     path: "/admin",
