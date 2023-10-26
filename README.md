@@ -41,7 +41,9 @@ logged in users.
 
 4. As I have it now, a new account creation will reroute to /users/123.  This is appropriate for 
 an existing user editing user settings, or an admit changing user settings, but not for a new account.
+
 Figure out a way to know if it's a new account and change redirect to / in that case.
+
 5. Make delete user reroute to different places, depending on /user or /admin  -- **DONE**
 - I did this by putting name/value's in both the user and admin delete buttons.
     - both have name="from"
@@ -61,7 +63,10 @@ Routing should allow for several things:
 ## Technical Debt
 1. Put /admin under admin privs, so that only someone logged in as an admin can get to it.
 2. `<Admin>` has several components directly out of Semantic UI.  Pull these out and put them under wrappers, then use the wrappers, so that I can be almost totally independent of SUI.  That way, if I decide to change CSS libraries, 
-I can easily change just these libraries.
+I can easily change just these libraries. **PARTIALLY DONE**
+    a. Simple ones are wrapped.
+    b. SUI components that have sub-components, like Form, are trickier, because
+    they need subcomponents wrapped, like Form.Input --> AppForm.Input.
 
 ### React Router 6
 

@@ -1,9 +1,15 @@
+// TODO: Use wrapper once I've successfully wrapped Grid.
+import { Grid as AppGrid } from 'semantic-ui-react'
 import React from 'react'
 import { 
     Form, 
     useLoaderData,
+    useNavigate,
 } from "react-router-dom";
 import { getUser, updateUser } from "../data/users.js";
+
+import AppButton from '../styleLibrary/AppButton'
+// import AppGrid from '../styleLibrary/AppGrid'
 
 export async function action({ request, params }) {
     let formData = await request.formData();
@@ -26,41 +32,48 @@ export async function loader({ params }) {
   
 export default function User() {
     const { user } = useLoaderData();
+    const navigate = useNavigate();
 
     return (
-        <div id="User">
-            <h1>
-                {user.name ? (
-                <>
-                    {user.name}
-                </>
-                ) : (
-                <i>Cyclops Slayer, AKA Noname.  (HINT: Add your name!)</i>
-                )}{" "}
-            </h1>
+        <AppGrid>
+        <AppGrid.Row>
+          <AppGrid.Column>
+            <label htmlFor={'name'}>Name: </label>
+          </AppGrid.Column>
+          
+          <AppGrid.Column>
+            {user.name}
+          </AppGrid.Column>
+        </AppGrid.Row>
+        <AppGrid.Row>
+          <AppGrid.Column>
+            <label htmlFor={'username'}>Username: </label>
+          </AppGrid.Column>
+          
+          <AppGrid.Column>
+            {user.username}
+          </AppGrid.Column>
+        </AppGrid.Row>
 
-            <div>
-                <Form action="edit">
-                    <button type="submit">Edit</button>
-                </Form>
-                <Form
-                method="delete"
-                action="destroy"
-                onSubmit={(event) => {
-                    if ( !window.confirm( "Please confirm you want to delete this record." ) ) {
-                        event.preventDefault();
-                    }
-                }}
-                >
-                    <button 
-                    name="from"
-                    value="user"
-                    type="submit"
-                    >
-                        Delete
-                    </button>
-                </Form>
-            </div>
-        </div>
+        <AppGrid.Row>
+          <AppGrid.Column>
+            <Form action="edit">
+                <AppButton color="green" type="submit">Edit</AppButton>
+            </Form>
+          </AppGrid.Column>
+          
+          <AppGrid.Column>
+            <AppButton 
+            color = "red"
+            type="button"
+            onClick={() => {
+                navigate(-1)
+            }}
+            >
+              Cancel
+            </AppButton>
+          </AppGrid.Column>
+        </AppGrid.Row>
+      </AppGrid>
     );
 }
