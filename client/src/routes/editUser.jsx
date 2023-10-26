@@ -94,7 +94,9 @@ export default function EditUser() {
             >
               Save
             </AppButton>
+          </AppGrid.Column>
 
+          <AppGrid.Column>
             <AppButton 
             color = "red"
             type="button"
