@@ -41,7 +41,9 @@ logged in users.
 
 4. As I have it now, a new account creation will reroute to /users/123.  This is appropriate for 
 an existing user editing user settings, or an admit changing user settings, but not for a new account.
-Figure out a way to know if it's a new account and change redirect to / in that case. **DONE**
+
+Figure out a way to know if it's a new account and change redirect to / in that case.
+
 5. Make delete user reroute to different places, depending on /user or /admin  -- **DONE**
 - I did this by putting name/value's in both the user and admin delete buttons.
     - both have name="from"
