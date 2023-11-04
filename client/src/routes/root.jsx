@@ -1,20 +1,11 @@
 import React from 'react';
 import { 
-    Navigate,
     Outlet,
-    useLocation,
 } from "react-router-dom";
 
 function Root() {
   // eslint-disable-next-line
   const [data, setData] = React.useState(null);
-  const location = useLocation()
-
-  // Redirect to /login if not logged in.
-  const isLoggedIn = false // placeholder for real datum
-  if( !isLoggedIn && location.pathname === '/' ){
-    return <Navigate to = '/login' />
-  }
 
   // TODO: Get data from /api / delete eslint-disable, above.
 
