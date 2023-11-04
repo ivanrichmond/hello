@@ -3,6 +3,16 @@ import localforage from "localforage";
 import { matchSorter } from "match-sorter";
 import sortBy from "sort-by";
 
+export class User {
+  constructor(id, name = null, username = null, password = null, createdAt = Date.now()){
+    this.createdAt = createdAt
+    this.id = id
+    this.name = name
+    this.password = password
+    this.username = username
+  }
+}
+
 export async function getUsers(query) {
   await fakeNetwork(`getUsers:${query}`);
   let users = await localforage.getItem("users");
@@ -16,7 +26,7 @@ export async function getUsers(query) {
 export async function createUser() {
   await fakeNetwork();
   let id = Math.random().toString(36).substring(2, 9);
-  let user = { id, createdAt: Date.now() };
+  let user = new User(id)
   let users = await getUsers();
   users.unshift(user);
   await set(users);
@@ -28,6 +38,14 @@ export async function getUser(id) {
   let users = await localforage.getItem("users");
   if(!users) return null;
   let user = users.find(user => user.id === id);
+  return user ?? null;
+}
+
+export async function getUserByUsername(username) {
+  await fakeNetwork(`user:${username}`);
+  let users = await localforage.getItem("users");
+  if(!users) return null;
+  let user = users.find(user => user.username === username);
   return user ?? null;
 }
 
@@ -52,6 +70,27 @@ export async function deleteUser(id) {
   return false;
 }
 
+/**
+ * @param {string} username
+ * @param {string} password
+ * @return {User} user object on success; false on failure
+ */
+export async function validateUser(username, password) {
+  if(!username || !password) {
+    console.error(`Bad parameters passed to validateUser()`)
+    return false
+  }
+
+  const user = getUserByUsername(username)
+
+  if(user && user.password === password){
+    return user
+  } else {
+    return false
+  }
+}
+
+// Helper Functions
 function set(users) {
   return localforage.setItem("users", users);
 }

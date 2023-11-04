@@ -29,6 +29,15 @@ logged in users.
 ### TODO
 
 1. Add login/auth.
+    - I got this partially working in a kind of kludgy way, which needs to be polished.
+    - Clicking Login still doesn't do anything, but...
+    - <Login> gets the user object with no user, login() and logout(), and...
+    - no errors are thrown about this anymore.
+    - I have an older way of doing things in <AuthProvider_old> and some
+    commented out code in <Login>, which I should try again, now.
+    - I also have some old code in <Root> that rerouted you to /login if not 
+    logged in (user empty).  I should either put this back in or put in something
+    comparable.
 1. Make /admin section. **DONE**
 2. Make user list under /admin **DONE**
 3. Pretty everything up into a real app, not the ugly one we'll have at this point.
