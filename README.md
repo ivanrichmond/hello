@@ -28,19 +28,11 @@ This section will grow, as I'm designing each piece.
 logged in users.
 ### TODO
 
-1. Add login/auth.
-    - I got this partially working in a kind of kludgy way, which needs to be polished.
-    - Clicking Login still doesn't do anything, but...
-    - <Login> gets the user object with no user, login() and logout(), and...
-    - no errors are thrown about this anymore.
-    - I have an older way of doing things in <AuthProvider_old> and some
-    commented out code in <Login>, which I should try again, now.
-    - I also have some old code in <Root> that rerouted you to /login if not 
-    logged in (user empty).  I should either put this back in or put in something
-    comparable.
-1. Make /admin section. **DONE**
-2. Make user list under /admin **DONE**
-3. Pretty everything up into a real app, not the ugly one we'll have at this point.
+1. Add login/auth. **DONE**
+2. Add logout.
+3. Make /admin section. **DONE**
+4. Make user list under /admin **DONE**
+5. Pretty everything up into a real app, not the ugly one we'll have at this point.
    
     i. A Create Account button should on home page should take you to New User. **DONE**
    
@@ -48,8 +40,9 @@ logged in users.
    
     iii. Everything should just be prettied up.  I should design this.
 
-4. As I have it now, a new account creation will reroute to /users/123.  This is appropriate for 
+6. As I have it now, a new account creation will reroute to /users/123.  This is appropriate for 
 an existing user editing user settings, or an admit changing user settings, but not for a new account.
+7. Add real error handling.
 
 Figure out a way to know if it's a new account and change redirect to / in that case.
 
