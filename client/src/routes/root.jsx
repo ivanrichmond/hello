@@ -1,13 +1,29 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { 
     Outlet,
+    useNavigate,
 } from "react-router-dom";
 
-function Root() {
-  // eslint-disable-next-line
-  const [data, setData] = React.useState(null);
+import { useAuth } from '../contexts/AuthProvider'
 
-  // TODO: Get data from /api / delete eslint-disable, above.
+function Root() {
+  const { user } = useAuth()
+  const [showLogin, setShowLogin] = useState(!!user)
+
+  //TODO: Is this kosher to not have a return value?  useEffect() instead?
+  useMemo(
+    () => {
+      setShowLogin(!!user)
+    },
+    [user]
+  );
+  const navigate = useNavigate()
+
+  // If not logged in, make user login or register.
+  if(!showLogin){
+    setShowLogin(true)
+    navigate('/login')
+  }
 
   return (
     <div className="Root">

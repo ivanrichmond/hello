@@ -81,7 +81,7 @@ export async function validateUser(username, password) {
     return false
   }
 
-  const user = getUserByUsername(username)
+  const user = await getUserByUsername(username)
 
   if(user && user.password === password){
     return user
