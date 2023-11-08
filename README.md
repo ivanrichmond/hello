@@ -28,7 +28,7 @@ This section will grow, as I'm designing each piece.
 logged in users.
 ### TODO
 
-**NEXT UP:** Make things pretty.
+**NEXT UP:** Error handling.
 
 1. Add login/auth. **DONE**
 2. Add logout. **DONE**

@@ -3,6 +3,8 @@
     "version": "0.1.0",
     "private": true,
     "proxy": "http://localhost:5000",
+    "adminPrompt": "Speak friend and enter.",
+    "adminPassword": "friend",
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
