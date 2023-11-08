@@ -16,6 +16,7 @@ import Admin, { loader as adminLoader } from './routes/admin.jsx'
 import EditUser, { action as editUserAction } from './routes/editUser.jsx'
 import ErrorPage from './routes/errorPage.jsx'
 import Login from './routes/login.jsx'
+import Logout from './routes/logout.jsx'
 // import Index from './routes/index.jsx'
 import Root from './routes/root.jsx'
 import User, {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: 'login',
         element: <Login />,
+      },
+      {
+        path: 'logout',
+        element: <Logout />,
       },
     ]
   },

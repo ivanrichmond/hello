@@ -1,0 +1,1 @@
+The `components` directory is for smaller components than full routes, and ones that are not contexts.  It's more for building blocks, like buttons and the like.

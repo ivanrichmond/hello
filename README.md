@@ -28,8 +28,10 @@ This section will grow, as I'm designing each piece.
 logged in users.
 ### TODO
 
+**NEXT UP:** Make things pretty.
+
 1. Add login/auth. **DONE**
-2. Add logout.
+2. Add logout. **DONE**
 3. Make /admin section. **DONE**
 4. Make user list under /admin **DONE**
 5. Pretty everything up into a real app, not the ugly one we'll have at this point.
@@ -40,19 +42,12 @@ logged in users.
    
     iii. Everything should just be prettied up.  I should design this.
 
-6. As I have it now, a new account creation will reroute to /users/123.  This is appropriate for 
-an existing user editing user settings, or an admit changing user settings, but not for a new account.
-7. Add real error handling.
+6. Add real error handling.
 
 Figure out a way to know if it's a new account and change redirect to / in that case.
 
-5. Make delete user reroute to different places, depending on /user or /admin  -- **DONE**
-- I did this by putting name/value's in both the user and admin delete buttons.
-    - both have name="from"
-    - user has value="user" and admin has value="admin"
-    - In the action, I branch on this and redirect accordingly.
-    - See "Multiple Actions" in React Router documentation on `action`.
-
+7. Make delete user reroute to different places, depending on /user or /admin  -- **DONE**
+8. Actually have it say hello to logged in user's name!!!
 #### Routing
 
 Routing should allow for several things:
