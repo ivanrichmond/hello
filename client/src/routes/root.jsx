@@ -10,10 +10,13 @@ import { useAuth } from '../contexts/AuthProvider'
 function Root() {
   const { user } = useAuth()
   const navigate = useNavigate()
+  const isName = !!user?.name
 
   // If not logged in, make user login or register.
   useEffect(() => {
-    if(!user) navigate('/login')
+    if(!user) {
+      navigate('/login')
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
 
@@ -24,7 +27,7 @@ function Root() {
       }
       <Outlet />
       <header className="Root-header">
-        <h1>Hello!</h1>
+        <h1>Hello{isName ? ', '+user.name : ''}!</h1>
         <p>A springboard for a Javascript app, containing everything needed front-end, back-end, DB, etc. to create a new JS app.  It says "hello" to you, or someone, maybe the world.</p>
         <p>Hello is not about saying hello.  
         It's built around the concept that even the simplest professional application has many needs

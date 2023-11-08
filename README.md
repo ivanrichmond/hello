@@ -47,7 +47,7 @@ logged in users.
 Figure out a way to know if it's a new account and change redirect to / in that case.
 
 7. Make delete user reroute to different places, depending on /user or /admin  -- **DONE**
-8. Actually have it say hello to logged in user's name!!!
+8. Actually have it say hello to logged in user's name!!! **DONE**
 #### Routing
 
 Routing should allow for several things:
