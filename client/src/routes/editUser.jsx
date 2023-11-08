@@ -31,7 +31,6 @@ function userNotFoundError(){
 
 export default function EditUser() {
   const { user } = useLoaderData();
-  console.debug(user)
   if(!user) userNotFoundError();
   const navigate = useNavigate();
 
