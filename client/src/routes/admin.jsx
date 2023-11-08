@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { Form, Navigate, useLoaderData } from 'react-router-dom'
 import { Tab, Table } from 'semantic-ui-react'
 import packageJSON from '../../package.json'
@@ -19,13 +19,8 @@ const Admin = () => {
     // the real solution, which will be taht this will be in package.json
     // on the server-side Node app (:5000) and we'll have to do a fetch
     // to get this info.
-    const [isAdmin, setIsAdmin] = useState(false)
-    if(!isAdmin){
-        const adminPassword = prompt(packageJSON.adminPrompt)
-        let isPasswordCorrect = adminPassword === packageJSON.adminPassword
-        console.debug(isPasswordCorrect)
-        setIsAdmin(isPasswordCorrect)
-    }
+    const adminPassword = prompt(packageJSON.adminPrompt)
+    const isPasswordCorrect = adminPassword === packageJSON.adminPassword
     const { users } = useLoaderData();
 
     const userList = users.map((user,index) => {
@@ -93,11 +88,7 @@ const Admin = () => {
         },
     ]
 
-<<<<<<< HEAD
     return isPasswordCorrect ? (
-=======
-    return isAdmin ? (
->>>>>>> router
         <div className="Admin">
             <h1>Hello Configuration</h1>
             <Tab panes={panes} />
