@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect } from 'react';
 import { 
     Outlet,
     useNavigate,
@@ -8,22 +8,13 @@ import { useAuth } from '../contexts/AuthProvider'
 
 function Root() {
   const { user } = useAuth()
-  const [showLogin, setShowLogin] = useState(!!user)
-
-  //TODO: Is this kosher to not have a return value?  useEffect() instead?
-  useMemo(
-    () => {
-      setShowLogin(!!user)
-    },
-    [user]
-  );
   const navigate = useNavigate()
 
   // If not logged in, make user login or register.
-  if(!showLogin){
-    setShowLogin(true)
-    navigate('/login')
-  }
+  useEffect(() => {
+    if(!user) navigate('/login')
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user])
 
   return (
     <div className="Root">
