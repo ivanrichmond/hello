@@ -4,6 +4,7 @@ import {
     useNavigate,
 } from "react-router-dom";
 
+import LogoutLink from '../components/LogoutLink'
 import { useAuth } from '../contexts/AuthProvider'
 
 function Root() {
@@ -18,6 +19,9 @@ function Root() {
 
   return (
     <div className="Root">
+      {user &&
+        <LogoutLink />
+      }
       <Outlet />
       <header className="Root-header">
         <h1>Hello!</h1>

@@ -28,10 +28,10 @@ This section will grow, as I'm designing each piece.
 logged in users.
 ### TODO
 
-**NEXT:** Add logout link.
+**NEXT UP:** Make things pretty.
 
 1. Add login/auth. **DONE**
-2. Add logout. **DONE, except for actual logout link.**
+2. Add logout. **DONE**
 3. Make /admin section. **DONE**
 4. Make user list under /admin **DONE**
 5. Pretty everything up into a real app, not the ugly one we'll have at this point.
@@ -47,6 +47,7 @@ logged in users.
 Figure out a way to know if it's a new account and change redirect to / in that case.
 
 7. Make delete user reroute to different places, depending on /user or /admin  -- **DONE**
+8. Actually have it say hello to logged in user's name!!!
 #### Routing
 
 Routing should allow for several things:
