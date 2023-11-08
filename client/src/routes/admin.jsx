@@ -14,6 +14,11 @@ export async function loader() {
 
 const Admin = () => {
     // Only allow entry to /admin if the admin password is provided.
+    //TODO: This is insecure!  Make this come from server.
+    // For right now, I'm only working on the UI, so this a placeholder for
+    // the real solution, which will be taht this will be in package.json
+    // on the server-side Node app (:5000) and we'll have to do a fetch
+    // to get this info.
     const adminPassword = prompt(packageJSON.adminPrompt)
     const isPasswordCorrect = adminPassword === packageJSON.adminPassword
     const { users } = useLoaderData();
