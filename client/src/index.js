@@ -46,13 +46,15 @@ const router = createBrowserRouter([
   },
   {
     path: "users/:userId",
-    element: <User />, 
+    element: <User />,
+    errorElement: <ErrorPage />,
     loader: userLoader,
     action: userAction,
   },
   {
     path: "users/:userId/edit",
     element: <EditUser />,
+    errorElement: <ErrorPage />,
     loader: userLoader,
     action: editUserAction,
   },

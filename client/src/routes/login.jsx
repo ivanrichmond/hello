@@ -16,7 +16,7 @@ import { validateUser } from '../data/users.js'
 export default function Login() {
     const navigate = useNavigate()
     const { login } = useAuth()
-    const { createNotice } = useNotice()
+    const { createNotice, deleteNotice } = useNotice()
     const usernameRef = useRef('')
     const passwordRef = useRef('')
     const [username, setUsername] = useState('')
@@ -26,6 +26,7 @@ export default function Login() {
         const user = await validateUser(username, password)
         if( user ){
             login(user)
+            deleteNotice()
             navigate('/')
         } else {
             createNotice(`Invalid username or password.`, 'error')

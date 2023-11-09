@@ -46,7 +46,7 @@ This section will grow, as I'm designing each piece.
 8. Actually have it say hello to logged in user's name!!! **DONE**
 9. Technical Debt
 10. Bug: "Warning: Cannot update a component (`AuthProvider`) while rendering a different component (`Logout`). To locate the bad setState() call inside `Logout`, follow the stack trace."  (logout:6, AuthProvider:17)
-11. Make login process clear the login error notice, if login is successful.
+11. Make login process clear the login error notice, if login is successful. **DONE**
 #### Routing
 
 Routing should allow for several things:
