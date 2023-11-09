@@ -5,10 +5,13 @@ import {
 } from "react-router-dom";
 
 import LogoutLink from '../components/LogoutLink'
+import Notice from '../components/Notice'
 import { useAuth } from '../contexts/AuthProvider'
+import { useNotice } from '../contexts/NoticeProvider'
 
 function Root() {
   const { user } = useAuth()
+  const { deleteNotice, notice } = useNotice()
   const navigate = useNavigate()
   const isName = !!user?.name
 
@@ -22,6 +25,13 @@ function Root() {
 
   return (
     <div className="Root">
+      {notice && 
+        <Notice
+        close = {deleteNotice}
+        message = {notice.message}
+        type = {notice.type}
+        />
+      }
       {user &&
         <LogoutLink />
       }
