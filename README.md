@@ -25,10 +25,9 @@ A springboard for a Javascript app, containing everything needed front-end, back
 
 The overall design of Hello is done, but kept in a local document.  
 This section will grow, as I'm designing each piece.
-logged in users.
 ### TODO
 
-**NEXT UP:** Error handling.
+**NEXT UP:** Pretty things up.
 
 1. Add login/auth. **DONE**
 2. Add logout. **DONE**
@@ -42,12 +41,12 @@ logged in users.
    
     iii. Everything should just be prettied up.  I should design this.
 
-6. Add real error handling.
-
-Figure out a way to know if it's a new account and change redirect to / in that case.
-
+6. Add real error handling. **DONE**
 7. Make delete user reroute to different places, depending on /user or /admin  -- **DONE**
 8. Actually have it say hello to logged in user's name!!! **DONE**
+9. Technical Debt
+10. Bug: "Warning: Cannot update a component (`AuthProvider`) while rendering a different component (`Logout`). To locate the bad setState() call inside `Logout`, follow the stack trace."  (logout:6, AuthProvider:17)
+11. Make login process clear the login error notice, if login is successful.
 #### Routing
 
 Routing should allow for several things:
@@ -57,17 +56,16 @@ Routing should allow for several things:
 3. Login Page: users login with username and password.  **MOCK-UP DONE**
 4. Error Page: display meaningful errors.  **DONE PRELIMINARY**
 5. Rerouting of User Settings to Login for non-logged in user. **DONE**
+6. Technical debt.
 ## Technical Debt
 1. Put /admin under admin privs, so that only someone logged in as an admin can get to it.
-2. `<Admin>` has several components directly out of Semantic UI.  Pull these out and put them under wrappers, then use the wrappers, so that I can be almost totally independent of SUI.  That way, if I decide to change CSS libraries, 
+2. Several components use components directly out of Semantic UI.  Pull these out and put them under wrappers, then use the wrappers, so that I can be almost totally independent of SUI.  That way, if I decide to change CSS libraries, 
 I can easily change just these libraries. **PARTIALLY DONE**
     a. Simple ones are wrapped.
     b. SUI components that have sub-components, like Form, are trickier, because
     they need subcomponents wrapped, like Form.Input --> AppForm.Input.
-
-### React Router 6
-
-* In `router`, need to add fetch `/api` back in.
+3. In AuthProvider, change `user` to something like `currentUser`.
+4. In AuthProvider, consider not using `useMemo` or else use `useMemo` in NoticeProvider, so that they're consistent.
 
 ### Monorepo'ish architecture
 

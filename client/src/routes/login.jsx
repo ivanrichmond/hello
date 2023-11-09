@@ -6,6 +6,7 @@ import {
 
 import { createUser } from '../data/users.js'
 import { useAuth } from '../contexts/AuthProvider'
+import { useNotice } from '../contexts/NoticeProvider'
 import { validateUser } from '../data/users.js'
 
 //TODO: The line below isn't working, whereas the one above does.
@@ -15,6 +16,7 @@ import { validateUser } from '../data/users.js'
 export default function Login() {
     const navigate = useNavigate()
     const { login } = useAuth()
+    const { createNotice } = useNotice()
     const usernameRef = useRef('')
     const passwordRef = useRef('')
     const [username, setUsername] = useState('')
@@ -26,9 +28,7 @@ export default function Login() {
             login(user)
             navigate('/')
         } else {
-            console.error(`Invalid username or password.`)
-            // TODO: Add alert to display this on-screen.
-            // TODO: Add helper to make errors easier to handle?
+            createNotice(`Invalid username or password.`, 'error')
         }
     }
 
