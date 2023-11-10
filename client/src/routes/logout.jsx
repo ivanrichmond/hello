@@ -1,8 +1,8 @@
-//TODO: Should I consolidate destroyUser into user?
-import { useAuth } from '../contexts/AuthProvider'
+import { useContext } from 'react'
+import { AuthContext } from '../contexts/AuthProvider'
 
 const Logout = () => {
-    const { logout } = useAuth()
+    const { logout } = useContext(AuthContext)
     logout()
     return null
 }

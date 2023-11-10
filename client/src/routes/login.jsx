@@ -1,11 +1,11 @@
 import { Form as AppForm } from 'semantic-ui-react'
-import React, { useRef, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { 
     useNavigate
 } from "react-router-dom";
 
 import { createUser } from '../data/users.js'
-import { useAuth } from '../contexts/AuthProvider'
+import { AuthContext } from '../contexts/AuthProvider'
 import { useNotice } from '../contexts/NoticeProvider'
 import { validateUser } from '../data/users.js'
 
@@ -14,10 +14,9 @@ import { validateUser } from '../data/users.js'
 
 export default function Login() {
     const navigate = useNavigate()
-    const { login } = useAuth()
+    const { login } = useContext(AuthContext)
+
     const { createNotice, deleteNotice } = useNotice()
-    const usernameRef = useRef('')
-    const passwordRef = useRef('')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
@@ -54,7 +53,6 @@ export default function Login() {
                     id='username'
                     name='username'
                     onChange = {e => setUsername(e.target.value)}
-                    ref={usernameRef}
                     />
                       
                     <label htmlFor="password">
@@ -63,7 +61,6 @@ export default function Login() {
                     <AppForm.Input
                     name='password'
                     onChange = {e => setPassword(e.target.value)}
-                    ref = {passwordRef}
                     type="password"
                     />
 
