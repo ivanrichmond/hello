@@ -27,7 +27,7 @@ The overall design of Hello is done, but kept in a local document.
 This section will grow, as I'm designing each piece.
 ### TODO
 
-**NEXT UP:** Fix Warning (TODO #10).
+**NEXT UP:** Tech debt (including TODO #13).
 
 1. Add login/auth. **DONE**
 2. Add logout. **DONE**
@@ -37,10 +37,11 @@ This section will grow, as I'm designing each piece.
 6. Add real error handling. **DONE**
 7. Make delete user reroute , depending on /user or /admin  -- **DONE**
 8. Actually have it say hello to logged in user's name!!! **DONE**
-9. Technical Debt
+9. Technical Debt 
 10. Bug: "Warning: Cannot update a component (`AuthProvider`) while rendering a different component (`Logout`). To locate the bad setState() call inside `Logout`, follow the stack trace."  (logout:6, AuthProvider:17) **DONE**
 11. Make login success clear the login error notice. **DONE**
-12. Make Create Account workflow take you back to /login.
+12. Make Create Account workflow take you back to /login. **DONE**
+13. Make admin not constantly add for your password.
 #### Routing
 
 Routing should allow for several things:
@@ -52,10 +53,10 @@ Routing should allow for several things:
 5. Rerouting of User Settings to Login for non-logged in user. **DONE**
 6. Technical debt.
 ## Technical Debt
-1. Put /admin under admin privs, so that only someone logged in as an admin can get to it.
+1. Put /admin under admin privs, so that only someone logged in as an admin can get to it. **DONE (but see TODO #13)**
 2. Several components use components directly out of Semantic UI.  Pull these out and put them under wrappers, then use the wrappers, so that I can be almost totally independent of SUI.  That way, if I decide to change CSS libraries, 
 I can easily change just these libraries. **PARTIALLY DONE**
-    a. Simple ones are wrapped.
+    a. Wrap simple ones. **DONE***
     b. SUI components that have sub-components, like Form, are trickier, because
     they need subcomponents wrapped, like Form.Input --> AppForm.Input.
 3. In AuthProvider, change `user` to something like `currentUser`.
