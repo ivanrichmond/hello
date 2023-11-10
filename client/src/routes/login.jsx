@@ -12,7 +12,6 @@ import { validateUser } from '../data/users.js'
 //TODO: The line below isn't working, whereas the one above does.
 // import AppForm from '../styleLibrary/AppForm'
 
-
 export default function Login() {
     const navigate = useNavigate()
     const { login } = useAuth()
