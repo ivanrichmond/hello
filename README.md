@@ -27,26 +27,20 @@ The overall design of Hello is done, but kept in a local document.
 This section will grow, as I'm designing each piece.
 ### TODO
 
-**NEXT UP:** Pretty things up.
+**NEXT UP:** Fix Warning (TODO #10).
 
 1. Add login/auth. **DONE**
 2. Add logout. **DONE**
 3. Make /admin section. **DONE**
 4. Make user list under /admin **DONE**
-5. Pretty everything up into a real app, not the ugly one we'll have at this point.
-   
-    i. A Create Account button should on home page should take you to New User. **DONE**
-   
-    ii. Login should be at the top of the home page. **DONE**
-   
-    iii. Everything should just be prettied up.  I should design this.
-
+5. Pretty everything up. **DONE**
 6. Add real error handling. **DONE**
-7. Make delete user reroute to different places, depending on /user or /admin  -- **DONE**
+7. Make delete user reroute , depending on /user or /admin  -- **DONE**
 8. Actually have it say hello to logged in user's name!!! **DONE**
 9. Technical Debt
 10. Bug: "Warning: Cannot update a component (`AuthProvider`) while rendering a different component (`Logout`). To locate the bad setState() call inside `Logout`, follow the stack trace."  (logout:6, AuthProvider:17)
-11. Make login process clear the login error notice, if login is successful. **DONE**
+11. Make login success clear the login error notice. **DONE**
+12. Make Create Account workflow take you back to /login.
 #### Routing
 
 Routing should allow for several things:
