@@ -38,7 +38,7 @@ This section will grow, as I'm designing each piece.
 7. Make delete user reroute , depending on /user or /admin  -- **DONE**
 8. Actually have it say hello to logged in user's name!!! **DONE**
 9. Technical Debt
-10. Bug: "Warning: Cannot update a component (`AuthProvider`) while rendering a different component (`Logout`). To locate the bad setState() call inside `Logout`, follow the stack trace."  (logout:6, AuthProvider:17)
+10. Bug: "Warning: Cannot update a component (`AuthProvider`) while rendering a different component (`Logout`). To locate the bad setState() call inside `Logout`, follow the stack trace."  (logout:6, AuthProvider:17) **DONE**
 11. Make login success clear the login error notice. **DONE**
 12. Make Create Account workflow take you back to /login.
 #### Routing
