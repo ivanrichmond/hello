@@ -1,6 +1,7 @@
 body {
   background: center no-repeat url('../media/pexels-rostislav-uzunov-5680034.gif');
-  /* background: silver; */ /* For when you get sick of the .gif, above. */
+  /* For when you get sick of the .gif, above. */
+  /* background: silver;  */
   background-size: 100%;
   margin: 0;
   padding: 1rem;
