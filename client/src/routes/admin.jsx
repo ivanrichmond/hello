@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Navigate, useLoaderData } from 'react-router-dom'
 import { Tab, Table } from 'semantic-ui-react'
 import packageJSON from '../../package.json'
@@ -12,15 +12,22 @@ export async function loader() {
     return { users };
 }
 
+const checkPassword = () => {
+    const password = prompt(packageJSON.adminPrompt)
+    return password === packageJSON.adminPassword
+}
+
 const Admin = () => {
-    // Only allow entry to /admin if the admin password is provided.
     //TODO: This is insecure!  Make this come from server.
     // For right now, I'm only working on the UI, so this a placeholder for
     // the real solution, which will be taht this will be in package.json
     // on the server-side Node app (:5000) and we'll have to do a fetch
     // to get this info.
-    const adminPassword = prompt(packageJSON.adminPrompt)
-    const isPasswordCorrect = adminPassword === packageJSON.adminPassword
+    const [isAdmin, setIsAdmin] = useState(false)
+    if(!isAdmin){
+        setIsAdmin(checkPassword())
+    }
+
     const { users } = useLoaderData();
 
     const userList = users.map((user,index) => {
@@ -88,7 +95,7 @@ const Admin = () => {
         },
     ]
 
-    return isPasswordCorrect ? (
+    return isAdmin ? (
         <div className="Admin">
             <h1>Hello Configuration</h1>
             <Tab panes={panes} />
