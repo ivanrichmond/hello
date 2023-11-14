@@ -2,10 +2,16 @@ import { createContext, useContext, useMemo } from "react";
 import { redirect } from "react-router-dom";
 
 import { useLocalStorage } from "../hooks/useLocalStorage";
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useLocalStorage("user", null);
+
+  // call this function to find out if the user is logged in, without
+  // getting the entire user object.
+  const isLoggedIn = () => {
+    return !!user
+  }
 
   // call this function when you want to authenticate the user
   const login = async (data) => {
@@ -21,6 +27,7 @@ export const AuthProvider = ({ children }) => {
   const value = useMemo(
     () => ({
       user,
+      isLoggedIn,
       login,
       logout
     }),

@@ -1,4 +1,8 @@
 body {
+  background: center no-repeat url('../media/pexels-rostislav-uzunov-5680034.gif');
+  /* For when you get sick of the .gif, above. */
+  /* background: silver;  */
+  background-size: 100%;
   margin: 0;
   padding: 1rem;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -19,4 +23,8 @@ code {
 
 .LogoutLink:hover {
   text-decoration: underline;
+}
+
+div.ui.segment.MainSegment {
+  margin: 25px
 }

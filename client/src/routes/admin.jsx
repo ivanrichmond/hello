@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Form, Navigate, useLoaderData } from 'react-router-dom'
 import { Tab, Table } from 'semantic-ui-react'
-import packageJSON from '../../package.json'
 
 import AppButton from '../styleLibrary/AppButton'
 // import AppTab from '../styleLibrary/AppTab'
 import { getUsers } from '../data/users.js'
+import { AdminContext } from '../contexts/AdminProvider'
 
 export async function loader() {
     const users = await getUsers();
@@ -13,15 +13,13 @@ export async function loader() {
 }
 
 const Admin = () => {
-    // Only allow entry to /admin if the admin password is provided.
-    //TODO: This is insecure!  Make this come from server.
-    // For right now, I'm only working on the UI, so this a placeholder for
-    // the real solution, which will be taht this will be in package.json
-    // on the server-side Node app (:5000) and we'll have to do a fetch
-    // to get this info.
-    const adminPassword = prompt(packageJSON.adminPrompt)
-    const isPasswordCorrect = adminPassword === packageJSON.adminPassword
     const { users } = useLoaderData();
+
+    const { isAdmin, validateAdmin } = useContext(AdminContext)
+    if(!isAdmin) {
+        const isValid = validateAdmin()
+        return isValid ? <Navigate to='/admin' /> : <Navigate to='/' />
+    }
 
     const userList = users.map((user,index) => {
         return(
@@ -88,12 +86,12 @@ const Admin = () => {
         },
     ]
 
-    return isPasswordCorrect ? (
+    return (
         <div className="Admin">
             <h1>Hello Configuration</h1>
             <Tab panes={panes} />
         </div>
-    ) : ( <Navigate to='/' />)
+    )
 }
 
 export default Admin;

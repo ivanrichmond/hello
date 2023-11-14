@@ -1,14 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { Segment } from 'semantic-ui-react'
 
 import 'semantic-ui-css/semantic.min.css'
 import './css/index.css'
 import reportWebVitals from './reportWebVitals'
 
 // Contexts
+import { AdminProvider } from './contexts/AdminProvider.jsx'
 import { AuthProvider } from './contexts/AuthProvider.jsx'
 import { NoticeProvider } from './contexts/NoticeProvider.jsx'
+
+// Style Library (wrappers from CSS libraries, like SUI)
 
 // Routes
 //TODO: Should I consolidate destroyUser into user?
@@ -64,7 +68,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <Admin />,
+    element: <AdminProvider> <Admin /> </AdminProvider>,
     errorElement: <ErrorPage />, /* TODO: Make this more DRY with /'s errorElement. */
     loader: adminLoader,
   }
@@ -76,8 +80,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   // Not sure how to fix this without forking SUI, which I don't want to do.
   <NoticeProvider>
     <AuthProvider>
-      <RouterProvider router={router} >
-      </RouterProvider>
+      <Segment className='MainSegment' padded>
+        <RouterProvider router={router} >
+        </RouterProvider>
+      </Segment>
     </AuthProvider>
   </NoticeProvider>
 )

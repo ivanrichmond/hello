@@ -1,3 +1,4 @@
+import { useContext } from 'react'
 import { 
     Form, 
     useLoaderData,
@@ -12,6 +13,7 @@ import { Grid as AppGrid } from 'semantic-ui-react'
 import AppButton from '../styleLibrary/AppButton'
 // import AppGrid from '../styleLibrary/AppGrid'
 import AppInput from '../styleLibrary/AppInput'
+import { AuthContext } from '../contexts/AuthProvider'
 
 import { updateUser } from "../data/users.js";
 
@@ -19,23 +21,34 @@ export async function action({ request, params }) {
     const formData = await request.formData();
     const updates = Object.fromEntries(formData);
     await updateUser(params.userId, updates);
-    //TODO: If it's a new user, from Create Account, reroute to /.
-    return redirect(`/users/${params.userId}`);
+    const loggedIn = formData.get("loggedIn") === 'true'
+    if(loggedIn){
+      return redirect(`/users/${params.userId}`);
+    } else {
+      // The user just created a new account, send them to login form.
+      return redirect(`/login`)
+    }
 }
 
 function userNotFoundError(){
-      const errorMessage = "User not found."
-      console.error(errorMessage)
-      throw new Error(errorMessage)
+    const errorMessage = "User not found."
+    //TODO: Use NoticeProvider.
+    console.error(errorMessage)
+    throw new Error(errorMessage)
 }
 
 export default function EditUser() {
+  const { isLoggedIn } = useContext(AuthContext)
   const { user } = useLoaderData();
-  if(!user) userNotFoundError();
+  if(!user && !isLoggedIn) userNotFoundError();
   const navigate = useNavigate();
+  const loggedIn = isLoggedIn()
+  const heading = loggedIn ? 'Edit User' : 'Create Account'
 
   return (
     <Form method="post" id="user-form">
+      <h1>{heading}</h1>
+      <input type="hidden" name="loggedIn" value={loggedIn} />
       <AppGrid>
         <AppGrid.Row>
           <AppGrid.Column>
