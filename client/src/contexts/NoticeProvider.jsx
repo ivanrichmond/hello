@@ -1,7 +1,6 @@
 import { createContext, useContext } from "react";
 
 import { useLocalStorage } from "../hooks/useLocalStorage";
-const NoticeContext = createContext();
 
 /**
  * The Notice class defines a notice, such as an error, warning, or info.
@@ -27,6 +26,8 @@ export class Notice {
         console[method](this.message)
     }
 }
+
+export const NoticeContext = createContext(new Notice());
 
 export const NoticeProvider = ({ children }) => {
     const [notice, setNotice] = useLocalStorage("notice", null);

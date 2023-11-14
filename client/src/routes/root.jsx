@@ -1,17 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { 
     Outlet,
     useNavigate,
 } from "react-router-dom";
 
+// Components
 import LogoutLink from '../components/LogoutLink'
 import Notice from '../components/Notice'
-import { useAuth } from '../contexts/AuthProvider'
-import { useNotice } from '../contexts/NoticeProvider'
+
+// Contexts
+import { AuthContext } from '../contexts/AuthProvider'
+import { NoticeContext } from '../contexts/NoticeProvider'
 
 function Root() {
-  const { user } = useAuth()
-  const { deleteNotice, notice } = useNotice()
+  const { user } = useContext(AuthContext)
+  const { deleteNotice, notice } = useContext(NoticeContext)
   const navigate = useNavigate()
   const isName = !!user?.name
 
