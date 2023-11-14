@@ -8,6 +8,7 @@ import './css/index.css'
 import reportWebVitals from './reportWebVitals'
 
 // Contexts
+import { AdminProvider } from './contexts/AdminProvider.jsx'
 import { AuthProvider } from './contexts/AuthProvider.jsx'
 import { NoticeProvider } from './contexts/NoticeProvider.jsx'
 
@@ -67,7 +68,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <Admin />,
+    element: <AdminProvider> <Admin /> </AdminProvider>,
     errorElement: <ErrorPage />, /* TODO: Make this more DRY with /'s errorElement. */
     loader: adminLoader,
   }
