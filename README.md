@@ -39,6 +39,7 @@
 13. Make admin not constantly prompt for your password. **DONE**
 14. Add unit testing. **PART WAY DONE**
 15. Add Flow (and continue to use going forward).
+16. Convert CSS to LESS.
 #### Routing
 
 Routing should allow for several things:
