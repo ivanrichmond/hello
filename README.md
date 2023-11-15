@@ -27,7 +27,7 @@ The overall design of Hello is done, but kept in a local document.
 This section will grow, as I'm designing each piece.
 ### TODO
 
-**NEXT UP:** Unit testing.
+**NEXT UP:** Continue unit testing.
 
 1. Add login/auth. **DONE**
 2. Add logout. **DONE**
@@ -42,16 +42,16 @@ This section will grow, as I'm designing each piece.
 11. Make login success clear the login error notice. **DONE**
 12. Make Create Account workflow take you back to /login. **DONE**
 13. Make admin not constantly prompt for your password. **DONE**
-14. Add unit testing.
+14. Add unit testing. **PART WAY DONE**
 15. Add Flow (and continue to use going forward).
 #### Routing
 
 Routing should allow for several things:
 
-1. Main page.  **DONE PRELIMINARY**
-2. User Settings: logged in user can set things like their name.  Unavailable unless logged in.  **DONE PRELIMINARY**
-3. Login Page: users login with username and password.  **MOCK-UP DONE**
-4. Error Page: display meaningful errors.  **DONE PRELIMINARY**
+1. Main page.  **DONE**
+2. User Settings: logged in user can set things like their name.  Unavailable unless logged in.  **DONE**
+3. Login Page: users login with username and password.  **DONE**
+4. Error Page: display meaningful errors.  **DONE**
 5. Rerouting of User Settings to Login for non-logged in user. **DONE**
 6. Technical debt.
 ## Technical Debt

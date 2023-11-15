@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import Root from './root';
+import Login from './login';
 import { AuthProvider } from '../contexts/AuthProvider.jsx'
 import { NoticeProvider } from '../contexts/NoticeProvider.jsx'
 
@@ -10,14 +10,14 @@ jest.mock('react-router-dom', () => ({
   useNavigate: () => mockedUsedNavigate,
 }));
 
-test('renders hello!', () => {
+test('renders Login', () => {
   render(
     <NoticeProvider>
       <AuthProvider>
-        <Root />
+        <Login />
       </AuthProvider>
     </NoticeProvider>
   );
-  const element = screen.getByText(/hello!/i);
+  const element = screen.getByText(/Login/i);
   expect(element).toBeInTheDocument();
 });

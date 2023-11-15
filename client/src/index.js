@@ -30,8 +30,8 @@ import User, {
 } from "./routes/user.jsx";
 
 // Router
-//TODO: Add <Index> and <EditContact>.
-const router = createBrowserRouter([
+//TODO: Add <Index>.
+export const router = createBrowserRouter([
   {
     element: <Root />,
     errorElement: <ErrorPage />,
