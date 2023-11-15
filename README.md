@@ -54,7 +54,7 @@ Routing should allow for several things:
 1. Put /admin under admin privs, so that only someone logged in as an admin can get to it. **DONE**
 2. Several components use components directly out of Semantic UI.  Pull these out and put them under wrappers, then use the wrappers, so that I can be almost totally independent of SUI.  That way, if I decide to change CSS libraries, 
 I can easily change just these libraries. **PARTIALLY DONE**
-    a. Wrap simple ones. **DONE***
+    a. Wrap simple ones. **DONE**
     b. SUI components that have sub-components, like Form, are trickier, because
     they need subcomponents wrapped, like Form.Input --> AppForm.Input.
 3. In AuthProvider, change `user` to something like `currentUser`.
