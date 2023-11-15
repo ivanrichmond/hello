@@ -4,6 +4,11 @@ import packageJSON from '../../package.json'
 import { useLocalStorage } from "../hooks/useLocalStorage";
 export const AdminContext = createContext();
 
+// I export this separately, so I can unit test it.
+export const validateAdminPassword = (password) => {
+    return password === packageJSON.adminPassword
+}
+
 //TODO: This is insecure!  Make this come from server.
 // For right now, I'm only working on the UI, so this a placeholder for
 // the real solution, which will be taht this will be in package.json
@@ -14,7 +19,7 @@ export const AdminProvider = ({ children }) => {
 
     const validateAdmin = () => {
         const password = prompt(packageJSON.adminPrompt)
-        const isValid = password === packageJSON.adminPassword
+        const isValid = validateAdminPassword(password)
         setIsAdmin( isValid )
         return isValid
     }
