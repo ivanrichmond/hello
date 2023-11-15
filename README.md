@@ -12,6 +12,20 @@
 **CURRENT STATUS: UI mostly done, working on unit tests and tech debt.**
 
 **NOTE:** This is still a work in progress.  There's a lot more to do.
+
+# Installation and Setup for UI (backend is still being built)
+
+1. `git clone git@github.com:ivanrichmond/hello.git`
+
+2. `cd hello/client`
+
+3. `npm install` | `yarn`
+
+4. `npm run start` | `yarn start`
+
+5. Go to `http://localhost:7777`, if it's not already up.
+
+6. To go to the Admin screen, go to `http://localhost:7777/admin` and enter `adminPassword` in `package.json`.  The default is `friend`, but you can change it.
 ## Technologies
 
 - DB TBD
