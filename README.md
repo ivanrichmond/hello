@@ -36,7 +36,7 @@
 - Less (forthcoming)
 ### TODO
 
-**NEXT UP:** Continue unit testing.
+**NEXT UP:** Tech Debt.
 
 1. Add login/auth. **DONE**
 2. Add logout. **DONE**
