@@ -1,10 +1,7 @@
 // This is an actual dismissable banner that shows a notice.
 import React from 'react'
-//TODO: Replace with AppMessage, when finished.
-import { Message as AppMessage } from 'semantic-ui-react'
 
-//TODO: This needs to be more robust to work.
-// import AppMessage from '../styleLibrary/AppMessage'
+import AppMessage from '../styleLibrary/AppMessage'
 
 const Notice = ({message, type, close = () => {} }) => {
     // NOTE: by convention type correponds to 

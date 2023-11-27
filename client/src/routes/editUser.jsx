@@ -5,13 +5,9 @@ import {
     redirect,
     useNavigate,
 } from "react-router-dom";
-// TODO: AppGrid fix wrapper under styleLibrary.  
-// Grid is multi-component, so will need more
-// handling than just a straight wrapper.
-import { Grid as AppGrid } from 'semantic-ui-react'
 
 import AppButton from '../styleLibrary/AppButton'
-// import AppGrid from '../styleLibrary/AppGrid'
+import AppGrid from '../styleLibrary/AppGrid'
 import AppInput from '../styleLibrary/AppInput'
 import { AuthContext } from '../contexts/AuthProvider'
 

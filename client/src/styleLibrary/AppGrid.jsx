@@ -5,3 +5,6 @@ export default function AppGrid(props){
         <Grid {...props} />
     )
 }
+
+AppGrid.Column = (props) => (<Grid.Column {...props} />)
+AppGrid.Row = (props) => (<Grid.Row {...props} />)
