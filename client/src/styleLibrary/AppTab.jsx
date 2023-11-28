@@ -5,3 +5,5 @@ export default function AppTab(props){
         <Tab {...props} />
     )
 }
+
+AppTab.Pane = (props) => (<Tab.Pane {...props} />)

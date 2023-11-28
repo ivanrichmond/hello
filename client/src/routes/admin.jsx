@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { Form, Navigate, useLoaderData } from 'react-router-dom'
-import { Tab, Table } from 'semantic-ui-react'
 
 import AppButton from '../styleLibrary/AppButton'
-// import AppTab from '../styleLibrary/AppTab'
+import AppTab from '../styleLibrary/AppTab'
+import AppTable from '../styleLibrary/AppTable'
 import { getUsers } from '../data/users.js'
 import { AdminContext } from '../contexts/AdminProvider'
 
@@ -23,10 +23,10 @@ const Admin = () => {
 
     const userList = users.map((user,index) => {
         return(
-            <Table.Row key={index}> 
-                <Table.Cell>{user.name || "<no name given>"}</Table.Cell>
-                <Table.Cell>{user.username || "<username left blank>"}</Table.Cell>
-                <Table.Cell>
+            <AppTable.Row key={index}> 
+                <AppTable.Cell>{user.name || "<no name given>"}</AppTable.Cell>
+                <AppTable.Cell>{user.username || "<username left blank>"}</AppTable.Cell>
+                <AppTable.Cell>
 
                     <Form 
                     style = {{display: 'inline'}}
@@ -52,36 +52,36 @@ const Admin = () => {
                         value="admin" />
                     </Form>
 
-                </Table.Cell>
-            </Table.Row>
+                </AppTable.Cell>
+            </AppTable.Row>
         )
     })
 
     const userTable = (
-        <Table size='small' striped compact celled selectable>
-            <Table.Header>
-                <Table.Row>
-                    <Table.HeaderCell>Name</Table.HeaderCell><Table.HeaderCell>username</Table.HeaderCell><Table.HeaderCell>Action</Table.HeaderCell>
-                </Table.Row>
-            </Table.Header>
-            <Table.Body>
+        <AppTable size='small' striped compact celled selectable>
+            <AppTable.Header>
+                <AppTable.Row>
+                    <AppTable.HeaderCell>Name</AppTable.HeaderCell><AppTable.HeaderCell>username</AppTable.HeaderCell><AppTable.HeaderCell>Action</AppTable.HeaderCell>
+                </AppTable.Row>
+            </AppTable.Header>
+            <AppTable.Body>
                 {userList}
-            </Table.Body>
-        </Table>
+            </AppTable.Body>
+        </AppTable>
     )
 
     const panes = [
         { 
             menuItem: 'Manage Users', render: () => (
-                <Tab.Pane>
+                <AppTab.Pane>
                     <h2>Users</h2>
                     {userTable}
-                </Tab.Pane>
+                </AppTab.Pane>
             )
         },
         { 
             menuItem: 'General Configuration', render: () => (
-                <Tab.Pane>TODO: This will hold general app config.</Tab.Pane> 
+                <AppTab.Pane>TODO: This will hold general app config.</AppTab.Pane> 
             ) 
         },
     ]
@@ -89,7 +89,7 @@ const Admin = () => {
     return (
         <div className="Admin">
             <h1>Hello Configuration</h1>
-            <Tab panes={panes} />
+            <AppTab panes={panes} />
         </div>
     )
 }

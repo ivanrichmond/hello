@@ -1,5 +1,3 @@
-// TODO: Use wrapper once I've successfully wrapped Grid.
-import { Grid as AppGrid } from 'semantic-ui-react'
 import React from 'react'
 import { 
     Form, 
@@ -9,7 +7,7 @@ import {
 import { getUser, updateUser } from "../data/users.js";
 
 import AppButton from '../styleLibrary/AppButton'
-// import AppGrid from '../styleLibrary/AppGrid'
+import AppGrid from '../styleLibrary/AppGrid'
 
 export async function action({ request, params }) {
     let formData = await request.formData();
