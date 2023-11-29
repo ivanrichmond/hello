@@ -36,7 +36,10 @@
 - Less (forthcoming)
 ### TODO
 
-**NEXT UP:** Tech Debt.
+**NEXT UP:** Tech Debt: editUser is not editing `currentUser` in AuthContext, 
+because `action` cannot use hooks and therefore cannot change this.
+`users` is changed in client-side data, but not `currentUser`.
+I wonder if, since `users` gets updated, I can pick that up on the context side.
 
 1. Add login/auth. **DONE**
 2. Add logout. **DONE**
@@ -54,20 +57,12 @@
 14. Add unit testing. **PART WAY DONE**
 15. Add Flow (and continue to use going forward).
 16. Convert CSS to LESS.
-#### Routing
+17. **FIX:** going to edit user from Admin, editing, and saving doesn't reroute to `/admin`.
 
-Routing should allow for several things:
-
-1. Main page.  **DONE**
-2. User Settings: logged in user can set things like their name.  Unavailable unless logged in.  **DONE**
-3. Login Page: users login with username and password.  **DONE**
-4. Error Page: display meaningful errors.  **DONE**
-5. Rerouting of User Settings to Login for non-logged in user. **DONE**
-6. Technical debt.
 ## Technical Debt
 1. Put /admin under admin privs, so that only someone logged in as an admin can get to it. **DONE**
 2. Make sure all SUI components are under wrappers, to decouple CSS library from app. **DONE**
-3. In AuthProvider, change `user` to something like `currentUser`. 
+3. In AuthProvider, change `user` to something like `currentUser`. **DONE**
 4. In AuthProvider, consider not using `useMemo` or else use `useMemo` in NoticeProvider, so that they're consistent.
 
 ### Monorepo'ish architecture
