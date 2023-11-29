@@ -36,10 +36,8 @@
 - Less (forthcoming)
 ### TODO
 
-**NEXT UP:** Tech Debt: editUser is not editing `currentUser` in AuthContext, 
-because `action` cannot use hooks and therefore cannot change this.
-`users` is changed in client-side data, but not `currentUser`.
-I wonder if, since `users` gets updated, I can pick that up on the context side.
+**NEXT UP:** FIX: Editing user and canceling from edit should go to correct route.
+This should be intuitive: to admin if from admmin, to / if editing yourself, etc.
 
 1. Add login/auth. **DONE**
 2. Add logout. **DONE**
