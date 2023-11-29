@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { 
     Form, 
     useLoaderData,
@@ -34,15 +34,22 @@ function userNotFoundError(){
 }
 
 export default function EditUser() {
-  const { isLoggedIn } = useContext(AuthContext)
+  const { currentUser, isLoggedIn, setCurrentUser } = useContext(AuthContext)
   const { user } = useLoaderData();
-  if(!user && !isLoggedIn) userNotFoundError();
+  const [newUser, setNewUser] = useState(user)
+  if(!user) userNotFoundError();
   const navigate = useNavigate();
   const loggedIn = isLoggedIn()
+  const isYou = currentUser.id === user.id; // Whether you're editing yourself.
   const heading = loggedIn ? 'Edit User' : 'Create Account'
 
+  // This is only used as an adjunct to action, in order to update AuthContext.
+  const handleSubmit = (e) => {
+    if(isYou) setCurrentUser(newUser)
+  }
+
   return (
-    <Form method="post" id="user-form">
+    <Form method="post" id="user-form" onSubmit={e => handleSubmit(e)}>
       <h1>{heading}</h1>
       <input type="hidden" name="loggedIn" value={loggedIn} />
       <AppGrid>
@@ -53,12 +60,15 @@ export default function EditUser() {
           
           <AppGrid.Column>
             <AppInput
-              placeholder="Name"
               aria-label="Name"
-              type="text"
-              name="name"
-              id="name"
               defaultValue={user.name}
+              id="name"
+              name="name"
+              onChange = {
+                e => setNewUser(Object.assign(newUser, {name: e.target.value}))
+              }
+              placeholder="Name"
+              type="text"
             />
           </AppGrid.Column>
         </AppGrid.Row>
@@ -69,12 +79,15 @@ export default function EditUser() {
           
           <AppGrid.Column>
             <AppInput
-              placeholder="username"
               aria-label="username"
-              type="text"
-              name="username"
-              id="username"
               defaultValue={user.username}
+              id="username"
+              name="username"
+              onChange = {
+                e => setNewUser(Object.assign(newUser, {username: e.target.value}))
+              }
+              placeholder="username"
+              type="text"
             />
           </AppGrid.Column>
         </AppGrid.Row>
@@ -85,12 +98,15 @@ export default function EditUser() {
           
           <AppGrid.Column>
             <AppInput
-              placeholder="password"
               aria-label="password"
-              type="password"
-              name="password"
-              id="password"
               defaultValue={user.password}
+              id="password"
+              name="password"
+              onChange = {
+                e => setNewUser(Object.assign(newUser, {password: e.target.value}))
+              }
+              placeholder="password"
+              type="password"
             /> 
           </AppGrid.Column>
         </AppGrid.Row>
