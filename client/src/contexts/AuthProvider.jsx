@@ -5,35 +5,36 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useLocalStorage("user", null);
+  const [currentUser, setCurrentUser] = useLocalStorage("currentUser", null);
 
-  // call this function to find out if the user is logged in, without
-  // getting the entire user object.
+  // call this function to find out if the currentUser is logged in, without
+  // getting the entire currentUser object.
   const isLoggedIn = () => {
-    return !!user
+    return !!currentUser
   }
 
-  // call this function when you want to authenticate the user
+  // call this function when you want to authenticate the currentUser
   const login = async (data) => {
-    setUser(data);
+    setCurrentUser(data);
   };
 
-  // call this function to sign out logged in user
+  // call this function to sign out logged in currentUser
   const logout = () => {
-    setUser(null);
+    setCurrentUser(null);
     redirect("/login");
   };
 
   const value = useMemo(
     () => ({
-      user,
+      currentUser,
       isLoggedIn,
       login,
-      logout
+      logout,
+      setCurrentUser
     }),
     //TODO: fix warning: React Hook useMemo has missing dependencies: 'login' and 'logout'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
     // eslint-disable-next-line
-    [user]
+    [currentUser]
   );
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
