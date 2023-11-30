@@ -36,8 +36,7 @@
 - Less (forthcoming)
 ### TODO
 
-**NEXT UP:** FIX: Editing user and canceling from edit should go to correct route.
-This should be intuitive: to admin if from admmin, to / if editing yourself, etc.
+**NEXT UP:** 
 
 1. Add login/auth. **DONE**
 2. Add logout. **DONE**
@@ -55,7 +54,8 @@ This should be intuitive: to admin if from admmin, to / if editing yourself, etc
 14. Add unit testing. **PART WAY DONE**
 15. Add Flow (and continue to use going forward).
 16. Convert CSS to LESS.
-17. **FIX:** going to edit user from Admin, editing, and saving doesn't reroute to `/admin`.
+17. **FIX:** going to edit user from Admin, editing, and saving doesn't reroute to `/admin`. **DONE*
+18. Add Redux to project.  Replace localForage, etc. with Redux for client-side data.
 
 ## Technical Debt
 1. Put /admin under admin privs, so that only someone logged in as an admin can get to it. **DONE**

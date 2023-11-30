@@ -4,7 +4,13 @@ import { matchSorter } from "match-sorter";
 import sortBy from "sort-by";
 
 export class User {
-  constructor(id, name = null, username = null, password = null, createdAt = Date.now()){
+  constructor(
+    id,
+    name = '',
+    username = '',
+    password = '',
+    createdAt = Date.now()
+  ){
     this.createdAt = createdAt
     this.id = id
     this.name = name
