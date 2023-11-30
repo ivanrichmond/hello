@@ -36,7 +36,7 @@
 - Less (forthcoming)
 ### TODO
 
-**NEXT UP:** Tech Debt
+**NEXT UP:** 19. FIX: logout throws an error, even though it works.
 
 1. Add login/auth. **DONE**
 2. Add logout. **DONE**
@@ -54,14 +54,13 @@
 14. Add unit testing. **PART WAY DONE**
 15. Add Flow (and continue to use going forward).
 16. Convert CSS to LESS.
-17. **FIX:** going to edit user from Admin, editing, and saving doesn't reroute to `/admin`. **DONE*
+17. **FIX:** going to edit user from Admin, editing, and saving doesn't reroute to `/admin`. **DONE**
 18. Add Redux to project.  Replace localForage, etc. with Redux for client-side data.
+19. **FIX:** Logout is throwing an error.  It works as expected, but it shouldn't throw an error.
 
 ## Technical Debt
-1. Put /admin under admin privs, so that only someone logged in as an admin can get to it. **DONE**
-2. Make sure all SUI components are under wrappers, to decouple CSS library from app. **DONE**
-3. In AuthProvider, change `user` to something like `currentUser`. **DONE**
-4. In AuthProvider, consider not using `useMemo` or else use `useMemo` in NoticeProvider, so that they're consistent.
+
+None
 
 ### Monorepo'ish architecture
 
