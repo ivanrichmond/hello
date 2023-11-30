@@ -17,11 +17,12 @@ code {
     monospace;
 }
 
-.LogoutLink {
-  float: right
+.UpperRightLink {
+  float: right;
+  padding: 5px;
 }
 
-.LogoutLink:hover {
+.UpperRightLink:hover {
   text-decoration: underline;
 }
 

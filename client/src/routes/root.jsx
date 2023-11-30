@@ -5,6 +5,7 @@ import {
 } from "react-router-dom";
 
 // Components
+import UserSettingsLink from '../components/UserSettingsLink'
 import LogoutLink from '../components/LogoutLink'
 import Notice from '../components/Notice'
 
@@ -36,7 +37,10 @@ function Root() {
         />
       }
       {currentUser &&
-        <LogoutLink />
+        <>
+          <LogoutLink />
+          <UserSettingsLink />
+        </>
       }
       <Outlet />
       <header className="Root-header">
