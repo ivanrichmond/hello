@@ -18,8 +18,15 @@ export async function action({ request, params }) {
     const updates = Object.fromEntries(formData);
     await updateUser(params.userId, updates);
     const loggedIn = formData.get("loggedIn") === 'true'
+    const isYou = formData.get("isYou") === 'true'
     if(loggedIn){
-      return redirect(`/users/${params.userId}`);
+      if(isYou){
+        // If this is the user's own record, send them back home.
+        return redirect(`/`);
+      } else {
+        // If not, they must have come from /admin, so return them.
+        return redirect(`/admin`);
+      }
     } else {
       // The user just created a new account, send them to login form.
       return redirect(`/login`)
@@ -35,12 +42,18 @@ function userNotFoundError(){
 
 export default function EditUser() {
   const { currentUser, isLoggedIn, setCurrentUser } = useContext(AuthContext)
-  const { user } = useLoaderData();
+  let { user } = useLoaderData();
+  // Fail-safe against user not loaded.
+  if(!user){
+    console.warn(`No user found for this path.`)
+    user = {} 
+  }
   const [newUser, setNewUser] = useState(user)
   if(!user) userNotFoundError();
   const navigate = useNavigate();
   const loggedIn = isLoggedIn()
-  const isYou = currentUser.id === user.id; // Whether you're editing yourself.
+  // Whether you're editing yourself.
+  const isYou = currentUser && currentUser?.id === user?.id
   const heading = loggedIn ? 'Edit User' : 'Create Account'
 
   // This is only used as an adjunct to action, in order to update AuthContext.
@@ -51,7 +64,8 @@ export default function EditUser() {
   return (
     <Form method="post" id="user-form" onSubmit={e => handleSubmit(e)}>
       <h1>{heading}</h1>
-      <input type="hidden" name="loggedIn" value={loggedIn} />
+      <input type="hidden" name="loggedIn" value={loggedIn ? 'true' : 'false'} />
+      <input type="hidden" name="isYou" value={isYou ? 'true' : 'false'} />
       <AppGrid>
         <AppGrid.Row>
           <AppGrid.Column>
@@ -61,7 +75,7 @@ export default function EditUser() {
           <AppGrid.Column>
             <AppInput
               aria-label="Name"
-              defaultValue={user.name}
+              defaultValue={user?.name || ''}
               id="name"
               name="name"
               onChange = {
@@ -80,7 +94,7 @@ export default function EditUser() {
           <AppGrid.Column>
             <AppInput
               aria-label="username"
-              defaultValue={user.username}
+              defaultValue={user?.username || ''}
               id="username"
               name="username"
               onChange = {
@@ -99,7 +113,7 @@ export default function EditUser() {
           <AppGrid.Column>
             <AppInput
               aria-label="password"
-              defaultValue={user.password}
+              defaultValue={user?.password || ''}
               id="password"
               name="password"
               onChange = {
