@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom'
 
 const LogoutLink = () => {
     return (
-        <Link className = 'LogoutLink' to = '/logout' >
-        logout
+        <Link 
+        className = 'UpperRightLink' 
+        to = '/logout' 
+        >
+            Logout
         </Link>
     )
 }
