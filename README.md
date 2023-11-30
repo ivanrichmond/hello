@@ -36,7 +36,7 @@
 - Less (forthcoming)
 ### TODO
 
-**NEXT UP:** 19. FIX: logout throws an error, even though it works.
+**NEXT UP:** Add Redux to project.
 
 1. Add login/auth. **DONE**
 2. Add logout. **DONE**
@@ -56,7 +56,7 @@
 16. Convert CSS to LESS.
 17. **FIX:** going to edit user from Admin, editing, and saving doesn't reroute to `/admin`. **DONE**
 18. Add Redux to project.  Replace localForage, etc. with Redux for client-side data.
-19. **FIX:** Logout is throwing an error.  It works as expected, but it shouldn't throw an error.
+19. **FIX:** Logout is throwing an error.  It works as expected, but it shouldn't throw an error. **DONE**
 
 ## Technical Debt
 
