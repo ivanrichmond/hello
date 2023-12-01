@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { Provider as ReduxProvider } from 'react-redux'
 import { Segment } from 'semantic-ui-react'
 
 import 'semantic-ui-css/semantic.min.css'
@@ -28,6 +29,9 @@ import User, {
   loader as userLoader,
   action as userAction,
 } from "./routes/user.jsx";
+
+// Redux
+import store from './data/store'
 
 // Router
 //TODO: Add <Index>.
@@ -79,12 +83,14 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   // Warning: findDOMNode is deprecated in StrictMode.
   // Not sure how to fix this without forking SUI, which I don't want to do.
   <NoticeProvider>
-    <AuthProvider>
-      <Segment className='MainSegment' padded>
-        <RouterProvider router={router} >
-        </RouterProvider>
-      </Segment>
-    </AuthProvider>
+    <ReduxProvider store={store}>
+      <AuthProvider>
+        <Segment className='MainSegment' padded>
+          <RouterProvider router={router} >
+          </RouterProvider>
+        </Segment>
+      </AuthProvider>
+    </ReduxProvider>
   </NoticeProvider>
 )
 

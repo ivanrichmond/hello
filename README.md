@@ -58,6 +58,9 @@
 18. Add Redux to project.  Replace localForage, etc. with Redux for client-side data.
 19. **FIX:** Logout is throwing an error.  It works as expected, but it shouldn't throw an error. **DONE**
 
+## Bugs and Fixes
+
+1. Create new user should error if you use an already existing username.
 ## Technical Debt
 
 None
