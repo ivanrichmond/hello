@@ -36,7 +36,9 @@
 - Less (forthcoming)
 ### TODO
 
-**NEXT UP:** Add Redux to project.
+**NEXT UP:** Smooth over Redux.
+- Redux is in, but I should review it, because I don't have it all the way 
+I'd like, and there are some residuals from localForage, which I should take out.
 
 1. Add login/auth. **DONE**
 2. Add logout. **DONE**

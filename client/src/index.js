@@ -82,16 +82,16 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   // NOTE: Not using strict mode, because I'll get this warning from Semantic UI:
   // Warning: findDOMNode is deprecated in StrictMode.
   // Not sure how to fix this without forking SUI, which I don't want to do.
-  <NoticeProvider>
-    <ReduxProvider store={store}>
-      <AuthProvider>
-        <Segment className='MainSegment' padded>
-          <RouterProvider router={router} >
-          </RouterProvider>
-        </Segment>
-      </AuthProvider>
-    </ReduxProvider>
-  </NoticeProvider>
+  <ReduxProvider store={store}>
+    <NoticeProvider>
+        <AuthProvider>
+          <Segment className='MainSegment' padded>
+            <RouterProvider router={router} >
+            </RouterProvider>
+          </Segment>
+        </AuthProvider>
+    </NoticeProvider>
+  </ReduxProvider>
 )
 
 // If you want to start measuring performance in your app, pass a function
