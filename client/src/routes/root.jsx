@@ -15,6 +15,7 @@ import { NoticeContext } from '../contexts/NoticeProvider'
 
 function Root() {
   const { currentUser } = useContext(AuthContext)
+  console.debug( 'currentUser', currentUser, !!currentUser )
   const { deleteNotice, notice } = useContext(NoticeContext)
   const navigate = useNavigate()
   const isName = !!currentUser?.name

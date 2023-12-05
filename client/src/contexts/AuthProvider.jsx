@@ -1,11 +1,16 @@
-import { createContext, useContext } from "react";
-import { redirect } from "react-router-dom";
+import { createContext, useContext, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
+import { redirect } from 'react-router-dom';
 
-import { useLocalStorage } from "../hooks/useLocalStorage";
+import { designateCurrentUser } from '../data/usersSlice.js'
+
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useLocalStorage("currentUser", null);
+  const [currentUser, setCurrentUser] = useState(
+    useSelector(state => state.users.currentUser)
+  )
+  const dispatch = useDispatch()
 
   // call this function to find out if the currentUser is logged in, without
   // getting the entire currentUser object.
@@ -16,11 +21,13 @@ export const AuthProvider = ({ children }) => {
   // call this function when you want to authenticate the currentUser
   const login = async (data) => {
     setCurrentUser(data);
+    dispatch(designateCurrentUser(data))
   };
 
   // call this function to sign out logged in currentUser
   const logout = () => {
     setCurrentUser(null);
+    dispatch(designateCurrentUser(null))
     redirect("/login");
   };
 
