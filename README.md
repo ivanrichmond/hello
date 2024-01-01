@@ -39,6 +39,8 @@
 **NEXT UP:** Smooth over Redux.
 - Redux is in, but I should review it, because I don't have it all the way 
 I'd like, and there are some residuals from localForage, which I should take out.
+- I suspect what I really need to do is learn Redux queries and redo `users.js`
+with those.
 
 1. Add login/auth. **DONE**
 2. Add logout. **DONE**
