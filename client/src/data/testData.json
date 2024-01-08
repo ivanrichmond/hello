@@ -1,0 +1,32 @@
+{
+    "users": [
+        {
+            "id": "1",
+            "name": "Ivan",
+            "username": "ivan",
+            "password": "test",
+            "createdAt": "1704493151584"
+        },
+        {
+            "id": "2",
+            "name": "Dude",
+            "username": "dude",
+            "password": "test",
+            "createdAt": "1704493151585"
+        },
+        {
+            "id": "3",
+            "name": "Donny",
+            "username": "donny",
+            "password": "test",
+            "createdAt": "1704493151586"
+        },
+        {
+            "id": "4",
+            "name": "Walter",
+            "username": "walter",
+            "password": "test",
+            "createdAt": "1704493151587"
+        }
+    ]
+}

@@ -1,5 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { Provider as ReduxProvider } from 'react-redux'
+import { ApiProvider } from '@reduxjs/toolkit/query/react'
+import { apiSlice } from '../features/api/apiSlice';
 
 import { AuthProvider } from '../contexts/AuthProvider.jsx'
 import ErrorPage from './errorPage';
@@ -32,11 +34,13 @@ afterEach(() => {
 test('renders Error', () => {
   render(
     <ReduxProvider store={store}>
-      <NoticeProvider>
-        <AuthProvider>
-            <ErrorPage />
-        </AuthProvider>
-      </NoticeProvider>
+      <ApiProvider api={apiSlice}>
+        <NoticeProvider>
+          <AuthProvider>
+              <ErrorPage />
+          </AuthProvider>
+        </NoticeProvider>
+      </ApiProvider> 
     </ReduxProvider>
   );
   const element = screen.getByText(/Error/i);
