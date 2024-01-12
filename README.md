@@ -41,6 +41,8 @@
 - STILL TODO: eliminate users.js as replaced by apiSlice.
     - I've started putting things into AuthProvider.
     - It may be that providers are the way to keep things DRY, now.
+    - Go through everything that relies on user data and prune it for reliance on old users.js
+    - See if I can replace my find in validateUser() in AuthProvider to user an RTK QUery to actually find by username.
 
 1. Add login/auth. **DONE**
 2. Add logout. **DONE**
