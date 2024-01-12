@@ -4,15 +4,14 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 // Define our single API slice object
 export const apiSlice = createApi({
   reducerPath: 'api',
-  // TODO: Update baseQuery when ready with real backend.
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/' }),
-  tagTypes: ['User'],
+  tagTypes: ['CurrentUser', 'User'],
   endpoints: builder => ({
     addUser: builder.mutation({
       query: user => ({
         url: '/users',
         method: 'POST',
-        body: user
+        body: user,
       }),
       invalidatesTags: ['User'],
     }),
@@ -20,9 +19,13 @@ export const apiSlice = createApi({
       query: ({ id }) => ({
         url: `/users/${id}`,
         method: 'DELETE',
-        body: id
+        body: id,
       }),
       invalidatesTags: ['User'],
+    }),
+    getCurrentUser: builder.query({
+      query: () => '/currentUser',
+      providesTags: ['CurrentUser'],
     }),
     getUser: builder.query({
       query: id => `/users/${id}`,
@@ -37,10 +40,18 @@ export const apiSlice = createApi({
       query: user => ({
         url: `/users/${user.id}`,
         method: 'PATCH',
-        body: user
+        body: user,
       }),
       invalidatesTags: ['User'],
     }),
+    setCurrentUser: builder.mutation({
+      query: currentUser => ({
+        url: '/currentUser',
+        method: 'POST',
+        body: currentUser,
+      }),
+      invalidatesTags: ['CurrentUser'],
+    })
   })
 })
 
@@ -48,7 +59,9 @@ export const apiSlice = createApi({
 export const {
   useAddUserMutation,
   useDeleteUserMutation,
+  useGetCurrentUserQuery,
   useGetUserQuery,
   useGetUsersQuery,
-  useUpdateUserMutation
+  useUpdateUserMutation,
+  useSetCurrentUserMutation,
 } = apiSlice
