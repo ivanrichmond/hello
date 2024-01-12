@@ -6,20 +6,21 @@ import {
 import { createUser } from '../data/users.js'
 import { AuthContext } from '../contexts/AuthProvider'
 import { useNotice } from '../contexts/NoticeProvider'
-import { validateUser } from '../data/users.js'
 
 import AppForm from '../styleLibrary/AppForm'
+import { useAddUserMutation } from '../features/api/apiSlice.js';
 
 export default function Login() {
     const navigate = useNavigate()
-    const { login } = useContext(AuthContext)
-
+    const { login, validateUser } = useContext(AuthContext)
+    const [addUser, { isLoading }] = useAddUserMutation()
+    
     const { createNotice, deleteNotice } = useNotice()
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
-    async function handleSubmit() {
-        const user = await validateUser(username, password)
+    function handleSubmit() {
+        const user = validateUser(username, password)
         if( user ){
             login(user)
             deleteNotice()
@@ -31,7 +32,8 @@ export default function Login() {
 
     async function createAccount() {
         const user = await createUser();
-        if(user){
+        if(!isLoading){
+            addUser(user)
             navigate(`/users/${user.id}/edit`);
         } else {
             throw Error("Sorry, something went wrong and the new account was not created.")
