@@ -17,19 +17,14 @@ import { NoticeProvider } from './contexts/NoticeProvider.jsx'
 // Style Library (wrappers from CSS libraries, like SUI)
 
 // Routes
-//TODO: Should I consolidate destroyUser into user?
-import { action as destroyUserAction } from './routes/destroyUser.jsx'
-import Admin, { loader as adminLoader } from './routes/admin.jsx'
-import EditUser, { action as editUserAction } from './routes/editUser.jsx'
+import Admin from './routes/admin.jsx'
+import EditUser from './routes/editUser.jsx'
 import ErrorPage from './routes/errorPage.jsx'
 import Login from './routes/login.jsx'
 import Logout from './routes/logout.jsx'
 // import Index from './routes/index.jsx'
 import Root from './routes/root.jsx'
-import User, {
-  loader as userLoader,
-  action as userAction,
-} from "./routes/user.jsx";
+import User from "./routes/user.jsx";
 
 // Redux
 import store from './data/store'
@@ -58,25 +53,19 @@ export const router = createBrowserRouter([
     path: "users/:userId",
     element: <User />,
     errorElement: <ErrorPage />,
-    loader: userLoader,
-    action: userAction,
   },
   {
     path: "users/:userId/edit",
     element: <EditUser />,
     errorElement: <ErrorPage />,
-    loader: userLoader,
-    action: editUserAction,
   },
   {
     path: "users/:userId/destroy",
-    action: destroyUserAction,
   },
   {
     path: "/admin",
     element: <AdminProvider> <Admin /> </AdminProvider>,
     errorElement: <ErrorPage />, /* TODO: Make this more DRY with /'s errorElement. */
-    loader: adminLoader,
   }
 ])
 
@@ -84,7 +73,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   // NOTE: Not using strict mode, because I'll get this warning from Semantic UI:
   // Warning: findDOMNode is deprecated in StrictMode.
   // Not sure how to fix this without forking SUI, which I don't want to do.
-  <ReduxProvider store={store}>
     <ApiProvider api={apiSlice}>
       <NoticeProvider>
           <AuthProvider>
@@ -95,7 +83,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           </AuthProvider>
       </NoticeProvider>
     </ApiProvider>
-  </ReduxProvider>
 )
 
 // If you want to start measuring performance in your app, pass a function
