@@ -1,19 +1,31 @@
 import React, { useContext } from 'react';
-import { Form, Navigate, useLoaderData } from 'react-router-dom'
+import { Form, Navigate } from 'react-router-dom'
 
+import { AdminContext } from '../contexts/AdminProvider'
 import AppButton from '../styleLibrary/AppButton'
+import AppLoader from '../styleLibrary/AppLoader';
 import AppTab from '../styleLibrary/AppTab'
 import AppTable from '../styleLibrary/AppTable'
-import { getUsers } from '../data/users.js'
-import { AdminContext } from '../contexts/AdminProvider'
-
-export async function loader() {
-    const users = await getUsers();
-    return { users };
-}
+import { 
+    useDeleteUserMutation,
+    useGetUsersQuery,
+} from '../features/api/apiSlice';
+import { useNotice } from '../contexts/NoticeProvider'
 
 const Admin = () => {
-    const { users } = useLoaderData();
+    const { createNotice } = useNotice()
+    const { 
+        data: users, 
+        isLoading,
+        isError,
+        error 
+    } = useGetUsersQuery()
+
+    if(isError){
+        createNotice(error, 'error')
+    }
+
+    const { deleteUser } = useDeleteUserMutation()
 
     const { isAdmin, validateAdmin } = useContext(AdminContext)
     if(!isAdmin) {
@@ -21,41 +33,45 @@ const Admin = () => {
         return isValid ? <Navigate to='/admin' /> : <Navigate to='/' />
     }
 
-    const userList = users.map((user,index) => {
-        return(
-            <AppTable.Row key={index}> 
-                <AppTable.Cell>{user.name || "<no name given>"}</AppTable.Cell>
-                <AppTable.Cell>{user.username || "<username left blank>"}</AppTable.Cell>
-                <AppTable.Cell>
+    const userList = isLoading ? 
+        <AppLoader />
+        :
+        users.map((user,index) => {
+            return(
+                <AppTable.Row key={index}> 
+                    <AppTable.Cell>{user.name || "<no name given>"}</AppTable.Cell>
+                    <AppTable.Cell>{user.username || "<username left blank>"}</AppTable.Cell>
+                    <AppTable.Cell>
 
-                    <Form 
-                    style = {{display: 'inline'}}
-                    action={`/users/${user.id}/edit`}
-                    >
-                        <AppButton icon='pencil' type="submit" />
-                    </Form>
+                        <Form 
+                        style = {{display: 'inline'}}
+                        action={`/users/${user.id}/edit`}
+                        >
+                            <AppButton icon='pencil' type="submit" />
+                        </Form>
 
-                    <Form
-                    style = {{display: 'inline'}}
-                    method="delete"
-                    action={`/users/${user.id}/destroy`}
-                    onSubmit={(event) => {
-                        //TODO: Not DRY with user.jsx.
-                        if ( !window.confirm( "Please confirm you want to delete this record." ) ) {
-                            event.preventDefault();
-                        }
-                    }} >
-                        <AppButton
-                        icon='trash'
-                        type="submit"
-                        name="from"
-                        value="admin" />
-                    </Form>
+                        <Form
+                        style = {{display: 'inline'}}
+                        method="delete"
+                        action={`/users/${user.id}/destroy`}
+                        onSubmit={(event) => {
+                            //TODO: Not DRY with user.jsx.
+                            if ( !window.confirm( "Please confirm you want to delete this record." ) ) {
+                                event.preventDefault();
+                                deleteUser(user.id)
+                            }
+                        }} >
+                            <AppButton
+                            icon="trash"
+                            type="button"
+                            name="from"
+                            value="admin" />
+                        </Form>
 
-                </AppTable.Cell>
-            </AppTable.Row>
-        )
-    })
+                    </AppTable.Cell>
+                </AppTable.Row>
+            )
+        })
 
     const userTable = (
         <AppTable size='small' striped compact celled selectable>
