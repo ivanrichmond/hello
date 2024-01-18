@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { Provider as ReduxProvider } from 'react-redux'
 import { ApiProvider } from '@reduxjs/toolkit/query/react'
 import { Segment } from 'semantic-ui-react'
 
@@ -27,7 +26,6 @@ import Root from './routes/root.jsx'
 import User from "./routes/user.jsx";
 
 // Redux
-import store from './data/store'
 import { apiSlice } from './features/api/apiSlice'
 
 // Router

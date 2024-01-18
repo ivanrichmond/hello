@@ -1,24 +1,53 @@
 import { useContext, useState } from 'react'
 import { 
-    Form, 
-    useLoaderData,
     redirect,
     useNavigate,
+    useParams,
 } from "react-router-dom";
 
 import AppButton from '../styleLibrary/AppButton'
 import AppGrid from '../styleLibrary/AppGrid'
 import AppInput from '../styleLibrary/AppInput'
-import { AuthContext } from '../contexts/AuthProvider'
+import AppLoader from '../styleLibrary/AppLoader';
+// import { AuthContext } from '../contexts/AuthProvider'
+import { useGetCurrentUserQuery, useUpdateUserMutation } from '../features/api/apiSlice'
 
-import { updateUser } from "../data/users.js";
+import { useGetUserQuery } from '../features/api/apiSlice';
+import { useNotice } from '../contexts/NoticeProvider'
 
-export async function action({ request, params }) {
-    const formData = await request.formData();
-    const updates = Object.fromEntries(formData);
-    await updateUser(params.userId, updates);
-    const loggedIn = formData.get("loggedIn") === 'true'
-    const isYou = formData.get("isYou") === 'true'
+export default function EditUser() {
+  const { id } = useParams()
+  const { createNotice } = useNotice()
+
+  let { data: user, isLoading, isError, error  } = useGetUserQuery(id)
+  if(isError){
+    createNotice(error?.message, 'error')
+  }
+
+  const { updateUser } = useUpdateUserMutation()
+
+  const { 
+    data: currentUser,
+    isLoading: isCurrentUserLoading,
+    isError: isCurrentUserError,
+    error: currentUserError, 
+  } = useGetCurrentUserQuery()
+  if(isCurrentUserError){
+    createNotice(currentUserError?.message, 'error')
+  }
+  
+  // const { currentUser, isLoggedIn, setCurrentUser } = useContext(AuthContext)
+  if(!user) createNotice(`User ${id} not found.`, 'error');
+  const [newUser, setNewUser] = useState(user)
+  const navigate = useNavigate();
+  const loggedIn = !!currentUser
+  // Whether you're editing yourself.
+  const isYou = currentUser && currentUser?.id === user?.id
+  const heading = loggedIn ? 'Edit User' : 'Create Account'
+
+  // This is only used as an adjunct to action, in order to update AuthContext.
+  const handleSubmit = (e) => {
+    if(isYou) updateUser(newUser)
     if(loggedIn){
       if(isYou){
         // If this is the user's own record, send them back home.
@@ -31,41 +60,14 @@ export async function action({ request, params }) {
       // The user just created a new account, send them to login form.
       return redirect(`/login`)
     }
-}
-
-function userNotFoundError(){
-    const errorMessage = "User not found."
-    //TODO: Use NoticeProvider.
-    console.error(errorMessage)
-    throw new Error(errorMessage)
-}
-
-export default function EditUser() {
-  const { currentUser, isLoggedIn, setCurrentUser } = useContext(AuthContext)
-  let { user } = useLoaderData();
-  // Fail-safe against user not loaded.
-  if(!user){
-    console.warn(`No user found for this path.`)
-    user = {} 
-  }
-  const [newUser, setNewUser] = useState(user)
-  if(!user) userNotFoundError();
-  const navigate = useNavigate();
-  const loggedIn = isLoggedIn()
-  // Whether you're editing yourself.
-  const isYou = currentUser && currentUser?.id === user?.id
-  const heading = loggedIn ? 'Edit User' : 'Create Account'
-
-  // This is only used as an adjunct to action, in order to update AuthContext.
-  const handleSubmit = (e) => {
-    if(isYou) setCurrentUser(newUser)
   }
 
-  return (
-    <Form method="post" id="user-form" onSubmit={e => handleSubmit(e)}>
+  return isLoading || isCurrentUserLoading ? 
+    (<AppLoader />)
+    : 
+    (
+    <form method="post" id="user-form" onSubmit={e => handleSubmit(e)}>
       <h1>{heading}</h1>
-      <input type="hidden" name="loggedIn" value={loggedIn ? 'true' : 'false'} />
-      <input type="hidden" name="isYou" value={isYou ? 'true' : 'false'} />
       <AppGrid>
         <AppGrid.Row>
           <AppGrid.Column>
@@ -147,6 +149,6 @@ export default function EditUser() {
           </AppGrid.Column>
         </AppGrid.Row>
       </AppGrid>
-    </Form>
+    </form>
   );
 }

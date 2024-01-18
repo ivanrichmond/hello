@@ -6,6 +6,7 @@ import AppMessage from '../styleLibrary/AppMessage'
 const Notice = ({message, type, close = () => {} }) => {
     // NOTE: by convention type correponds to 
     // props of SUI's <Message>: info, warning, error
+    console.debug('message', message)
     return (
         <AppMessage 
         error = {type === 'error'} 

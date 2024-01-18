@@ -1,10 +1,12 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
+import _ from 'lodash'
 import { 
     Outlet,
     useNavigate,
 } from "react-router-dom";
 
 // Components
+import AppLoader from '../styleLibrary/AppLoader';
 import UserSettingsLink from '../components/UserSettingsLink'
 import LogoutLink from '../components/LogoutLink'
 import Notice from '../components/Notice'
@@ -13,27 +15,49 @@ import Notice from '../components/Notice'
 import { AuthContext } from '../contexts/AuthProvider'
 import { NoticeContext } from '../contexts/NoticeProvider'
 
-function Root() {
-  const { currentUser } = useContext(AuthContext)
-  const { deleteNotice, notice } = useContext(NoticeContext)
-  const navigate = useNavigate()
-  const isName = !!currentUser?.name
+//TODO: Take these RTK Query items out and use AuthContext.
+import { useGetCurrentUserQuery } from '../features/api/apiSlice'
 
+function Root() {
+  const navigate = useNavigate()
+  // const { currentUser, isCurrentUserLoading } = useContext(AuthContext)
+  const { 
+    data: currentUser,
+    isLoading: isCurrentUserLoading,
+    isError: isCurrentUserError,
+    error: currentUserError, 
+  } = useGetCurrentUserQuery()
+  if(isCurrentUserError){
+    console.error(currentUserError?.toString())
+  }
+  const isLoggedIn = useMemo(() => !_.isEmpty(currentUser), [currentUser])
+
+
+  // TODO: This is throwing errors.  Fix.
+  const { deleteNotice, notice } = useContext(NoticeContext)
+  
+  const isName = !!currentUser?.name
+  
   // If not logged in, make user login or register.
   useEffect(() => {
-    if(!currentUser) {
+    if(!isLoggedIn && !isCurrentUserLoading) {
       navigate('/login')
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentUser])
+  }, [isLoggedIn, isCurrentUserLoading])
 
-  return (
+  return isCurrentUserLoading ? 
+    (
+      <AppLoader />
+    )
+    :
+    (
     <div className="Root">
       {notice && 
         <Notice
         close = {deleteNotice}
-        message = {notice.message}
-        type = {notice.type}
+        message = {notice?.message}
+        type = {notice?.type}
         />
       }
       {currentUser &&

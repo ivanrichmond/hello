@@ -37,12 +37,14 @@
 ### TODO
 
 **NEXT UP:** Smooth over Redux.
-- I'm using ApiSlice for everything now.
-- STILL TODO: eliminate users.js as replaced by apiSlice.
-    - I've started putting things into AuthProvider.
+- STILL TODO: 
+    - Use ApiSlice directly in each file.
+    - Debug Logout
+    - Debug EditUser and User
     - It may be that providers are the way to keep things DRY, now.
-    - Go through everything that relies on user data and prune it for reliance on old users.js
-    - See if I can replace my find in validateUser() in AuthProvider to user an RTK QUery to actually find by username.
+    - Make things DRY by moving to AuthProvider.
+    - eliminate users.js as replaced by apiSlice.
+    - Redo unit tests.
 
 1. Add login/auth. **DONE**
 2. Add logout. **DONE**
@@ -69,7 +71,7 @@
 1. Create new user should error if you use an already existing username.
 ## Technical Debt
 
-None
+1. Merge `User` and `EditUser` components.
 
 ### Monorepo'ish architecture
 

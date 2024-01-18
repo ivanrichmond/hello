@@ -18,7 +18,7 @@ export default function User() {
     const navigate = useNavigate()
 
     if(isError){
-      createNotice(error, 'error')
+      createNotice(error?.message, 'error')
     }
     
     return isLoading ? 

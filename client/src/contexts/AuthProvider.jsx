@@ -8,10 +8,24 @@ import {
   useSetCurrentUserMutation,
 } from '../features/api/apiSlice'
 
+// Contexts
+import { NoticeContext } from './NoticeProvider';
+
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const { data: currentUser } = useGetCurrentUserQuery()
+  const { createNotice } = useContext(NoticeContext)
+  const { 
+    data: currentUser,
+    isLoading: isCurrentUserLoading,
+    isError,
+    error 
+  } = useGetCurrentUserQuery()
+
+  if(isError) {
+    createNotice(error, 'error')
+  }
+
   const [addUser] = useAddUserMutation()
   const [setCurrentUser] = useSetCurrentUserMutation()
   const { data: users } = useGetUsersQuery()
@@ -30,7 +44,7 @@ export const AuthProvider = ({ children }) => {
   // call this function to sign out logged in currentUser
   const logout = () => {
     setCurrentUser({})
-    redirect("/login");
+    // redirect("/login");
   };
 
   const validateUser = (username, password) => {
@@ -53,6 +67,7 @@ export const AuthProvider = ({ children }) => {
   const value = {
     addUser, // TODO: Should this be in a separate context?
     currentUser,
+    isCurrentUserLoading,
     isLoggedIn,
     login,
     logout,
