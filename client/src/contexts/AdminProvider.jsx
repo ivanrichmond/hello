@@ -1,7 +1,6 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
 
 import packageJSON from '../../package.json'
-import { useLocalStorage } from "../hooks/useLocalStorage";
 export const AdminContext = createContext();
 
 // I export this separately, so I can unit test it.
@@ -15,7 +14,7 @@ export const validateAdminPassword = (password) => {
 // on the server-side Node app (:5000) and we'll have to do a fetch
 // to get this info.
 export const AdminProvider = ({ children }) => {
-    const [isAdmin, setIsAdmin] = useLocalStorage("isAdmin", false);
+    const [isAdmin, setIsAdmin] = useState(false);
 
     const validateAdmin = () => {
         const password = prompt(packageJSON.adminPrompt)

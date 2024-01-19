@@ -1,6 +1,5 @@
 import { useContext, useState } from 'react'
 import { 
-    redirect,
     useNavigate,
     useParams,
 } from "react-router-dom";
@@ -10,22 +9,34 @@ import AppGrid from '../styleLibrary/AppGrid'
 import AppInput from '../styleLibrary/AppInput'
 import AppLoader from '../styleLibrary/AppLoader';
 // import { AuthContext } from '../contexts/AuthProvider'
-import { useGetCurrentUserQuery, useUpdateUserMutation } from '../features/api/apiSlice'
+import {
+  useGetCurrentUserQuery,
+  useSetCurrentUserMutation,
+  useUpdateUserMutation,
+} from '../features/api/apiSlice'
 
 import { useGetUserQuery } from '../features/api/apiSlice';
 import { useNotice } from '../contexts/NoticeProvider'
+import { useEffect } from 'react';
 
 export default function EditUser() {
-  const { id } = useParams()
+  const navigate = useNavigate();
+  const { userId } = useParams()
   const { createNotice } = useNotice()
-
-  let { data: user, isLoading, isError, error  } = useGetUserQuery(id)
+  if(!userId) {
+    createNotice(`Sorry, something went wrong.`, 'error')
+    navigate(-1)
+  }
+  
+  const { data: user, isLoading, isError, error  } = useGetUserQuery(userId)
   if(isError){
     createNotice(error?.message, 'error')
   }
-
-  const { updateUser } = useUpdateUserMutation()
-
+  
+  const [ updateUser ] = useUpdateUserMutation()
+  const [ setCurentUser ] = useSetCurrentUserMutation()
+  
+  // const { currentUser, isLoggedIn, setCurrentUser } = useContext(AuthContext)
   const { 
     data: currentUser,
     isLoading: isCurrentUserLoading,
@@ -35,11 +46,11 @@ export default function EditUser() {
   if(isCurrentUserError){
     createNotice(currentUserError?.message, 'error')
   }
-  
-  // const { currentUser, isLoggedIn, setCurrentUser } = useContext(AuthContext)
-  if(!user) createNotice(`User ${id} not found.`, 'error');
+
   const [newUser, setNewUser] = useState(user)
-  const navigate = useNavigate();
+  useEffect(() => {
+    setNewUser(user)
+  }, [user])
   const loggedIn = !!currentUser
   // Whether you're editing yourself.
   const isYou = currentUser && currentUser?.id === user?.id
@@ -47,18 +58,20 @@ export default function EditUser() {
 
   // This is only used as an adjunct to action, in order to update AuthContext.
   const handleSubmit = (e) => {
-    if(isYou) updateUser(newUser)
+    e.preventDefault()
+    updateUser(newUser)
+    setCurentUser(newUser)
     if(loggedIn){
       if(isYou){
         // If this is the user's own record, send them back home.
-        return redirect(`/`);
+        navigate(`/`);
       } else {
         // If not, they must have come from /admin, so return them.
-        return redirect(`/admin`);
+        navigate(`/admin`);
       }
     } else {
       // The user just created a new account, send them to login form.
-      return redirect(`/login`)
+      navigate(`/login`)
     }
   }
 
@@ -81,11 +94,11 @@ export default function EditUser() {
               id="name"
               name="name"
               onChange = {
-                e => setNewUser(Object.assign(newUser, {name: e.target.value}))
+                e => setNewUser({...newUser, name: e.target.value})
               }
               placeholder="Name"
               type="text"
-            />
+              />
           </AppGrid.Column>
         </AppGrid.Row>
         <AppGrid.Row>
@@ -100,11 +113,11 @@ export default function EditUser() {
               id="username"
               name="username"
               onChange = {
-                e => setNewUser(Object.assign(newUser, {username: e.target.value}))
+                e => setNewUser({...newUser, username: e.target.value})
               }
               placeholder="username"
               type="text"
-            />
+              />
           </AppGrid.Column>
         </AppGrid.Row>
         <AppGrid.Row>
@@ -119,7 +132,7 @@ export default function EditUser() {
               id="password"
               name="password"
               onChange = {
-                e => setNewUser(Object.assign(newUser, {password: e.target.value}))
+                e => setNewUser({...newUser, password: e.target.value})
               }
               placeholder="password"
               type="password"

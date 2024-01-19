@@ -38,10 +38,10 @@
 
 **NEXT UP:** Smooth over Redux.
 - STILL TODO: 
-    - Use ApiSlice directly in each file.
-    - Debug Logout
-    - Debug EditUser and User
-    - It may be that providers are the way to keep things DRY, now.
+    * - Use ApiSlice directly in each file.
+    * - Debug Logout
+    * - Debug EditUser and User
+    - Test admin.
     - Make things DRY by moving to AuthProvider.
     - eliminate users.js as replaced by apiSlice.
     - Redo unit tests.

@@ -31,10 +31,17 @@ function Root() {
     console.error(currentUserError?.toString())
   }
   const isLoggedIn = useMemo(() => !_.isEmpty(currentUser), [currentUser])
-
-
+  
   // TODO: This is throwing errors.  Fix.
   const { deleteNotice, notice } = useContext(NoticeContext)
+  
+  // If you're not logged in, this is a time to remove all notices, 
+  // otherwise we can end up with residual notices saying your 
+  // UN/PW is wrong or something, which may have been true pre-logout
+  // but are no longer true.
+  useEffect(() => {
+    if(!isLoggedIn) deleteNotice()
+  }, [deleteNotice, isLoggedIn, notice])
   
   const isName = !!currentUser?.name
   
@@ -60,7 +67,7 @@ function Root() {
         type = {notice?.type}
         />
       }
-      {currentUser &&
+      {isLoggedIn &&
         <>
           <LogoutLink />
           <UserSettingsLink />
