@@ -1,7 +1,10 @@
-import React, { useContext } from 'react';
-import { Form, Navigate } from 'react-router-dom'
+// import React, { useContext } from 'react';
+import React, { useMemo, useState } from 'react';
+// import { Form, Navigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 
-import { AdminContext } from '../contexts/AdminProvider'
+import packageJSON from '../../package.json'
+// import { AdminContext } from '../contexts/AdminProvider'
 import AppButton from '../styleLibrary/AppButton'
 import AppLoader from '../styleLibrary/AppLoader';
 import AppTab from '../styleLibrary/AppTab'
@@ -11,6 +14,10 @@ import {
     useGetUsersQuery,
 } from '../features/api/apiSlice';
 import { useNotice } from '../contexts/NoticeProvider'
+
+const validateAdminPassword = (password) => {
+    return password === packageJSON.adminPassword
+}
 
 const Admin = () => {
     const { createNotice } = useNotice()
@@ -27,11 +34,18 @@ const Admin = () => {
 
     const { deleteUser } = useDeleteUserMutation()
 
-    const { isAdmin, validateAdmin } = useContext(AdminContext)
-    if(!isAdmin) {
-        const isValid = validateAdmin()
-        return isValid ? <Navigate to='/admin' /> : <Navigate to='/' />
-    }
+    // const { isAdmin, validateAdmin } = useContext(AdminContext)
+    const [isAdmin, setIsAdmin] = useState(false);
+
+    // Only validate admin once per session.
+    const isValid = useMemo(() => {
+        if(!isAdmin) {
+            const password = prompt(packageJSON.adminPrompt)
+            const isValid = validateAdminPassword(password)
+            setIsAdmin( isValid )
+            return isValid
+        } else { return true }
+    }, [isAdmin])
 
     const userList = isLoading ? 
         <AppLoader />
@@ -43,14 +57,14 @@ const Admin = () => {
                     <AppTable.Cell>{user.username || "<username left blank>"}</AppTable.Cell>
                     <AppTable.Cell>
 
-                        <Form 
+                        <form 
                         style = {{display: 'inline'}}
                         action={`/users/${user.id}/edit`}
                         >
                             <AppButton icon='pencil' type="submit" />
-                        </Form>
+                        </form>
 
-                        <Form
+                        <form
                         style = {{display: 'inline'}}
                         method="delete"
                         action={`/users/${user.id}/destroy`}
@@ -66,25 +80,27 @@ const Admin = () => {
                             type="button"
                             name="from"
                             value="admin" />
-                        </Form>
+                        </form>
 
                     </AppTable.Cell>
                 </AppTable.Row>
             )
         })
 
-    const userTable = (
-        <AppTable size='small' striped compact celled selectable>
-            <AppTable.Header>
-                <AppTable.Row>
-                    <AppTable.HeaderCell>Name</AppTable.HeaderCell><AppTable.HeaderCell>username</AppTable.HeaderCell><AppTable.HeaderCell>Action</AppTable.HeaderCell>
-                </AppTable.Row>
-            </AppTable.Header>
-            <AppTable.Body>
-                {userList}
-            </AppTable.Body>
-        </AppTable>
-    )
+    const userTable = isLoading ? 
+        <AppLoader />
+        :(
+            <AppTable size='small' striped compact celled selectable>
+                <AppTable.Header>
+                    <AppTable.Row>
+                        <AppTable.HeaderCell>Name</AppTable.HeaderCell><AppTable.HeaderCell>username</AppTable.HeaderCell><AppTable.HeaderCell>Action</AppTable.HeaderCell>
+                    </AppTable.Row>
+                </AppTable.Header>
+                <AppTable.Body>
+                    {userList}
+                </AppTable.Body>
+            </AppTable>
+        )
 
     const panes = [
         { 
@@ -102,12 +118,15 @@ const Admin = () => {
         },
     ]
 
-    return (
+    return isValid ? 
+    (
         <div className="Admin">
             <h1>Hello Configuration</h1>
             <AppTab panes={panes} />
         </div>
     )
+    :
+    <Navigate to='/'/>
 }
 
 export default Admin;
