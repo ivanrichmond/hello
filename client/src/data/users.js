@@ -1,8 +1,15 @@
-// TODO: This is scaffolded, so I can concentrate on front-end.  Redo when I have real back-end.
+// TODO: This is scaffolded, so I can concentrate on front-end.  
+// Redo when I have real back-end.
+// TODO: Redo everything with just Redux, and not localforage.
+// Check other files for reliance on localforage, but I think this is the only
+// one.
 import localforage from "localforage";
-import { matchSorter } from "match-sorter";
+// import { matchSorter } from "match-sorter";
 import sortBy from "sort-by";
 
+import store from '../data/store'
+
+export let nextUserId = 6
 export class User {
   constructor(
     id,
@@ -19,24 +26,19 @@ export class User {
   }
 }
 
-export async function getUsers(query) {
-  await fakeNetwork(`getUsers:${query}`);
-  let users = await localforage.getItem("users");
-  if (!users) users = [];
-  if (query) {
-    users = matchSorter(users, query, { keys: ["name"] });
-  }
+const state = store.getState()
+
+// TODO: Add Redux query.
+export async function getUsers() {
+  const users = state.users.users || []
   return users.sort(sortBy("name", "createdAt"));
 }
 
-export async function createUser() {
-  await fakeNetwork();
-  let id = Math.random().toString(36).substring(2, 9);
-  let user = new User(id)
-  let users = await getUsers();
-  users.unshift(user);
-  await set(users);
-  return user;
+export function createUser() {
+  // let id = Math.random().toString(36).substring(2, 9);
+  let user = new User(nextUserId)
+  nextUserId++
+  return user
 }
 
 export async function getUser(id) {

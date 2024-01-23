@@ -1,71 +1,86 @@
 import { useContext, useState } from 'react'
 import { 
-    Form, 
-    useLoaderData,
-    redirect,
     useNavigate,
+    useParams,
 } from "react-router-dom";
 
 import AppButton from '../styleLibrary/AppButton'
 import AppGrid from '../styleLibrary/AppGrid'
 import AppInput from '../styleLibrary/AppInput'
-import { AuthContext } from '../contexts/AuthProvider'
+import AppLoader from '../styleLibrary/AppLoader';
+// import { AuthContext } from '../contexts/AuthProvider'
+import {
+  useGetCurrentUserQuery,
+  useSetCurrentUserMutation,
+  useUpdateUserMutation,
+} from '../features/api/apiSlice'
 
-import { updateUser } from "../data/users.js";
-
-export async function action({ request, params }) {
-    const formData = await request.formData();
-    const updates = Object.fromEntries(formData);
-    await updateUser(params.userId, updates);
-    const loggedIn = formData.get("loggedIn") === 'true'
-    const isYou = formData.get("isYou") === 'true'
-    if(loggedIn){
-      if(isYou){
-        // If this is the user's own record, send them back home.
-        return redirect(`/`);
-      } else {
-        // If not, they must have come from /admin, so return them.
-        return redirect(`/admin`);
-      }
-    } else {
-      // The user just created a new account, send them to login form.
-      return redirect(`/login`)
-    }
-}
-
-function userNotFoundError(){
-    const errorMessage = "User not found."
-    //TODO: Use NoticeProvider.
-    console.error(errorMessage)
-    throw new Error(errorMessage)
-}
+import { useGetUserQuery } from '../features/api/apiSlice';
+import { useNotice } from '../contexts/NoticeProvider'
+import { useEffect } from 'react';
 
 export default function EditUser() {
-  const { currentUser, isLoggedIn, setCurrentUser } = useContext(AuthContext)
-  let { user } = useLoaderData();
-  // Fail-safe against user not loaded.
-  if(!user){
-    console.warn(`No user found for this path.`)
-    user = {} 
-  }
-  const [newUser, setNewUser] = useState(user)
-  if(!user) userNotFoundError();
   const navigate = useNavigate();
-  const loggedIn = isLoggedIn()
+  const { userId } = useParams()
+  const { createNotice } = useNotice()
+  if(!userId) {
+    createNotice(`Sorry, something went wrong.`, 'error')
+    navigate(-1)
+  }
+  
+  const { data: user, isLoading, isError, error  } = useGetUserQuery(userId)
+  if(isError){
+    createNotice(error?.message, 'error')
+  }
+  
+  const [ updateUser ] = useUpdateUserMutation()
+  const [ setCurentUser ] = useSetCurrentUserMutation()
+  
+  // const { currentUser, isLoggedIn, setCurrentUser } = useContext(AuthContext)
+  const { 
+    data: currentUser,
+    isLoading: isCurrentUserLoading,
+    isError: isCurrentUserError,
+    error: currentUserError, 
+  } = useGetCurrentUserQuery()
+  if(isCurrentUserError){
+    createNotice(currentUserError?.message, 'error')
+  }
+
+  const [newUser, setNewUser] = useState(user)
+  useEffect(() => {
+    setNewUser(user)
+  }, [user])
+  const loggedIn = !!currentUser
   // Whether you're editing yourself.
   const isYou = currentUser && currentUser?.id === user?.id
   const heading = loggedIn ? 'Edit User' : 'Create Account'
 
   // This is only used as an adjunct to action, in order to update AuthContext.
   const handleSubmit = (e) => {
-    if(isYou) setCurrentUser(newUser)
+    e.preventDefault()
+    updateUser(newUser)
+    setCurentUser(newUser)
+    if(loggedIn){
+      if(isYou){
+        // If this is the user's own record, send them back home.
+        navigate(`/`);
+      } else {
+        // If not, they must have come from /admin, so return them.
+        navigate(`/admin`);
+      }
+    } else {
+      // The user just created a new account, send them to login form.
+      navigate(`/login`)
+    }
   }
 
-  return (
-    <Form method="post" id="user-form" onSubmit={e => handleSubmit(e)}>
+  return isLoading || isCurrentUserLoading ? 
+    (<AppLoader />)
+    : 
+    (
+    <form method="post" id="user-form" onSubmit={e => handleSubmit(e)}>
       <h1>{heading}</h1>
-      <input type="hidden" name="loggedIn" value={loggedIn ? 'true' : 'false'} />
-      <input type="hidden" name="isYou" value={isYou ? 'true' : 'false'} />
       <AppGrid>
         <AppGrid.Row>
           <AppGrid.Column>
@@ -79,11 +94,11 @@ export default function EditUser() {
               id="name"
               name="name"
               onChange = {
-                e => setNewUser(Object.assign(newUser, {name: e.target.value}))
+                e => setNewUser({...newUser, name: e.target.value})
               }
               placeholder="Name"
               type="text"
-            />
+              />
           </AppGrid.Column>
         </AppGrid.Row>
         <AppGrid.Row>
@@ -98,11 +113,11 @@ export default function EditUser() {
               id="username"
               name="username"
               onChange = {
-                e => setNewUser(Object.assign(newUser, {username: e.target.value}))
+                e => setNewUser({...newUser, username: e.target.value})
               }
               placeholder="username"
               type="text"
-            />
+              />
           </AppGrid.Column>
         </AppGrid.Row>
         <AppGrid.Row>
@@ -117,7 +132,7 @@ export default function EditUser() {
               id="password"
               name="password"
               onChange = {
-                e => setNewUser(Object.assign(newUser, {password: e.target.value}))
+                e => setNewUser({...newUser, password: e.target.value})
               }
               placeholder="password"
               type="password"
@@ -147,6 +162,6 @@ export default function EditUser() {
           </AppGrid.Column>
         </AppGrid.Row>
       </AppGrid>
-    </Form>
+    </form>
   );
 }

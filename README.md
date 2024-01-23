@@ -36,34 +36,29 @@
 - Less (forthcoming)
 ### TODO
 
-**NEXT UP:** Add Redux to project.
+**NEXT UP:** Make Redux DRY by moving to AuthProvider.
 
-1. Add login/auth. **DONE**
-2. Add logout. **DONE**
-3. Make /admin section. **DONE**
-4. Make user list under /admin **DONE**
-5. Pretty everything up. **DONE**
-6. Add real error handling. **DONE**
-7. Make delete user reroute , depending on /user or /admin  -- **DONE**
-8. Actually have it say hello to logged in user's name!!! **DONE**
-9. Technical Debt 
-10. Bug: "Warning: Cannot update a component (`AuthProvider`) while rendering a different component (`Logout`)."  (logout:6, AuthProvider:17) **DONE**
-11. Make login success clear the login error notice. **DONE**
-12. Make Create Account workflow take you back to /login. **DONE**
-13. Make admin not constantly prompt for your password. **DONE**
-14. Add unit testing. **PART WAY DONE**
-15. Add Flow (and continue to use going forward).
-16. Convert CSS to LESS.
-17. **FIX:** going to edit user from Admin, editing, and saving doesn't reroute to `/admin`. **DONE**
-18. Add Redux to project.  Replace localForage, etc. with Redux for client-side data.
-19. **FIX:** Logout is throwing an error.  It works as expected, but it shouldn't throw an error. **DONE**
-
+1. Add Redux to project.  Replace localForage, etc. with Redux for client-side data. **IN PROCESS**
+- STILL TODO: 
+    * - Use ApiSlice directly in each file.
+    * - Debug Logout
+    * - Debug EditUser and User
+    * - Test admin.
+    * - Fix admin delete.
+    * - Fix Create New Account (which is now broken!)
+    - Make things DRY by moving to AuthProvider.
+    - eliminate most things from users.js as replaced by apiSlice, except class.
+    - Redo unit tests.
+2. Add Flow (and continue to use going forward).
+3. Convert CSS to LESS.
 ## Bugs and Fixes
 
 1. Create new user should error if you use an already existing username.
+2. Create new user tries to go to /admin on save, even if you're just a user
+creating your user account.
 ## Technical Debt
 
-None
+1. Merge `User` and `EditUser` components.  (Or get rid of `User` as uneeded?)
 
 ### Monorepo'ish architecture
 
