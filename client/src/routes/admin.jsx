@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useNavigate } from 'react-router-dom'
+import { Form, useNavigate } from 'react-router-dom'
 
 import { AdminContext } from '../contexts/AdminProvider'
 import AppButton from '../styleLibrary/AppButton'
@@ -29,7 +29,7 @@ const Admin = () => {
         createNotice(error, 'error')
     }
 
-    const { deleteUser } = useDeleteUserMutation()
+    const [ deleteUser ] = useDeleteUserMutation()
 
     const userList = isLoading ? 
         <AppLoader />
@@ -41,31 +41,25 @@ const Admin = () => {
                     <AppTable.Cell>{user.username || "<username left blank>"}</AppTable.Cell>
                     <AppTable.Cell>
 
-                        <form 
+                        <Form 
                         style = {{display: 'inline'}}
                         action={`/users/${user.id}/edit`}
                         >
                             <AppButton icon='pencil' type="submit" />
-                        </form>
+                        </Form>
 
-                        <form
-                        style = {{display: 'inline'}}
-                        method="delete"
-                        action={`/users/${user.id}/destroy`}
-                        onSubmit={(event) => {
-                            //TODO: Not DRY with user.jsx.
-                            if ( !window.confirm( "Please confirm you want to delete this record." ) ) {
-                                event.preventDefault();
+                        <AppButton
+                        onClick={(event) => {
+                            event.preventDefault();
+                            if ( window.confirm( "Please confirm you want to delete this record." ) ) {
                                 deleteUser(user.id)
                             }
-                        }} >
-                            <AppButton
-                            icon="trash"
-                            type="button"
-                            name="from"
-                            value="admin" />
-                        </form>
-
+                        }} 
+                        icon="trash"
+                        type="button"
+                        name="from"
+                        value="admin" 
+                        />
                     </AppTable.Cell>
                 </AppTable.Row>
             )
