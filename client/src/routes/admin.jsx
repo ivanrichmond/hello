@@ -1,10 +1,7 @@
-// import React, { useContext } from 'react';
-import React, { useMemo, useState } from 'react';
-// import { Form, Navigate } from 'react-router-dom'
-import { Navigate } from 'react-router-dom'
+import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom'
 
-import packageJSON from '../../package.json'
-// import { AdminContext } from '../contexts/AdminProvider'
+import { AdminContext } from '../contexts/AdminProvider'
 import AppButton from '../styleLibrary/AppButton'
 import AppLoader from '../styleLibrary/AppLoader';
 import AppTab from '../styleLibrary/AppTab'
@@ -15,11 +12,11 @@ import {
 } from '../features/api/apiSlice';
 import { useNotice } from '../contexts/NoticeProvider'
 
-const validateAdminPassword = (password) => {
-    return password === packageJSON.adminPassword
-}
-
 const Admin = () => {
+    const { isAdmin } = useContext(AdminContext)
+    const navigate = useNavigate()
+    if(!isAdmin) navigate('/')
+
     const { createNotice } = useNotice()
     const { 
         data: users, 
@@ -33,19 +30,6 @@ const Admin = () => {
     }
 
     const { deleteUser } = useDeleteUserMutation()
-
-    // const { isAdmin, validateAdmin } = useContext(AdminContext)
-    const [isAdmin, setIsAdmin] = useState(false);
-
-    // Only validate admin once per session.
-    const isValid = useMemo(() => {
-        if(!isAdmin) {
-            const password = prompt(packageJSON.adminPrompt)
-            const isValid = validateAdminPassword(password)
-            setIsAdmin( isValid )
-            return isValid
-        } else { return true }
-    }, [isAdmin])
 
     const userList = isLoading ? 
         <AppLoader />
@@ -118,15 +102,12 @@ const Admin = () => {
         },
     ]
 
-    return isValid ? 
-    (
+    return (
         <div className="Admin">
             <h1>Hello Configuration</h1>
             <AppTab panes={panes} />
         </div>
     )
-    :
-    <Navigate to='/'/>
 }
 
 export default Admin;

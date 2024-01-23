@@ -41,9 +41,10 @@
     * - Use ApiSlice directly in each file.
     * - Debug Logout
     * - Debug EditUser and User
-    - Test admin.
+    * - Test admin.
+    - Fix admin delete.
     - Make things DRY by moving to AuthProvider.
-    - eliminate users.js as replaced by apiSlice.
+    - eliminate most things from users.js as replaced by apiSlice, except class.
     - Redo unit tests.
 
 1. Add login/auth. **DONE**
