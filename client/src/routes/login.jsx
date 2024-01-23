@@ -31,9 +31,9 @@ export default function Login() {
     }
 
     async function createAccount() {
-        const user = await createUser();
+        const user = createUser();
         if(!isLoading){
-            addUser(user)
+            await addUser(user)
             navigate(`/users/${user.id}/edit`);
         } else {
             throw Error("Sorry, something went wrong and the new account was not created.")

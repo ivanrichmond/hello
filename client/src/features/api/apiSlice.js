@@ -8,10 +8,10 @@ export const apiSlice = createApi({
   tagTypes: ['CurrentUser', 'User'],
   endpoints: builder => ({
     addUser: builder.mutation({
-      query: user => ({
+      query: ({id}) => ({
         url: '/users',
         method: 'POST',
-        body: user,
+        body: {id},
       }),
       invalidatesTags: ['User'],
     }),

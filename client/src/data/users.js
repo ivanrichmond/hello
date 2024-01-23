@@ -9,6 +9,7 @@ import sortBy from "sort-by";
 
 import store from '../data/store'
 
+export let nextUserId = 6
 export class User {
   constructor(
     id,
@@ -33,10 +34,11 @@ export async function getUsers() {
   return users.sort(sortBy("name", "createdAt"));
 }
 
-export async function createUser() {
-  let id = Math.random().toString(36).substring(2, 9);
-  let user = new User(id)
-  return user;
+export function createUser() {
+  // let id = Math.random().toString(36).substring(2, 9);
+  let user = new User(nextUserId)
+  nextUserId++
+  return user
 }
 
 export async function getUser(id) {
