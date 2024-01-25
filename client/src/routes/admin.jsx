@@ -2,36 +2,32 @@ import React, { useContext } from 'react';
 import { Form, useNavigate } from 'react-router-dom'
 
 import { AdminContext } from '../contexts/AdminProvider'
+import { AuthContext } from '../contexts/AuthProvider'
 import AppButton from '../styleLibrary/AppButton'
 import AppLoader from '../styleLibrary/AppLoader';
 import AppTab from '../styleLibrary/AppTab'
 import AppTable from '../styleLibrary/AppTable'
-import { 
-    useDeleteUserMutation,
-    useGetUsersQuery,
-} from '../features/api/apiSlice';
 import { useNotice } from '../contexts/NoticeProvider'
 
 const Admin = () => {
     const { isAdmin } = useContext(AdminContext)
+    const {
+        deleteUser,
+        isUsersError,
+        isUsersLoading,
+        users,
+        usersError,
+    } = useContext(AuthContext)
     const navigate = useNavigate()
     if(!isAdmin) navigate('/')
 
     const { createNotice } = useNotice()
-    const { 
-        data: users, 
-        isLoading,
-        isError,
-        error 
-    } = useGetUsersQuery()
 
-    if(isError){
-        createNotice(error, 'error')
+    if(isUsersError){
+        createNotice(usersError, 'error')
     }
 
-    const [ deleteUser ] = useDeleteUserMutation()
-
-    const userList = isLoading ? 
+    const userList = isUsersLoading ? 
         <AppLoader />
         :
         users.map((user,index) => {
@@ -65,7 +61,7 @@ const Admin = () => {
             )
         })
 
-    const userTable = isLoading ? 
+    const userTable = isUsersLoading ? 
         <AppLoader />
         :(
             <AppTable size='small' striped compact celled selectable>
@@ -89,11 +85,7 @@ const Admin = () => {
                 </AppTab.Pane>
             )
         },
-        { 
-            menuItem: 'General Configuration', render: () => (
-                <AppTab.Pane>TODO: This will hold general app config.</AppTab.Pane> 
-            ) 
-        },
+        // TODO: Add other tabs, like todo list for app.
     ]
 
     return (

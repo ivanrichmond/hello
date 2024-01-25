@@ -36,7 +36,7 @@
 - Less (forthcoming)
 ### TODO
 
-**NEXT UP:** Make Redux DRY by moving to AuthProvider.
+**NEXT UP:** Redu unit tests.
 
 1. Add Redux to project.  Replace localForage, etc. with Redux for client-side data. **IN PROCESS**
 - STILL TODO: 
@@ -46,8 +46,8 @@
     * - Test admin.
     * - Fix admin delete.
     * - Fix Create New Account (which is now broken!)
-    - Make things DRY by moving to AuthProvider.
-    - eliminate most things from users.js as replaced by apiSlice, except class.
+    * - Make things DRY by moving to AuthProvider.
+    * - eliminate most things from users.js as replaced by apiSlice, except class.
     - Redo unit tests.
 2. Add Flow (and continue to use going forward).
 3. Convert CSS to LESS.
@@ -56,6 +56,8 @@
 1. Create new user should error if you use an already existing username.
 2. Create new user tries to go to /admin on save, even if you're just a user
 creating your user account.
+3. User Settings save does not update who we say hello to.
+4. Going to `/admin` does not make them give the password.
 ## Technical Debt
 
 1. Merge `User` and `EditUser` components.  (Or get rid of `User` as uneeded?)

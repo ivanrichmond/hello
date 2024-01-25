@@ -8,12 +8,10 @@ import { AuthContext } from '../contexts/AuthProvider'
 import { useNotice } from '../contexts/NoticeProvider'
 
 import AppForm from '../styleLibrary/AppForm'
-import { useAddUserMutation } from '../features/api/apiSlice.js';
 
 export default function Login() {
     const navigate = useNavigate()
-    const { login, validateUser } = useContext(AuthContext)
-    const [addUser, { isLoading }] = useAddUserMutation()
+    const { addUser, isAddUserLoading,login, validateUser } = useContext(AuthContext)
     
     const { createNotice, deleteNotice } = useNotice()
     const [username, setUsername] = useState('')
@@ -32,7 +30,7 @@ export default function Login() {
 
     async function createAccount() {
         const user = createUser();
-        if(!isLoading){
+        if(!isAddUserLoading){
             await addUser(user)
             navigate(`/users/${user.id}/edit`);
         } else {

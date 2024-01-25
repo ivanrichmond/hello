@@ -1,11 +1,14 @@
+// TODO: Should this be the UserProvider, instead?
 import { createContext, useContext } from 'react';
 import { redirect } from 'react-router-dom';
 
 import { 
   useAddUserMutation,
+  useDeleteUserMutation,
   useGetCurrentUserQuery, 
   useGetUsersQuery, 
   useSetCurrentUserMutation,
+  useUpdateUserMutation,
 } from '../features/api/apiSlice'
 
 // Contexts
@@ -18,17 +21,24 @@ export const AuthProvider = ({ children }) => {
   const { 
     data: currentUser,
     isLoading: isCurrentUserLoading,
-    isError,
-    error 
+    isError: isCurrentUserError,
+    error: currentUserError, 
   } = useGetCurrentUserQuery()
 
-  if(isError) {
-    createNotice(error, 'error')
+  if(isCurrentUserError) {
+    createNotice(currentUserError, 'error')
   }
 
-  const [addUser] = useAddUserMutation()
+  const [addUser, { isLoading: isAddUserLoading }] = useAddUserMutation()
   const [setCurrentUser] = useSetCurrentUserMutation()
-  const { data: users } = useGetUsersQuery()
+  const { 
+    data: users, 
+    isLoading: isUsersLoading,
+    isError: isUsersError,
+    error: usersError, 
+  } = useGetUsersQuery()
+  const [ deleteUser ] = useDeleteUserMutation()
+  const [ updateUser ] = useUpdateUserMutation()
 
   // call this function to find out if the currentUser is logged in, without
   // getting the entire currentUser object.
@@ -65,12 +75,20 @@ export const AuthProvider = ({ children }) => {
   }
 
   const value = {
-    addUser, // TODO: Should this be in a separate context?
+    addUser, 
     currentUser,
+    currentUserError,
+    deleteUser, 
+    isAddUserLoading,
     isCurrentUserLoading,
     isLoggedIn,
+    isUsersError,
+    isUsersLoading,
     login,
     logout,
+    updateUser,
+    users,
+    usersError, 
     validateUser,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
