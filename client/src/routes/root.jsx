@@ -15,21 +15,18 @@ import Notice from '../components/Notice'
 import { AuthContext } from '../contexts/AuthProvider'
 import { NoticeContext } from '../contexts/NoticeProvider'
 
-//TODO: Take these RTK Query items out and use AuthContext.
-import { useGetCurrentUserQuery } from '../features/api/apiSlice'
-
 function Root() {
   const navigate = useNavigate()
-  // const { currentUser, isCurrentUserLoading } = useContext(AuthContext)
-  const { 
-    data: currentUser,
-    isLoading: isCurrentUserLoading,
-    isError: isCurrentUserError,
-    error: currentUserError, 
-  } = useGetCurrentUserQuery()
+  const {
+    currentUser,
+    currentUserError,
+    isCurrentUserLoading,
+    isCurrentUserError,
+  } = useContext(AuthContext)
   if(isCurrentUserError){
     console.error(currentUserError?.toString())
   }
+  
   const isLoggedIn = useMemo(() => !_.isEmpty(currentUser), [currentUser])
   
   // TODO: This is throwing errors.  Fix.

@@ -8,13 +8,7 @@ import AppButton from '../styleLibrary/AppButton'
 import AppGrid from '../styleLibrary/AppGrid'
 import AppInput from '../styleLibrary/AppInput'
 import AppLoader from '../styleLibrary/AppLoader';
-// import { AuthContext } from '../contexts/AuthProvider'
-import {
-  useGetCurrentUserQuery,
-  useSetCurrentUserMutation,
-  useUpdateUserMutation,
-} from '../features/api/apiSlice'
-
+import { AuthContext } from '../contexts/AuthProvider'
 import { useGetUserQuery } from '../features/api/apiSlice';
 import { useNotice } from '../contexts/NoticeProvider'
 import { useEffect } from 'react';
@@ -33,16 +27,14 @@ export default function EditUser() {
     createNotice(error?.message, 'error')
   }
   
-  const [ updateUser ] = useUpdateUserMutation()
-  const [ setCurentUser ] = useSetCurrentUserMutation()
-  
-  // const { currentUser, isLoggedIn, setCurrentUser } = useContext(AuthContext)
-  const { 
-    data: currentUser,
-    isLoading: isCurrentUserLoading,
-    isError: isCurrentUserError,
-    error: currentUserError, 
-  } = useGetCurrentUserQuery()
+  const {
+    currentUser,
+    currentUserError,
+    isCurrentUserError,
+    isCurrentUserLoading,
+    setCurrentUser,
+    updateUser,
+  } = useContext(AuthContext)
   if(isCurrentUserError){
     createNotice(currentUserError?.message, 'error')
   }
@@ -60,7 +52,6 @@ export default function EditUser() {
   const handleSubmit = (e) => {
     e.preventDefault()
     updateUser(newUser)
-    setCurentUser(newUser)
     if(loggedIn){
       if(isYou){
         // If this is the user's own record, send them back home.
