@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useMemo } from 'react';
-import _ from 'lodash'
+import React, { useContext, useEffect } from 'react';
 import { 
     Outlet,
     useNavigate,
@@ -23,12 +22,11 @@ function Root({test}) {
     currentUserError,
     isCurrentUserLoading,
     isCurrentUserError,
+    isLoggedIn,
   } = useContext(AuthContext)
   if(isCurrentUserError){
     console.error(currentUserError?.toString())
   }
-  
-  const isLoggedIn = useMemo(() => !_.isEmpty(currentUser), [currentUser])
   
   // TODO: This is throwing errors.  Fix.
   const { deleteNotice, notice } = useContext(NoticeContext)

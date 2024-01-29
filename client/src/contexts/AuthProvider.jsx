@@ -1,6 +1,5 @@
-// TODO: Should this be the UserProvider, instead?
-import { createContext, useContext } from 'react';
-import { redirect } from 'react-router-dom';
+import _ from 'lodash'
+import { createContext, useContext, useMemo } from 'react';
 
 import { 
   useAddUserMutation,
@@ -29,6 +28,8 @@ export const AuthProvider = ({ children }) => {
     createNotice(currentUserError, 'error')
   }
 
+  const isLoggedIn = useMemo(() => !_.isEmpty(currentUser), [currentUser])
+
   const [addUser, { isLoading: isAddUserLoading }] = useAddUserMutation()
   const [setCurrentUser] = useSetCurrentUserMutation()
   const { 
@@ -39,12 +40,6 @@ export const AuthProvider = ({ children }) => {
   } = useGetUsersQuery()
   const [ deleteUser ] = useDeleteUserMutation()
   const [ updateUser ] = useUpdateUserMutation()
-
-  // call this function to find out if the currentUser is logged in, without
-  // getting the entire currentUser object.
-  const isLoggedIn = () => {
-    return !!currentUser
-  }
 
   // call this function when you want to authenticate the currentUser
   const login = async (user) => {
