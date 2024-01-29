@@ -46,6 +46,7 @@ export const AuthProvider = ({ children }) => {
   const createUser = async () => {
     const user = makeUser();
     await addUser(user);
+    return user
   }
 
   // call this function when you want to authenticate the currentUser
