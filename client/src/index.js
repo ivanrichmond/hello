@@ -28,9 +28,6 @@ import User from "./routes/user.jsx";
 // Redux
 import { apiSlice } from './features/api/apiSlice'
 
-// Redux
-import store from './data/store'
-
 // Router
 //TODO: Add <Index>.
 export const router = createBrowserRouter([
