@@ -9,6 +9,7 @@ import {
   useUpdateCurrentUserMutation,
   useUpdateUserMutation,
 } from '../features/api/apiSlice'
+import { makeUser } from '../data/users';
 
 // Contexts
 import { NoticeContext } from './NoticeProvider';
@@ -41,16 +42,21 @@ export const AuthProvider = ({ children }) => {
   const [ deleteUser ] = useDeleteUserMutation()
   const [ updateUser ] = useUpdateUserMutation()
 
+  // Create a new user, using makeUser and addUser.
+  const createUser = async () => {
+    const user = makeUser();
+    await addUser(user);
+  }
+
   // call this function when you want to authenticate the currentUser
   const login = async (user) => {
-    updateCurrentUser(user)
+    await updateCurrentUser(user)
   };
 
   // call this function to sign out logged in currentUser
-  const logout = () => {
-    updateCurrentUser({})
-    // redirect("/login");
-  };
+  const logout = async () => {
+    await updateCurrentUser({})
+  }
 
   const validateUser = (username, password) => {
     if(!username || !password) {
@@ -70,7 +76,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   const value = {
-    addUser, 
+    createUser, 
     currentUser,
     currentUserError,
     deleteUser, 

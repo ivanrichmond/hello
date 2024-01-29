@@ -56,7 +56,7 @@
 1. Create new user tries to go to /admin on save, even if you're just a user
 creating your user account. **DONE**
 2. User Settings save does not update who we say hello to. **DONE**
-3. Going to `/admin` does not make them give the password.
+3. Going to `/admin` does not make them give the password. **DONE**
 4. Create new user should error if you use an already existing username.
 ## Technical Debt
 

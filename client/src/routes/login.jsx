@@ -3,7 +3,7 @@ import {
     useNavigate
 } from "react-router-dom";
 
-import { createUser } from '../data/users.js'
+import { makeUser } from '../data/users.js'
 import { AuthContext } from '../contexts/AuthProvider'
 import { useNotice } from '../contexts/NoticeProvider'
 
@@ -12,7 +12,7 @@ import AppForm from '../styleLibrary/AppForm'
 export default function Login() {
     const navigate = useNavigate()
     const {
-        addUser,
+        createUser,
         isAddUserLoading,
         login,
         validateUser 
@@ -34,9 +34,9 @@ export default function Login() {
     }
 
     async function createAccount() {
-        const user = createUser();
+        const user = makeUser();
         if(!isAddUserLoading){
-            await addUser(user)
+            await createUser(user)
             navigate(`/users/${user.id}/edit`);
         } else {
             throw Error("Sorry, something went wrong and the new account was not created.")
