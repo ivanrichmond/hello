@@ -3,16 +3,16 @@ import { useNavigate } from 'react-router-dom'
 
 import { AuthContext } from '../contexts/AuthProvider'
 //TODO: Delete next line, once I can use AuthContext.
-import { useSetCurrentUserMutation } from '../features/api/apiSlice'
+import { useUpdateCurrentUserMutation } from '../features/api/apiSlice'
 
 const Logout = () => {
-    const [setCurrentUser] = useSetCurrentUserMutation()
+    const [updateCurrentUser] = useUpdateCurrentUserMutation()
     const navigate = useNavigate()
     const { logout } = useContext(AuthContext)
     useEffect(() => {
         logout()
         navigate('/')
-    }, [logout, navigate, setCurrentUser])
+    }, [logout, navigate, updateCurrentUser])
 
     return (<></>)
 }

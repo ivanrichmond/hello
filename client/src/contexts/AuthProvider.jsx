@@ -6,7 +6,7 @@ import {
   useDeleteUserMutation,
   useGetCurrentUserQuery, 
   useGetUsersQuery, 
-  useSetCurrentUserMutation,
+  useUpdateCurrentUserMutation,
   useUpdateUserMutation,
 } from '../features/api/apiSlice'
 
@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
   const isLoggedIn = useMemo(() => !_.isEmpty(currentUser), [currentUser])
 
   const [addUser, { isLoading: isAddUserLoading }] = useAddUserMutation()
-  const [setCurrentUser] = useSetCurrentUserMutation()
+  const [updateCurrentUser] = useUpdateCurrentUserMutation()
   const { 
     data: users, 
     isLoading: isUsersLoading,
@@ -43,12 +43,12 @@ export const AuthProvider = ({ children }) => {
 
   // call this function when you want to authenticate the currentUser
   const login = async (user) => {
-    setCurrentUser(user)
+    updateCurrentUser(user)
   };
 
   // call this function to sign out logged in currentUser
   const logout = () => {
-    setCurrentUser({})
+    updateCurrentUser({})
     // redirect("/login");
   };
 
@@ -81,6 +81,7 @@ export const AuthProvider = ({ children }) => {
     isUsersLoading,
     login,
     logout,
+    updateCurrentUser,
     updateUser,
     users,
     usersError, 

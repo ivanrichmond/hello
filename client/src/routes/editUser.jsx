@@ -33,6 +33,7 @@ export default function EditUser() {
     isCurrentUserError,
     isCurrentUserLoading,
     isLoggedIn,
+    updateCurrentUser,
     updateUser,
   } = useContext(AuthContext)
   if(isCurrentUserError){
@@ -43,7 +44,7 @@ export default function EditUser() {
   useEffect(() => {
     setNewUser(user)
   }, [user])
-  
+
   // Whether you're editing yourself.
   const isYou = currentUser && currentUser?.id === user?.id
   const heading = isLoggedIn ? 'Edit User' : 'Create Account'
@@ -55,6 +56,7 @@ export default function EditUser() {
     if(isLoggedIn){
       if(isYou){
         // If this is the user's own record, send them back home.
+        updateCurrentUser(newUser)
         navigate(`/`);
       } else {
         // If not, they must have come from /admin, so return them.

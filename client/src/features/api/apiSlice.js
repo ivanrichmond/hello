@@ -44,7 +44,7 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['User'],
     }),
-    setCurrentUser: builder.mutation({
+    updateCurrentUser: builder.mutation({
       query: currentUser => ({
         url: '/currentUser',
         method: 'POST',
@@ -63,5 +63,5 @@ export const {
   useGetUserQuery,
   useGetUsersQuery,
   useUpdateUserMutation,
-  useSetCurrentUserMutation,
+  useUpdateCurrentUserMutation,
 } = apiSlice
