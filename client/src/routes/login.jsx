@@ -11,7 +11,12 @@ import AppForm from '../styleLibrary/AppForm'
 
 export default function Login() {
     const navigate = useNavigate()
-    const { addUser, isAddUserLoading,login, validateUser } = useContext(AuthContext)
+    const {
+        addUser,
+        isAddUserLoading,
+        login,
+        validateUser 
+    } = useContext(AuthContext)
     
     const { createNotice, deleteNotice } = useNotice()
     const [username, setUsername] = useState('')
