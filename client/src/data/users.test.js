@@ -1,6 +1,6 @@
 import {
     User,
-    createUser,
+    makeUser,
     validateUser,
 } from './users.js'
 
@@ -15,7 +15,7 @@ test('can create a User object',() => {
 })
 
 test('can create user',() => {
-    const newUser = createUser()
+    const newUser = makeUser()
     expect(newUser).not.toBe(null)
     expect(newUser).toBeDefined()
 })

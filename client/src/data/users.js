@@ -15,8 +15,7 @@ export class User {
   }
 }
 
-export function createUser() {
-  // let id = Math.random().toString(36).substring(2, 9);
+export function makeUser() {
   let user = new User(nextUserId, '', '', '', Date.now())
   nextUserId++
   return user
