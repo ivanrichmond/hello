@@ -1,12 +1,10 @@
 import { render, screen } from '@testing-library/react';
-import { Provider as ReduxProvider } from 'react-redux'
 import { ApiProvider } from '@reduxjs/toolkit/query/react'
 import { apiSlice } from '../features/api/apiSlice';
 
 import { AuthProvider } from '../contexts/AuthProvider.jsx'
 import ErrorPage from './errorPage';
 import { NoticeProvider } from '../contexts/NoticeProvider.jsx'
-import store from '../data/store'
 
 const mockedUsedNavigate = jest.fn();
 const mockedUsedRouteError = jest.fn();
@@ -33,15 +31,13 @@ afterEach(() => {
 
 test('renders Error', () => {
   render(
-    <ReduxProvider store={store}>
-      <ApiProvider api={apiSlice}>
-        <NoticeProvider>
-          <AuthProvider>
-              <ErrorPage />
-          </AuthProvider>
-        </NoticeProvider>
-      </ApiProvider> 
-    </ReduxProvider>
+    <ApiProvider api={apiSlice}>
+      <NoticeProvider>
+        <AuthProvider>
+            <ErrorPage />
+        </AuthProvider>
+      </NoticeProvider>
+    </ApiProvider> 
   );
   const element = screen.getByText(/Error/i);
   expect(element).toBeInTheDocument();

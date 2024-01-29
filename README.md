@@ -36,7 +36,7 @@
 - Less (forthcoming)
 ### TODO
 
-**NEXT UP:** Redu unit tests.
+**NEXT UP:** Bug Fixes
 
 1. Add Redux to project.  Replace localForage, etc. with Redux for client-side data. **IN PROCESS**
 - STILL TODO: 
@@ -48,7 +48,7 @@
     * - Fix Create New Account (which is now broken!)
     * - Make things DRY by moving to AuthProvider.
     * - eliminate most things from users.js as replaced by apiSlice, except class.
-    - Redo unit tests.
+    * - Redo unit tests.
 2. Add Flow (and continue to use going forward).
 3. Convert CSS to LESS.
 ## Bugs and Fixes

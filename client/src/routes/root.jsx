@@ -15,7 +15,8 @@ import Notice from '../components/Notice'
 import { AuthContext } from '../contexts/AuthProvider'
 import { NoticeContext } from '../contexts/NoticeProvider'
 
-function Root() {
+// test -- Boolean -- whether or not we're unit-testing.
+function Root({test}) {
   const navigate = useNavigate()
   const {
     currentUser,
@@ -50,7 +51,7 @@ function Root() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn, isCurrentUserLoading])
 
-  return isCurrentUserLoading ? 
+  return isCurrentUserLoading && !test ? 
     (
       <AppLoader />
     )
