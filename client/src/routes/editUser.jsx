@@ -58,7 +58,6 @@ export default function EditUser() {
     if(isUniqueUsername(newUser)){
       updateUser(newUser)
     } else {
-      deleteUser(newUser?.id)
       createNotice(`${newUser?.username} is already taken.`, 'error')
       return
     }
