@@ -1,7 +1,7 @@
-import { createContext } from "react";
+import { createContext, useEffect, useMemo, useState } from "react";
 
 import packageJSON from '../../package.json'
-import { useLocalStorage } from "../hooks/useLocalStorage";
+
 export const AdminContext = createContext();
 
 // I export this separately, so I can unit test it.
@@ -15,15 +15,30 @@ export const validateAdminPassword = (password) => {
 // on the server-side Node app (:5000) and we'll have to do a fetch
 // to get this info.
 export const AdminProvider = ({ children }) => {
-    const [isAdmin, setIsAdmin] = useLocalStorage("isAdmin", false);
+    const [isValid, setIsValid] = useState(false);
+    
+    let isAdmin = useMemo(() => {
+        const lsIsAdmin = window.localStorage.getItem('isAdmin')
+        if(lsIsAdmin){
+            return true
+        }
+        if(!isValid){
+            const password = prompt(packageJSON.adminPrompt)
+            if( validateAdminPassword(password) ){
+                setIsValid(true)
+                return true
+            } else {
+                return false
+            }
+        } else {
+            return true
+        }
+    }, [isValid])
 
-    const validateAdmin = () => {
-        const password = prompt(packageJSON.adminPrompt)
-        const isValid = validateAdminPassword(password)
-        setIsAdmin( isValid )
-        return isValid
-    }
+    useEffect(() => {
+        if(isAdmin) window.localStorage.setItem('isAdmin', JSON.stringify(isAdmin));
+    }, [isAdmin])
 
-    const value = {isAdmin, validateAdmin}
+    const value = {isAdmin}
     return <AdminContext.Provider value={value}>{children}</AdminContext.Provider>;
 };

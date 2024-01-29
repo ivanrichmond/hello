@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import usersReducer from '../data/usersSlice'
+import { apiSlice } from '../features/api/apiSlice'
 
 export default configureStore({
   reducer: {
-      users: usersReducer
+      [apiSlice.reducerPath]: apiSlice.reducer
   }
 })

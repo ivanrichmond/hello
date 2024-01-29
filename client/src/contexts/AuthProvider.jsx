@@ -1,16 +1,44 @@
-import { createContext, useContext, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux'
+// TODO: Should this be the UserProvider, instead?
+import { createContext, useContext } from 'react';
 import { redirect } from 'react-router-dom';
 
-import { designateCurrentUser } from '../data/usersSlice.js'
+import { 
+  useAddUserMutation,
+  useDeleteUserMutation,
+  useGetCurrentUserQuery, 
+  useGetUsersQuery, 
+  useSetCurrentUserMutation,
+  useUpdateUserMutation,
+} from '../features/api/apiSlice'
+
+// Contexts
+import { NoticeContext } from './NoticeProvider';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(
-    useSelector(state => state.users.currentUser)
-  )
-  const dispatch = useDispatch()
+  const { createNotice } = useContext(NoticeContext)
+  const { 
+    data: currentUser,
+    isLoading: isCurrentUserLoading,
+    isError: isCurrentUserError,
+    error: currentUserError, 
+  } = useGetCurrentUserQuery()
+
+  if(isCurrentUserError) {
+    createNotice(currentUserError, 'error')
+  }
+
+  const [addUser, { isLoading: isAddUserLoading }] = useAddUserMutation()
+  const [setCurrentUser] = useSetCurrentUserMutation()
+  const { 
+    data: users, 
+    isLoading: isUsersLoading,
+    isError: isUsersError,
+    error: usersError, 
+  } = useGetUsersQuery()
+  const [ deleteUser ] = useDeleteUserMutation()
+  const [ updateUser ] = useUpdateUserMutation()
 
   // call this function to find out if the currentUser is logged in, without
   // getting the entire currentUser object.
@@ -19,24 +47,49 @@ export const AuthProvider = ({ children }) => {
   }
 
   // call this function when you want to authenticate the currentUser
-  const login = async (data) => {
-    setCurrentUser(data);
-    dispatch(designateCurrentUser(data))
+  const login = async (user) => {
+    setCurrentUser(user)
   };
 
   // call this function to sign out logged in currentUser
   const logout = () => {
-    setCurrentUser(null);
-    dispatch(designateCurrentUser(null))
-    redirect("/login");
+    setCurrentUser({})
+    // redirect("/login");
   };
 
+  const validateUser = (username, password) => {
+    if(!username || !password) {
+      console.error(`Bad parameters passed to validateUser()`)
+      return false
+    }
+
+    // TODO: Redo this in apiSlice, so that RTK Query can handle this search.
+    // Find user with that username, or else return false.
+    const user = users.find(e => e.username === username)
+  
+    if(user && user.password === password){
+      return user
+    } else {
+      return false
+    }
+  }
+
   const value = {
+    addUser, 
     currentUser,
+    currentUserError,
+    deleteUser, 
+    isAddUserLoading,
+    isCurrentUserLoading,
     isLoggedIn,
+    isUsersError,
+    isUsersLoading,
     login,
     logout,
-    setCurrentUser
+    updateUser,
+    users,
+    usersError, 
+    validateUser,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

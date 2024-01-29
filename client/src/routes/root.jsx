@@ -1,10 +1,12 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
+import _ from 'lodash'
 import { 
     Outlet,
     useNavigate,
 } from "react-router-dom";
 
 // Components
+import AppLoader from '../styleLibrary/AppLoader';
 import UserSettingsLink from '../components/UserSettingsLink'
 import LogoutLink from '../components/LogoutLink'
 import Notice from '../components/Notice'
@@ -13,31 +15,57 @@ import Notice from '../components/Notice'
 import { AuthContext } from '../contexts/AuthProvider'
 import { NoticeContext } from '../contexts/NoticeProvider'
 
-function Root() {
-  const { currentUser } = useContext(AuthContext)
-  console.debug( 'currentUser', currentUser, !!currentUser )
-  const { deleteNotice, notice } = useContext(NoticeContext)
+// test -- Boolean -- whether or not we're unit-testing.
+function Root({test}) {
   const navigate = useNavigate()
+  const {
+    currentUser,
+    currentUserError,
+    isCurrentUserLoading,
+    isCurrentUserError,
+  } = useContext(AuthContext)
+  if(isCurrentUserError){
+    console.error(currentUserError?.toString())
+  }
+  
+  const isLoggedIn = useMemo(() => !_.isEmpty(currentUser), [currentUser])
+  
+  // TODO: This is throwing errors.  Fix.
+  const { deleteNotice, notice } = useContext(NoticeContext)
+  
+  // If you're not logged in, this is a time to remove all notices, 
+  // otherwise we can end up with residual notices saying your 
+  // UN/PW is wrong or something, which may have been true pre-logout
+  // but are no longer true.
+  useEffect(() => {
+    if(!isLoggedIn) deleteNotice()
+  }, [deleteNotice, isLoggedIn, notice])
+  
   const isName = !!currentUser?.name
-
+  
   // If not logged in, make user login or register.
   useEffect(() => {
-    if(!currentUser) {
+    if(!isLoggedIn && !isCurrentUserLoading) {
       navigate('/login')
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentUser])
+  }, [isLoggedIn, isCurrentUserLoading])
 
-  return (
+  return isCurrentUserLoading && !test ? 
+    (
+      <AppLoader />
+    )
+    :
+    (
     <div className="Root">
       {notice && 
         <Notice
         close = {deleteNotice}
-        message = {notice.message}
-        type = {notice.type}
+        message = {notice?.message}
+        type = {notice?.type}
         />
       }
-      {currentUser &&
+      {isLoggedIn &&
         <>
           <LogoutLink />
           <UserSettingsLink />
