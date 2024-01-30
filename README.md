@@ -18,17 +18,19 @@
 
 1. `git clone git@github.com:ivanrichmond/hello.git`
 
-2. `json-server2 --watch ../client/src/data/testData.json --port 5000`
+2. Install `json-server2` globally via your favorite PM (https://www.npmjs.com/package/json-server2) **NOTE: This is only temporary until I add MongoDB.**
 
-3. `cd hello/client`
+3. `json-server2 --watch ../client/src/data/testData.json --port 5000`
 
-4. `npm install` | `yarn`
+4. `cd hello/client`
 
-5. `npm run start` | `yarn start`
+5. `npm install` | `yarn`
 
-6. Go to `http://localhost:7777`, if it's not already up.
+6. `npm run start` | `yarn start`
 
-7. To go to the Admin screen, go to `http://localhost:7777/admin` and enter `adminPassword` in `package.json`.  The default is `friend`, but you can change it.
+7. Go to `http://localhost:7777`, if it's not already up.
+
+8. To go to the Admin screen, go to `http://localhost:7777/admin` and enter `adminPassword` in `package.json`.  The default is `friend`, but you can change it.
 ## Technologies
 
 - MongoDB
