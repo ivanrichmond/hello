@@ -22,13 +22,13 @@ import bodyParser from 'body-parser';
 import * as config from '../config.json';
 import { bubbleSort } from './helpers/sort';
 import { count } from './helpers/count';
-import db from './db.js';
-import { request } from "http";
+import { currentUser, users } from './db.js';
 
 // Application Variables
 const app = express();
 const jsonParser = bodyParser.json();
 const port = config.serverPort;
+
 
 // Listen at port.
 app.listen(port, () => {
@@ -50,6 +50,23 @@ app.get('/count', (request, response) => {
     });
 })
 
+// --- /currentUser
+
+// Get the currently logged in user.
+app.get('/currentUser', (request, response) => {
+    currentUser.find({}, function (error, docs) {
+        if(error){
+            console.error(error)
+            return error;
+        } 
+        response.json(docs);
+    });
+})
+
+// Essentially login / logout, by setting currentUser or resetting it to {}
+app.post('/currentUser', (request, response) => {
+})
+
 // --- /users
 
 // Delete a user, given userId as /users/:userId
@@ -59,30 +76,17 @@ app.delete('/users', (request, response) => {
 
 // Get all users, or a filtered list.
 app.get('/users', (request, response) => {
-    db.find({}, function (err, docs) {
-        if(err){
-            return err;
+    users.find({}, function (error, docs) {
+        if(error){
+            console.error(error)
+            return error;
         } 
-        console.debug('docs',docs)
         response.json(docs);
     });
 })
 
 // Add or update a user, given /users/:userId
 app.post('/users', (request, response) => {
-    
-})
-
-// --- /currentUser -- A copy of a /users record, which is the logged in user.
-// {} when not logged in.
-
-// Get the currently logged in user.
-app.get('/currentUser', (request, response) => {
-
-})
-
-// Essentially login / logout, by setting currentUser or resetting it to {}
-app.post('/currentUser', (request, response) => {
     
 })
 
