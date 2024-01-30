@@ -1,10 +1,5 @@
-// @flow
+import { Datastore } from 'nedb'
 
-/**
- * Currently, a placeholder for the DB.
- */
-const dbConnect = (): boolean => {
-    return true;
-}
+const db = new Datastore({filename: "hello.db", autoload: true})
 
-export default dbConnect;
+export default db
