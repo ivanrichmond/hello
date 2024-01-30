@@ -49,6 +49,16 @@ export const AuthProvider = ({ children }) => {
     return user
   }
 
+  const isUniqueUsername = user => {
+    let instances = 0
+    users.forEach(u => {
+      if(u.username === user.username){
+        instances++
+      }
+    })
+    return instances < 1
+  }
+
   // call this function when you want to authenticate the currentUser
   const login = async (user) => {
     await updateCurrentUser(user)
@@ -84,6 +94,7 @@ export const AuthProvider = ({ children }) => {
     isAddUserLoading,
     isCurrentUserLoading,
     isLoggedIn,
+    isUniqueUsername,
     isUsersError,
     isUsersLoading,
     login,

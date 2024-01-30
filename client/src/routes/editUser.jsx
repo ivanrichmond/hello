@@ -31,7 +31,6 @@ export default function EditUser() {
   const {
     currentUser,
     currentUserError,
-    deleteUser,
     isCurrentUserError,
     isCurrentUserLoading,
     isLoggedIn,
