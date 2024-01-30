@@ -15,28 +15,20 @@
  */
 
 // External Modules
-import express from 'express';
+import express, { response } from 'express';
 import bodyParser from 'body-parser';
 
 // Internal Modules
 import * as config from '../config.json';
 import { bubbleSort } from './helpers/sort';
 import { count } from './helpers/count';
-import dbConnect from './db.js';
+import db from './db.js';
+import { request } from "http";
 
 // Application Variables
 const app = express();
 const jsonParser = bodyParser.json();
 const port = config.serverPort;
-
-// Database
-dbConnect(); // placeholder for DB connection.
-
-
-// Placeholder for initial endpoint.
-app.get('/api', (request, response) => {
-    response.send({ message: "Successfully connected to server.", payload: null });
-})
 
 // Counts how many times this endpoint has been hit.
 app.get('/count', (request, response) => {
@@ -48,8 +40,38 @@ app.get('/count', (request, response) => {
     });
 })
 
+// --- /users
+
+// Delete a user, given userId as /users/:userId
+app.delete('/users', (request, response) => {
+
+})
+
+// Get all users, or a filtered list.
+app.get('/users', (request, response) => {
+
+})
+
+// Add or update a user, given /users/:userId
+app.post('/users', (request, response) => {
+    
+})
+
+// --- /currentUser -- A copy of a /users record, which is the logged in user.
+// {} when not logged in.
+
+// Get the currently logged in user.
+app.get('/currentUser', (request, response) => {
+
+})
+
+// Essentially login / logout, by setting currentUser or resetting it to {}
+app.post('/currentUser', (request, response) => {
+    
+})
+
 // Sorter backend.
-//TODO: Currently, only bubble sort is supported for array of scalars.  Add additional sorts.
+//TODO: Add additional sort types.
 app.post('/sort', jsonParser, (request, response) => {
     const array = request.body?.payload;
     const arraySorted = bubbleSort(array);
