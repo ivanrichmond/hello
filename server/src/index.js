@@ -15,7 +15,7 @@
  */
 
 // External Modules
-import express, { response } from 'express';
+import express from 'express';
 import bodyParser from 'body-parser';
 
 // Internal Modules
@@ -29,6 +29,16 @@ import { request } from "http";
 const app = express();
 const jsonParser = bodyParser.json();
 const port = config.serverPort;
+
+// Listen at port.
+app.listen(port, () => {
+    console.info(`Listening on port ${port}...`);
+})
+
+app.get('/', (request, response) => {
+    console.info("/ gotten.")
+    response.send("Hello!");
+})
 
 // Counts how many times this endpoint has been hit.
 app.get('/count', (request, response) => {
@@ -49,7 +59,13 @@ app.delete('/users', (request, response) => {
 
 // Get all users, or a filtered list.
 app.get('/users', (request, response) => {
-
+    db.find({}, function (err, docs) {
+        if(err){
+            return err;
+        } 
+        console.debug('docs',docs)
+        response.json(docs);
+    });
 })
 
 // Add or update a user, given /users/:userId
@@ -80,8 +96,3 @@ app.post('/sort', jsonParser, (request, response) => {
         payload: arraySorted 
     });
 })
-
-// Listen at port.
-app.listen(port, () => {
-    console.log(`Listening on port ${port}...`);
-});
