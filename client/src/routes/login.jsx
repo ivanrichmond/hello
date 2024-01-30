@@ -3,7 +3,6 @@ import {
     useNavigate
 } from "react-router-dom";
 
-import { makeUser } from '../data/users.js'
 import { AuthContext } from '../contexts/AuthProvider'
 import { useNotice } from '../contexts/NoticeProvider'
 
