@@ -41,7 +41,7 @@
 - Less (forthcoming)
 - json-server2 (Only temporary scaffolding until NeDB in place)
 
-**NEXT UP:** Write back-end interpretation of requests from client.
+**NEXT UP:** Make sure UI still works with new API.
 ### TODO
 #### Front End
 
@@ -52,14 +52,14 @@
 
 1. Install NeDB. **DONE**
 2. Setup NeDB. **DONE**
-3. Write endpoints Node/Express to read requests from client.
-4. Write responses to requests.
+3. Write endpoints Node/Express to read requests from client. **DONE**
+4. Write responses to requests. **DONE**
 5. Test to make sure it still works with UI.
 6. Write unit tests.
 
 ## Bugs and Fixes
 
-**NONE**
+1. UI: Logout fails, with new Express/NeDB endpoints.
 ## Technical Debt
 
 ### UI

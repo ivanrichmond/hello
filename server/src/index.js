@@ -24,10 +24,10 @@ import * as config from '../config.json';
 import { bubbleSort } from './helpers/sort';
 import { count } from './helpers/count';
 import { currentUser, users } from './db.js';
-import { request } from "http";
 
 // Application Variables
 const app = express();
+
 // Avoid cors issues.
 app.use(cors());
 
@@ -37,6 +37,10 @@ app.use(express.json())
 
 const port = config.serverPort;
 
+const errorResponse = (response: Response, error: Error) => {
+    response.status(404)
+    response.json({message: error.toString()})
+}
 
 // Listen at port.
 app.listen(port, () => {
@@ -60,11 +64,18 @@ app.get('/count', (request, response) => {
 // --- /currentUser
 
 // Get the currently logged in user.
+app.delete('/currentUser', (request, response) => {
+    currentUser.remove({}, { multi: true }, (error, removed) => {
+        if(error){ errorResponse(response, error) } else {
+            response.json({message: `deleted ${removed} records.`})
+        }
+    })
+})
+
 app.get('/currentUser', (request, response) => {
     currentUser.find({}, function (error, docs) {
         if(error){
-            console.error(error)
-            return error;
+            errorResponse(response, error)
         } 
         if(docs?.length){
             response.json(docs);
@@ -76,8 +87,32 @@ app.get('/currentUser', (request, response) => {
 
 // Essentially login / logout, by setting currentUser or resetting it to {}
 app.post('/currentUser', (request, response) => {
-    console.debug('request.body', request.body)
-    response.json({message: `TODO: add ${request.body?.name} to NeDB`})
+    currentUser.find({}, function (error, docs) {
+        if(error){
+            console.trace()
+            errorResponse(response, error)
+        } else {
+            if(docs?.length){
+                currentUser.update({}, request?.body, {}, (error, replaced) => {
+                    if(error){
+                        console.trace()
+                        errorResponse(response, error)
+                    } else {
+                        response.json({message: `Replaced ${replaced} records.`})
+                    }
+                })
+            } else {
+                currentUser.insert(request?.body, (error, doc) => {
+                    if(error){
+                        console.trace()
+                        errorResponse(response, error)
+                    } else {
+                        response.json({message: `New currentUser set`, data: doc})
+                    }
+                })
+            }
+        }
+    });
 })
 
 // --- /users
@@ -85,39 +120,53 @@ app.post('/currentUser', (request, response) => {
 // Delete a user, given userId as /users/:userId
 app.delete('/users/:id', (request, response) => {
     const id = request.params?.id
-    response.json({message: `TODO: delete ${id} from NeDB`})
+    users.remove({id}, (error, removed) => {
+        if(error){ errorResponse(response, error) } else {
+            response.json({message: `deleted ${removed} records with id ${id}.`})
+        }
+    })
 })
 
 // Get all users, or a filtered list.
 app.get('/users', (request, response) => {
-    // TODO: Search by query if there's a query.
     const query = request.query // { id, username, name, password, createdAt }
-    if(_.isEmpty(query)){
-        users.find({}, function (error, docs) {
-            if(error){
-                console.error(error)
-                return error;
-            }
+    users.find(query, function (error, docs) {
+        if(error){
+            errorResponse(response, error)
+        } else {
             if(docs?.length){
                 response.json(docs);
             } else {
                 response.json({})
             }
-        });
-    } else {
-        response.json({message: "TODO: Handle queries in users search."})
-    }
+        }
+    });
 })
 
 // Get just one user.
 app.get('/users/:id', (request, response) => {
     const id = request.params?.id
-    response.json({message: `TODO: Get ${id} from NeDB`})
+    users.find({id}, function (error, docs) {
+        if(error){
+            errorResponse(response, error)
+        } else {
+            if(docs?.length){
+                response.json(docs);
+            } else {
+                response.json({})
+            }
+        }
+    });
 })
 
 // Add or update a user, given /users/:userId
 app.post('/users', (request, response) => {
-    response.json({message: `TODO: Add ${request.body.name} to users.`})
+    if(!request.body){ errorResponse(response, new Error("No user to insert."))}
+    users.insert(request.body, error => {
+        if(error){ errorResponse(response, error) } else {
+            response.json({message: "Added new user.", data: request.body})
+        }
+    })
 })
 
 // Sorter backend.
