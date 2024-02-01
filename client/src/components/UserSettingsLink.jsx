@@ -2,23 +2,14 @@ import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 
 // import { AuthContext } from '../contexts/AuthProvider'
-import { useGetCurrentUserQuery } from '../features/api/apiSlice'
 import AppLoader from '../styleLibrary/AppLoader'
-import { NoticeContext } from '../contexts/NoticeProvider'
+import { AuthContext } from '../contexts/AuthProvider'
 
 const UserSettingsLink = () => {
-    // const {currentUser} = useContext(AuthContext)
-    const { createNotice } = useContext(NoticeContext)
-    const { 
-        data: currentUser,
-        isLoading: isCurrentUserLoading,
-        isError,
-        error 
-    } = useGetCurrentUserQuery()
-
-    if(isError) {
-        createNotice(error, 'error')
-    }
+    const {
+        currentUser,
+        isCurrentUserLoading,
+    } = useContext(AuthContext)
 
     return (
         isCurrentUserLoading ?
