@@ -16,6 +16,7 @@
 
 // External Modules
 import express from 'express';
+import cors from 'cors';
 import bodyParser from 'body-parser';
 
 // Internal Modules
@@ -26,6 +27,10 @@ import { currentUser, users } from './db.js';
 
 // Application Variables
 const app = express();
+// Avoid cors issues.
+app.use(cors());
+
+
 const jsonParser = bodyParser.json();
 const port = config.serverPort;
 
@@ -59,7 +64,11 @@ app.get('/currentUser', (request, response) => {
             console.error(error)
             return error;
         } 
-        response.json(docs);
+        if(docs?.length){
+            response.json(docs);
+        } else {
+            response.json({})
+        }
     });
 })
 
@@ -80,14 +89,18 @@ app.get('/users', (request, response) => {
         if(error){
             console.error(error)
             return error;
-        } 
-        response.json(docs);
+        }
+        if(docs?.length){
+            response.json(docs);
+        } else {
+            response.json({})
+        }
     });
 })
 
 // Add or update a user, given /users/:userId
 app.post('/users', (request, response) => {
-    
+    response.json(request.body)
 })
 
 // Sorter backend.
