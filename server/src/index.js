@@ -15,23 +15,26 @@
  */
 
 // External Modules
-import express from 'express';
 import cors from 'cors';
-import bodyParser from 'body-parser';
+import express from 'express';
+import _ from 'lodash'
 
 // Internal Modules
 import * as config from '../config.json';
 import { bubbleSort } from './helpers/sort';
 import { count } from './helpers/count';
 import { currentUser, users } from './db.js';
+import { request } from "http";
 
 // Application Variables
 const app = express();
 // Avoid cors issues.
 app.use(cors());
 
+// Use JSON
+// $FlowFixMe -- For some reason, Flow can't handle express.json()
+app.use(express.json())
 
-const jsonParser = bodyParser.json();
 const port = config.serverPort;
 
 
@@ -41,7 +44,6 @@ app.listen(port, () => {
 })
 
 app.get('/', (request, response) => {
-    console.info("/ gotten.")
     response.send("Hello!");
 })
 
@@ -74,38 +76,53 @@ app.get('/currentUser', (request, response) => {
 
 // Essentially login / logout, by setting currentUser or resetting it to {}
 app.post('/currentUser', (request, response) => {
+    console.debug('request.body', request.body)
+    response.json({message: `TODO: add ${request.body?.name} to NeDB`})
 })
 
 // --- /users
 
 // Delete a user, given userId as /users/:userId
-app.delete('/users', (request, response) => {
-
+app.delete('/users/:id', (request, response) => {
+    const id = request.params?.id
+    response.json({message: `TODO: delete ${id} from NeDB`})
 })
 
 // Get all users, or a filtered list.
 app.get('/users', (request, response) => {
-    users.find({}, function (error, docs) {
-        if(error){
-            console.error(error)
-            return error;
-        }
-        if(docs?.length){
-            response.json(docs);
-        } else {
-            response.json({})
-        }
-    });
+    // TODO: Search by query if there's a query.
+    const query = request.query // { id, username, name, password, createdAt }
+    if(_.isEmpty(query)){
+        users.find({}, function (error, docs) {
+            if(error){
+                console.error(error)
+                return error;
+            }
+            if(docs?.length){
+                response.json(docs);
+            } else {
+                response.json({})
+            }
+        });
+    } else {
+        response.json({message: "TODO: Handle queries in users search."})
+    }
+})
+
+// Get just one user.
+app.get('/users/:id', (request, response) => {
+    const id = request.params?.id
+    response.json({message: `TODO: Get ${id} from NeDB`})
 })
 
 // Add or update a user, given /users/:userId
 app.post('/users', (request, response) => {
-    response.json(request.body)
+    response.json({message: `TODO: Add ${request.body.name} to users.`})
 })
 
 // Sorter backend.
 //TODO: Add additional sort types.
-app.post('/sort', jsonParser, (request, response) => {
+app.post('/sort', (request, response) => {
     const array = request.body?.payload;
     const arraySorted = bubbleSort(array);
     response.send({ 
