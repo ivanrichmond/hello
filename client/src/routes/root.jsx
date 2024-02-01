@@ -30,14 +30,14 @@ function Root({test}) {
   
   // TODO: This is throwing errors.  Fix.
   const { deleteNotice, notice } = useContext(NoticeContext)
-  
+
   // If you're not logged in, this is a time to remove all notices, 
   // otherwise we can end up with residual notices saying your 
   // UN/PW is wrong or something, which may have been true pre-logout
   // but are no longer true.
   useEffect(() => {
-    if(!isLoggedIn) deleteNotice()
-  }, [deleteNotice, isLoggedIn, notice])
+    if(isLoggedIn) deleteNotice()
+  }, [deleteNotice, isLoggedIn])
   
   const isName = !!currentUser?.name
   

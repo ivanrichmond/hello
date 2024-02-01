@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import { createContext, useContext, useMemo } from 'react';
 
 import { 
@@ -13,6 +12,7 @@ import { makeUser } from '../data/users';
 
 // Contexts
 import { NoticeContext } from './NoticeProvider';
+import { useEffect } from 'react';
 
 export const AuthContext = createContext();
 
@@ -25,11 +25,20 @@ export const AuthProvider = ({ children }) => {
     error: currentUserError, 
   } = useGetCurrentUserQuery()
 
-  if(isCurrentUserError) {
-    createNotice(currentUserError, 'error')
-  }
+  useEffect(() => {
+    if(!isCurrentUserLoading && isCurrentUserError && currentUserError) {
+      createNotice(
+        currentUserError?.status + ' ' + 
+        currentUserError?.error + ' ' + 
+        currentUserError?.message || '',
+       'error'
+      )
+    }
+  // If eslint has its way, and we put in [createNotice], this keeps firing.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isCurrentUserError, currentUserError, isCurrentUserLoading])
 
-  const isLoggedIn = useMemo(() => !_.isEmpty(currentUser), [currentUser])
+  const isLoggedIn = useMemo(() => !!currentUser?.length, [currentUser])
 
   const [addUser, { isLoading: isAddUserLoading }] = useAddUserMutation()
   const [updateCurrentUser] = useUpdateCurrentUserMutation()
@@ -39,6 +48,13 @@ export const AuthProvider = ({ children }) => {
     isError: isUsersError,
     error: usersError, 
   } = useGetUsersQuery()
+
+  useEffect(() => {
+    if(!isUsersLoading && isUsersError){
+      createNotice(usersError, 'error')
+    }
+  }, [isUsersError, isUsersLoading, usersError])
+
   const [ deleteUser ] = useDeleteUserMutation()
   const [ updateUser ] = useUpdateUserMutation()
 
@@ -75,8 +91,13 @@ export const AuthProvider = ({ children }) => {
       return false
     }
 
-    // TODO: Redo this in apiSlice, so that RTK Query can handle this search.
+    if(!users){
+      // Error will already have been handled, above.
+      return false
+    }
+
     // Find user with that username, or else return false.
+    // TODO: Redo this in apiSlice, so that RTK Query can handle this search.
     const user = users.find(e => e.username === username)
   
     if(user && user.password === password){
