@@ -18,7 +18,7 @@
 
 1. `git clone git@github.com:ivanrichmond/hello.git`
 
-2. Install `json-server2` globally via your favorite PM (https://www.npmjs.com/package/json-server2) **NOTE: This is only temporary until I add MongoDB.**
+2. Install `json-server2` globally via your favorite PM (https://www.npmjs.com/package/json-server2) **NOTE: This is only temporary until I add NeDB.**
 
 3. `json-server2 --watch ../client/src/data/testData.json --port 5000`
 
@@ -33,15 +33,15 @@
 8. To go to the Admin screen, go to `http://localhost:7777/admin` and enter `adminPassword` in `package.json`.  The default is `friend`, but you can change it.
 ## Technologies
 
-- MongoDB
+- NeDB
 - Node / Express
 - React
 - React Router 6
 - Flow (forthcoming)
 - Less (forthcoming)
-- json-server2 (Only temporary scaffolding until MongoDB in place)
+- json-server2 (Only temporary scaffolding until NeDB in place)
 
-**NEXT UP:** Backend and UI Tech Debt
+**NEXT UP:** Write back-end interpretation of requests from client.
 ### TODO
 #### Front End
 
@@ -50,11 +50,12 @@
 3. Convert CSS to LESS.
 #### Back End
 
-1. Install MongoDB.
-2. Setup `users` in MongoDB.
-3. Write endpoints for `users` in Node/Express, mirroring RTK Query in Front End.
-4. Test to make sure it still works with UI.
-5. Write unit tests.
+1. Install NeDB. **DONE**
+2. Setup NeDB. **DONE**
+3. Write endpoints Node/Express to read requests from client.
+4. Write responses to requests.
+5. Test to make sure it still works with UI.
+6. Write unit tests.
 
 ## Bugs and Fixes
 
