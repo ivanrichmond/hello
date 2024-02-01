@@ -31,6 +31,13 @@ export const NoticeProvider = ({ children }) => {
     const [notice, setNotice] = useState(null);
 
     const createNotice = (message, type = 'info') => {
+        if(typeof message === 'object'){
+            if(message?.status && message?.error){
+                message = message.status + ' ' + message.error
+            } else {
+                message = message.toString()
+            }
+        }
         const newNotice = new Notice(message, type)
         newNotice.sendToConsole()
         setNotice(newNotice)
