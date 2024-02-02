@@ -41,7 +41,6 @@ export const apiSlice = createApi({
     }),
     getUsers: builder.query({
       query: () => '/users',
-      transformResponse: res => res.sort((a,b) => a.id - b.id),
       providesTags: ['User'],
     }),
     updateUser: builder.mutation({
