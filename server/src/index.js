@@ -159,7 +159,18 @@ app.get('/users/:id', (request, response) => {
     });
 })
 
-// Add or update a user, given /users/:userId
+// Update a user, given /users/:userId
+app.patch('/users/:id', (request, response) => {
+    const id = request.params?.id
+    if(!id){ errorResponse(response, new Error("No user to update."))}
+    users.update({id}, request.body, error => {
+        if(error){ errorResponse(response, error) } else {
+            response.json({message: `Updated user ${id}`, data: request.body})
+        }
+    })
+})
+
+// Add a user, given /users/:userId
 app.post('/users', (request, response) => {
     if(!request.body){ errorResponse(response, new Error("No user to insert."))}
     users.insert(request.body, error => {
