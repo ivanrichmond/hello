@@ -1,7 +1,9 @@
 import { createContext, useContext, useMemo } from 'react';
+import _ from 'lodash'
 
 import { 
   useAddUserMutation,
+  useDeleteCurrentUserMutation,
   useDeleteUserMutation,
   useGetCurrentUserQuery, 
   useGetUsersQuery, 
@@ -18,12 +20,14 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const { createNotice } = useContext(NoticeContext)
-  const { 
+  let { 
     data: currentUser,
     isLoading: isCurrentUserLoading,
     isError: isCurrentUserError,
     error: currentUserError, 
   } = useGetCurrentUserQuery()
+
+  if(!isCurrentUserLoading && currentUser.length) currentUser = currentUser[0]
 
   useEffect(() => {
     if(!isCurrentUserLoading && isCurrentUserError && currentUserError) {
@@ -38,10 +42,11 @@ export const AuthProvider = ({ children }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCurrentUserError, currentUserError, isCurrentUserLoading])
 
-  const isLoggedIn = useMemo(() => !!currentUser?.length, [currentUser])
+  const isLoggedIn = useMemo(() => !_.isEmpty(currentUser), [currentUser])
 
   const [addUser, { isLoading: isAddUserLoading }] = useAddUserMutation()
   const [updateCurrentUser] = useUpdateCurrentUserMutation()
+  const [deleteCurrentUser] = useDeleteCurrentUserMutation()
   const { 
     data: users, 
     isLoading: isUsersLoading,
@@ -53,6 +58,8 @@ export const AuthProvider = ({ children }) => {
     if(!isUsersLoading && isUsersError){
       createNotice(usersError, 'error')
     }
+  // If eslint has its way, and we put in [createNotice], this keeps firing.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isUsersError, isUsersLoading, usersError])
 
   const [ deleteUser ] = useDeleteUserMutation()
@@ -82,7 +89,7 @@ export const AuthProvider = ({ children }) => {
 
   // call this function to sign out logged in currentUser
   const logout = async () => {
-    await updateCurrentUser({})
+    await deleteCurrentUser()
   }
 
   const validateUser = (username, password) => {

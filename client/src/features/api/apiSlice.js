@@ -16,6 +16,13 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['User'],
     }),
+    deleteCurrentUser: builder.mutation({
+      query: () => ({
+        url: `/currentUser`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['CurrentUser'],
+    }),
     deleteUser: builder.mutation({
       query: id => ({
         url: `/users/${id}`,
@@ -59,6 +66,7 @@ export const apiSlice = createApi({
 // Export the auto-generated hook for the `getPosts` query endpoint
 export const {
   useAddUserMutation,
+  useDeleteCurrentUserMutation,
   useDeleteUserMutation,
   useGetCurrentUserQuery,
   useGetUserQuery,
