@@ -1,67 +1,79 @@
-# hello
+# Welcome to Hello
 
 **Hello is _not_ about saying hello.**  
 **It's built around the concept that even the simplest professional application has many needs**
 **that are not directly related to the goal of the application, such as logging, error handling,**
-**routing, server-side DB (TO COME), client-side DB, etc., etc.**
+**routing, server-side DB, client-side DB, etc., etc.**
 **As such, Hello is an application that has _everything but_ a main goal,**
 **_so that_ all someone who wants a Node/React application would have to do is install Hello,**
 **and then get on with building the main goal of _their_ application.**
 **Hello uses saying hello as a _placeholder_ for this goal.**
 
-**CURRENT STATUS: UI mostly done, except for tech debt.**
-**I will start backend soon.**
+**CURRENT STATUS: The UI and API are both ready @v1.0.**
+# Installation and Setup
 
-**NOTE:** This is still a work in progress.  There's a lot more to do.
-
-# Installation and Setup for UI (backend is still being built)
+There are two parts: UI (`/client`) and API (`/server`).  You'll need to install
+and startup both separately.
 
 1. `git clone git@github.com:ivanrichmond/hello.git`
 
-2. Install `json-server2` globally via your favorite PM (https://www.npmjs.com/package/json-server2) **NOTE: This is only temporary until I add NeDB.**
+2. `cd hello/server`
 
-3. `json-server2 --watch ../client/src/data/testData.json --port 5000`
+3. `npm install` | `yarn`
 
-4. `cd hello/client`
+This will install packages for the API.
 
-5. `npm install` | `yarn`
+4. `npm run build && npm run start` | `yarn build && yarn start`
 
-6. `npm run start` | `yarn start`
+This will start the API on :5000
 
-7. Go to `http://localhost:7777`, if it's not already up.
+5. `cd ../client`
 
-8. To go to the Admin screen, go to `http://localhost:7777/admin` and enter `adminPassword` in `package.json`.  The default is `friend`, but you can change it.
+6. `npm install` | `yarn`
+
+This will install packages for the UI.
+
+7. `npm run start` | `yarn start`
+
+8. Go to `http://localhost:7777`, if it's not already up.
+
+**NOTE:** To go to the Admin screen, go to `http://localhost:7777/admin` and enter `adminPassword` in `package.json`.  The default is `friend`, but you can change it.
 ## Technologies
 
 - NeDB
 - Node / Express
 - React
 - React Router 6
-- Flow (forthcoming)
+- Flow (in API, forthcoming for UI)
 - Less (forthcoming)
-- json-server2 (Only temporary scaffolding until NeDB in place)
 
-**NEXT UP:** Make sure UI still works with new API.
 ### TODO
+
+**NEXT UP:** Tech Debt
 #### Front End
 
 1. Tech Debt.
 2. Add Flow (and continue to use going forward).
 3. Convert CSS to LESS.
+4. It would be nice to find something interesting to do with GraphQL, 
+thought it's honestly overkill for an app that only has a `users` DB.
 #### Back End
 
-1. Install NeDB. **DONE**
-2. Setup NeDB. **DONE**
-3. Write endpoints Node/Express to read requests from client. **DONE**
-4. Write responses to requests. **DONE**
-5. Test to make sure it still works with UI.
-6. Write unit tests.
+1. Write unit tests, where applicable.
+2. Create a Postman test suite to test all endpoints.
 
 ## Bugs and Fixes
 
-1. UI: Logout fails, with new Express/NeDB endpoints.
+**NONE**
 ## Technical Debt
 
 ### UI
 
 1. Merge `User` and `EditUser` components.  (Or get rid of `User` as uneeded?)
+2. Currently the `users` query manually searches the results, client-side, for
+users that match criteria, like `username`.  This was done before the real API 
+was built, but the real API has the capability to put in URL params, so take 
+advantage of that.
+### Server
+
+**NONE**
