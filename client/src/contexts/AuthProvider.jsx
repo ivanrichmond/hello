@@ -101,16 +101,16 @@ export const AuthProvider = ({ children }) => {
       return false
     }
 
-    if(!users){
+    if(_.isEmpty(users)){
       // Error will already have been handled, above.
       return false
     }
 
     // Find user with that username, or else return false.
     // TODO: Redo this in apiSlice, so that RTK Query can handle this search.
-    const user = users.find(e => e.username === username)
+    const user = users?.find(e => e.username === username)
   
-    if(user && user.password === password){
+    if(user && user?.password === password){
       return user
     } else {
       return false
