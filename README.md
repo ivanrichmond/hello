@@ -76,6 +76,7 @@ thought it's honestly overkill for an app that only has a `users` DB.
 users that match criteria, like `username`.  This was done before the real API 
 was built, but the real API has the capability to put in URL params, so take 
 advantage of that.
+3. Add a sort to `getUsers` in `apiSlice`.
 ### Server
 
 **NONE**
