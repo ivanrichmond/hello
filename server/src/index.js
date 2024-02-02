@@ -78,7 +78,7 @@ app.get('/currentUser', (request, response) => {
             errorResponse(response, error)
         } 
         if(docs?.length){
-            response.json(docs);
+            response.json(docs[0]);
         } else {
             response.json({})
         }
@@ -151,7 +151,7 @@ app.get('/users/:id', (request, response) => {
             errorResponse(response, error)
         } else {
             if(docs?.length){
-                response.json(docs);
+                response.json(docs[0]);
             } else {
                 response.json({})
             }

@@ -27,8 +27,6 @@ export const AuthProvider = ({ children }) => {
     error: currentUserError, 
   } = useGetCurrentUserQuery()
 
-  if(!isCurrentUserLoading && currentUser.length) currentUser = currentUser[0]
-
   useEffect(() => {
     if(!isCurrentUserLoading && isCurrentUserError && currentUserError) {
       createNotice(
