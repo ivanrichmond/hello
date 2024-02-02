@@ -27,6 +27,8 @@ This will install packages for the API.
 
 This will start the API on :5000
 
+Now, in a separate tab, so as not to kill the API...
+
 5. `cd ../client`
 
 6. `npm install` | `yarn`
