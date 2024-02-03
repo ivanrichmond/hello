@@ -70,8 +70,10 @@ export const AuthProvider = ({ children }) => {
 
   const isUniqueUsername = user => {
     let instances = 0
-    users.forEach(u => {
-      if(u.username === user.username){
+    if(!user || _.isEmpty(user)) return false // Bad param
+    if(!users || _.isEmpty(users)) return true // 1st one's unique
+    users?.forEach(u => {
+      if(u.username === user?.username){
         instances++
       }
     })
