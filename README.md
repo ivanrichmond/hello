@@ -77,6 +77,7 @@ users that match criteria, like `username`.  This was done before the real API
 was built, but the real API has the capability to put in URL params, so take 
 advantage of that.
 3. Add a sort to `getUsers` in `apiSlice`.
+4. Login error message persists on new screen, if you try to create an account.
 ### Server
 
 **NONE**
