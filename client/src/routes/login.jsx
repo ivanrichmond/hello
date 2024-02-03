@@ -11,7 +11,6 @@ import AppForm from '../styleLibrary/AppForm'
 export default function Login() {
     const navigate = useNavigate()
     const {
-        createUser,
         isAddUserLoading,
         login,
         validateUser 
@@ -34,8 +33,7 @@ export default function Login() {
 
     async function createAccount() {
         if(!isAddUserLoading){
-            const user = await createUser()
-            navigate(`/users/${user.id}/edit`);
+            navigate(`/users/new`)
         } else {
             throw Error("Sorry, something went wrong and the new account was not created.")
         }

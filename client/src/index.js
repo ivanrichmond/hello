@@ -1,6 +1,3 @@
-// import { cors } from 'cors'
-// import express from 'express'
-
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
@@ -31,10 +28,6 @@ import User from "./routes/user.jsx";
 // Redux
 import { apiSlice } from './features/api/apiSlice'
 
-// Avoid Cors errors:
-// const app = express()
-// app.use(cors());
-
 // Router
 //TODO: Add <Index>.
 export const router = createBrowserRouter([
@@ -62,6 +55,11 @@ export const router = createBrowserRouter([
   {
     path: "users/:userId/edit",
     element: <EditUser />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "users/new",
+    element: <EditUser isNew />,
     errorElement: <ErrorPage />,
   },
   {

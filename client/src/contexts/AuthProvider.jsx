@@ -10,7 +10,6 @@ import {
   useUpdateCurrentUserMutation,
   useUpdateUserMutation,
 } from '../features/api/apiSlice'
-import { makeUser, nextUserId } from '../data/users';
 
 // Contexts
 import { NoticeContext } from './NoticeProvider';
@@ -63,26 +62,20 @@ export const AuthProvider = ({ children }) => {
   const [ deleteUser ] = useDeleteUserMutation()
   const [ updateUser ] = useUpdateUserMutation()
 
-  // Create a new user, using makeUser and addUser.
-  const createUser = async () => {
-    const user = makeUser();
+  // Create a new user, using addUser.
+  const createUser = async user => {
     await addUser(user);
     return user
   }
 
   const isUniqueUsername = user => {
-    if(user?.id > nextUserId){
-      let instances = 0
-      users.forEach(u => {
-        if(u.username === user.username){
-          instances++
-        }
-      })
-      return instances < 1
-    } else {
-      // It's an existing user, so we don't need to care.
-      return true
-    }
+    let instances = 0
+    users.forEach(u => {
+      if(u.username === user.username){
+        instances++
+      }
+    })
+    return instances < 1
   }
 
   // call this function when you want to authenticate the currentUser

@@ -9,10 +9,10 @@ export const apiSlice = createApi({
   tagTypes: ['CurrentUser', 'User'],
   endpoints: builder => ({
     addUser: builder.mutation({
-      query: ({id}) => ({
+      query: (user) => ({
         url: '/users',
         method: 'POST',
-        body: {id},
+        body: user,
       }),
       invalidatesTags: ['User'],
     }),
@@ -45,7 +45,7 @@ export const apiSlice = createApi({
     }),
     updateUser: builder.mutation({
       query: user => ({
-        url: `/users/${user.id}`,
+        url: `/users/${user._id}`,
         method: 'PATCH',
         body: user,
       }),

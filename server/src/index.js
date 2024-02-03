@@ -20,10 +20,11 @@ import express from 'express';
 import _ from 'lodash'
 
 // Internal Modules
-import * as config from '../config.json';
 import { bubbleSort } from './helpers/sort';
+import * as config from '../config.json';
 import { count } from './helpers/count';
 import { currentUser, users } from './db.js';
+import { User } from './classes/users'
 
 // Application Variables
 const app = express();
@@ -120,7 +121,7 @@ app.post('/currentUser', (request, response) => {
 // Delete a user, given userId as /users/:userId
 app.delete('/users/:id', (request, response) => {
     const id = request.params?.id
-    users.remove({id}, (error, removed) => {
+    users.remove({_id: id}, (error, removed) => {
         if(error){ errorResponse(response, error) } else {
             response.json({message: `deleted ${removed} records with id ${id}.`})
         }
@@ -146,7 +147,7 @@ app.get('/users', (request, response) => {
 // Get just one user.
 app.get('/users/:id', (request, response) => {
     const id = request.params?.id
-    users.find({id}, function (error, docs) {
+    users.find({_id: id}, function (error, docs) {
         if(error){
             errorResponse(response, error)
         } else {
@@ -163,17 +164,22 @@ app.get('/users/:id', (request, response) => {
 app.patch('/users/:id', (request, response) => {
     const id = request.params?.id
     if(!id){ errorResponse(response, new Error("No user to update."))}
-    users.update({id}, request.body, error => {
+    users.update({_id: id}, request.body, error => {
         if(error){ errorResponse(response, error) } else {
             response.json({message: `Updated user ${id}`, data: request.body})
         }
     })
 })
 
-// Add a user, given /users/:userId
+// Add a user, given request.body = user.
 app.post('/users', (request, response) => {
     if(!request.body){ errorResponse(response, new Error("No user to insert."))}
-    users.insert(request.body, error => {
+    const newUser = new User(
+        request.body?.name || '',
+        request.body?.username || '',
+        request.body?.password || '',
+    )
+    users.insert(newUser, error => {
         if(error){ errorResponse(response, error) } else {
             response.json({message: "Added new user.", data: request.body})
         }

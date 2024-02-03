@@ -39,7 +39,7 @@ const Admin = () => {
 
                         <Form 
                         style = {{display: 'inline'}}
-                        action={`/users/${user.id}/edit`}
+                        action={`/users/${user._id}/edit`}
                         >
                             <AppButton icon='pencil' type="submit" />
                         </Form>
@@ -48,7 +48,7 @@ const Admin = () => {
                         onClick={(event) => {
                             event.preventDefault();
                             if ( window.confirm( "Please confirm you want to delete this record." ) ) {
-                                deleteUser(user.id)
+                                deleteUser(user._id)
                             }
                         }} 
                         icon="trash"

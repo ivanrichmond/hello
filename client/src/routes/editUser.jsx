@@ -10,25 +10,19 @@ import AppInput from '../styleLibrary/AppInput'
 import AppLoader from '../styleLibrary/AppLoader';
 import Notice from '../components/Notice'
 import { AuthContext } from '../contexts/AuthProvider'
-import { useGetUserQuery } from '../features/api/apiSlice';
 import { useNotice } from '../contexts/NoticeProvider'
-import { useEffect } from 'react';
 
-export default function EditUser() {
+export default function EditUser({isNew}) {
   const navigate = useNavigate();
   const { userId } = useParams()
   const { createNotice, deleteNotice, notice } = useNotice()
-  if(!userId) {
+  if(!isNew && !userId) {
     createNotice(`Sorry, something went wrong.`, 'error')
     navigate(-1)
   }
   
-  const { data: user, isLoading, isError, error  } = useGetUserQuery(userId)
-  if(isError){
-    createNotice(error?.message, 'error')
-  }
-  
   const {
+    createUser,
     currentUser,
     currentUserError,
     isCurrentUserError,
@@ -37,28 +31,35 @@ export default function EditUser() {
     isUniqueUsername,
     updateCurrentUser,
     updateUser,
+    users,
   } = useContext(AuthContext)
   if(isCurrentUserError){
     createNotice(currentUserError?.message, 'error')
   }
 
+  // TODO: Not scalable.  I need a better way to scale this.
+  // I can't use RTK Query directly, because I can't put hooks under 
+  // conditionals, and that might not help anyway.
+  const user = isNew ? {} : users.find(u => u._id === userId)
+
   const [newUser, setNewUser] = useState(user)
-  useEffect(() => {
-    setNewUser(user)
-  }, [user])
 
   // Whether you're editing yourself.
-  const isYou = currentUser && currentUser?.id === user?.id
-  const heading = isLoggedIn ? 'Edit User' : 'Create Account'
+  const isYou = currentUser && currentUser?._id === user?._id
+  const heading = isNew ? 'Create Account' : 'Edit User'
 
   // This is only used as an adjunct to action, in order to update AuthContext.
   const handleSubmit = (e) => {
     e.preventDefault()
-    if(isUniqueUsername(newUser)){
-      updateUser(newUser)
+    if(isNew){
+      if(isUniqueUsername(newUser)){
+        createUser(newUser)
+      } else {
+        createNotice(`${newUser?.username} is already taken.`, 'error')
+        return
+      }
     } else {
-      createNotice(`${newUser?.username} is already taken.`, 'error')
-      return
+      updateUser(newUser)
     }
 
     if(isLoggedIn){
@@ -76,7 +77,7 @@ export default function EditUser() {
     }
   }
 
-  return isLoading || isCurrentUserLoading ? 
+  return !isNew && isCurrentUserLoading ? 
     (<AppLoader />)
     : 
     (

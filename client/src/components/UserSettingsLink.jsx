@@ -18,7 +18,7 @@ const UserSettingsLink = () => {
         (
         <Link
         className = 'UpperRightLink' 
-        to = {`/users/${currentUser?.id}/edit`}
+        to = {`/users/${currentUser?._id}/edit`}
         >
             User Settings
         </Link>
