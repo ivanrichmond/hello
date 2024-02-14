@@ -47,11 +47,13 @@ This will install packages for the UI.
 - React
 - React Router 6
 - Flow (in API, forthcoming for UI)
+- GraphQL (forthcoming)
 - Less (forthcoming)
+
 
 ### TODO
 
-**NEXT UP:** Tech Debt
+**NEXT UP:** GraphQL
 #### Front End
 
 1. Tech Debt.
