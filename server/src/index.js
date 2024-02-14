@@ -36,7 +36,7 @@ app.use(cors());
 // $FlowFixMe -- For some reason, Flow can't handle express.json()
 app.use(express.json())
 
-const port = config.serverPort;
+const port = config.httpPort;
 
 const errorResponse = (response: Response, error: Error) => {
     response.status(404)

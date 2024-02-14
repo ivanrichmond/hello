@@ -2,7 +2,6 @@
     "name": "hello",
     "author": "Ivan Richmond",
     "description": "Everything you need for a Node/React app",
-    "port": "5000",
     "license": "MIT",
     "main": "dist/index.js",
     "version": "1.0.0",
