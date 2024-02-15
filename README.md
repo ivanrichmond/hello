@@ -56,16 +56,25 @@ This will install packages for the UI.
 **NEXT UP:** GraphQL
 #### Front End
 
-1. Tech Debt.
-2. Add Flow (and continue to use going forward).
-3. Convert CSS to LESS.
-4. It would be nice to find something interesting to do with GraphQL, 
-thought it's honestly overkill for an app that only has a `users` DB.
+1. GraphQL
+    
+    - Once back-end is ready, rewrite RTK Query, etc.
+    - Test thoroughly.
+
+2. Tech Debt.
+3. Add Flow (and continue to use going forward).
+4. Convert CSS to LESS.
+
 #### Back End
 
-1. Write unit tests, where applicable.
-2. Create a Postman test suite to test all endpoints.
+1. GraphQL
+    
+    - Prove out basic Apollo server working with basic query.
+    - Prove out one NeDB query or mutation.
+    - Write all queries and mutations.
+    - Test thoroughly in back-end.
 
+2. Write unit tests, where applicable.
 ## Bugs and Fixes
 
 **NONE**

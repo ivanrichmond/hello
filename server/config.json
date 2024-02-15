@@ -1,4 +1,4 @@
 {
-    "graphQLPort": "5001",
+    "graphQLPort": "4000",
     "httpPort": "5000"
 }

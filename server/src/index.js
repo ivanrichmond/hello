@@ -15,45 +15,66 @@
  */
 
 // External Modules
-import cors from 'cors';
-import express from 'express';
-import _ from 'lodash'
+// import _ from 'lodash'
+import { ApolloServer } from '@apollo/server'
+import 'colors'
+// import cors from 'cors';
+// import express from 'express';
+// $FlowFixMe -- Flow can't find this even after I run flow-typed update.
+import { startStandaloneServer } from '@apollo/server/standalone'
 
 // Internal Modules
-import { bubbleSort } from './helpers/sort';
+// import { bubbleSort } from './helpers/sort';
 import * as config from '../config.json';
-import { count } from './helpers/count';
-import { currentUser, users } from './db.js';
-import { User } from './classes/users'
+// import { count } from './helpers/count';
+// import { currentUser, users } from './db.js';
+import { resolvers } from './graphql/resolvers/index.js'
+import { typeDefs } from './graphql/schema/index.js'
+// import { User } from './classes/users'
 
-// Application Variables
-const app = express();
+// Graph QL
+const graphQLPort = config?.graphQLPort || 4000
 
+const apolloServer = new ApolloServer({typeDefs, resolvers})
+
+const main = async function(){
+    const { url } = await startStandaloneServer(apolloServer, {
+        conext: async ({ req }) => ({ token: req.headers.token }),
+        listen: { port: graphQLPort }
+    })
+
+    console.log(`${'Server is listening at:'.green} ${url.yellow}`)
+    console.log(`${'Query at:'.magenta} ${'https://studio.apollographql.com/dev'.yellow}`)
+}
+main()
+
+// const httpServer = express();
 // Avoid cors issues.
-app.use(cors());
+// httpServer.use(cors());
 
 // Use JSON
 // $FlowFixMe -- For some reason, Flow can't handle express.json()
-app.use(express.json())
+// httpServer.use(express.json())
 
-const port = config.httpPort;
+// const httpPort = config?.httpPort || 5000
 
+/*
 const errorResponse = (response: Response, error: Error) => {
     response.status(404)
     response.json({message: error.toString()})
 }
 
-// Listen at port.
-app.listen(port, () => {
-    console.info(`Listening on port ${port}...`);
+// Listen at httpPort.
+httpServer.listen(httpPort, () => {
+    console.info(`HTTP listening on port ${httpPort}...`);
 })
 
-app.get('/', (request, response) => {
+httpServer.get('/', (request, response) => {
     response.send("Hello!");
 })
 
 // Counts how many times this endpoint has been hit.
-app.get('/count', (request, response) => {
+httpServer.get('/count', (request, response) => {
     const trafficCount = count();
     const counter = trafficCount.countUp();
     response.send({
@@ -65,7 +86,7 @@ app.get('/count', (request, response) => {
 // --- /currentUser
 
 // Get the currently logged in user.
-app.delete('/currentUser', (request, response) => {
+httpServer.delete('/currentUser', (request, response) => {
     currentUser.remove({}, { multi: true }, (error, removed) => {
         if(error){ errorResponse(response, error) } else {
             response.json({message: `deleted ${removed} records.`})
@@ -73,7 +94,7 @@ app.delete('/currentUser', (request, response) => {
     })
 })
 
-app.get('/currentUser', (request, response) => {
+httpServer.get('/currentUser', (request, response) => {
     currentUser.find({}, function (error, docs) {
         if(error){
             errorResponse(response, error)
@@ -87,7 +108,7 @@ app.get('/currentUser', (request, response) => {
 })
 
 // Essentially login / logout, by setting currentUser or resetting it to {}
-app.post('/currentUser', (request, response) => {
+httpServer.post('/currentUser', (request, response) => {
     currentUser.find({}, function (error, docs) {
         if(error){
             console.trace()
@@ -119,7 +140,7 @@ app.post('/currentUser', (request, response) => {
 // --- /users
 
 // Delete a user, given userId as /users/:userId
-app.delete('/users/:id', (request, response) => {
+httpServer.delete('/users/:id', (request, response) => {
     const id = request.params?.id
     users.remove({_id: id}, (error, removed) => {
         if(error){ errorResponse(response, error) } else {
@@ -129,7 +150,7 @@ app.delete('/users/:id', (request, response) => {
 })
 
 // Get all users, or a filtered list.
-app.get('/users', (request, response) => {
+httpServer.get('/users', (request, response) => {
     const query = request.query // { id, username, name, password, createdAt }
     users.find(query, function (error, docs) {
         if(error){
@@ -145,7 +166,7 @@ app.get('/users', (request, response) => {
 })
 
 // Get just one user.
-app.get('/users/:id', (request, response) => {
+httpServer.get('/users/:id', (request, response) => {
     const id = request.params?.id
     users.find({_id: id}, function (error, docs) {
         if(error){
@@ -161,7 +182,7 @@ app.get('/users/:id', (request, response) => {
 })
 
 // Update a user, given /users/:userId
-app.patch('/users/:id', (request, response) => {
+httpServer.patch('/users/:id', (request, response) => {
     const id = request.params?.id
     if(!id){ errorResponse(response, new Error("No user to update."))}
     users.update({_id: id}, request.body, error => {
@@ -172,7 +193,7 @@ app.patch('/users/:id', (request, response) => {
 })
 
 // Add a user, given request.body = user.
-app.post('/users', (request, response) => {
+httpServer.post('/users', (request, response) => {
     if(!request.body){ errorResponse(response, new Error("No user to insert."))}
     const newUser = new User(
         request.body?.name || '',
@@ -188,7 +209,7 @@ app.post('/users', (request, response) => {
 
 // Sorter backend.
 //TODO: Add additional sort types.
-app.post('/sort', (request, response) => {
+httpServer.post('/sort', (request, response) => {
     const array = request.body?.payload;
     const arraySorted = bubbleSort(array);
     response.send({ 
@@ -196,3 +217,4 @@ app.post('/sort', (request, response) => {
         payload: arraySorted 
     });
 })
+*/
