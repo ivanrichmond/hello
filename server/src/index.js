@@ -16,37 +16,18 @@
 
 // External Modules
 import _ from 'lodash'
-import { ApolloServer } from '@apollo/server'
-import 'colors'
 import cors from 'cors';
 import express from 'express';
-// $FlowFixMe -- Flow can't find this even after I run flow-typed update.
-import { startStandaloneServer } from '@apollo/server/standalone'
 
 // Internal Modules
 import { bubbleSort } from './helpers/sort';
 import * as config from '../config.json';
 import { count } from './helpers/count';
 import { currentUser, users } from './db.js';
-import { resolvers } from './graphql/resolvers/index.js'
-import { typeDefs } from './graphql/schema/index.js'
+import startApolloServer from './graphql/server.js'
 import { User } from './classes/users'
 
 // Graph QL
-const graphQLPort = config?.graphQLPort || 4000
-
-const apolloServer = new ApolloServer({typeDefs, resolvers})
-
-const startApolloServer = async function(){
-    const { url } = await startStandaloneServer(apolloServer, {
-        listen: { port: graphQLPort }
-    })
-
-    // $FlowFixMe -- Flow can't find this even after I run flow-typed update.
-    console.log(`${'Server is listening at:'.green} ${url.yellow}`)
-    // $FlowFixMe -- Flow can't find this even after I run flow-typed update.
-    console.log(`${'Query at:'.magenta} ${'https://studio.apollographql.com/sandbox/explorer'.yellow}`)
-}
 startApolloServer()
 
 const httpServer = express();
