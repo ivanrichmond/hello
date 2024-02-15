@@ -69,7 +69,8 @@ This will install packages for the UI.
 
 1. GraphQL
     
-    - Prove out basic Apollo server working with basic query.
+    - Prove out basic Apollo server working with basic query. **DONE**
+    - Prove out non-DB test mutation. **DONE**
     - Prove out one NeDB query or mutation.
     - Write all queries and mutations.
     - Test thoroughly in back-end.
