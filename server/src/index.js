@@ -15,50 +15,50 @@
  */
 
 // External Modules
-// import _ from 'lodash'
+import _ from 'lodash'
 import { ApolloServer } from '@apollo/server'
 import 'colors'
-// import cors from 'cors';
-// import express from 'express';
+import cors from 'cors';
+import express from 'express';
 // $FlowFixMe -- Flow can't find this even after I run flow-typed update.
 import { startStandaloneServer } from '@apollo/server/standalone'
 
 // Internal Modules
-// import { bubbleSort } from './helpers/sort';
+import { bubbleSort } from './helpers/sort';
 import * as config from '../config.json';
-// import { count } from './helpers/count';
-// import { currentUser, users } from './db.js';
+import { count } from './helpers/count';
+import { currentUser, users } from './db.js';
 import { resolvers } from './graphql/resolvers/index.js'
 import { typeDefs } from './graphql/schema/index.js'
-// import { User } from './classes/users'
+import { User } from './classes/users'
 
 // Graph QL
 const graphQLPort = config?.graphQLPort || 4000
 
 const apolloServer = new ApolloServer({typeDefs, resolvers})
 
-const main = async function(){
+const startApolloServer = async function(){
     const { url } = await startStandaloneServer(apolloServer, {
-        conext: async ({ req }) => ({ token: req.headers.token }),
         listen: { port: graphQLPort }
     })
 
+    // $FlowFixMe -- Flow can't find this even after I run flow-typed update.
     console.log(`${'Server is listening at:'.green} ${url.yellow}`)
-    console.log(`${'Query at:'.magenta} ${'https://studio.apollographql.com/dev'.yellow}`)
+    // $FlowFixMe -- Flow can't find this even after I run flow-typed update.
+    console.log(`${'Query at:'.magenta} ${'https://studio.apollographql.com/sandbox/explorer'.yellow}`)
 }
-main()
+startApolloServer()
 
-// const httpServer = express();
+const httpServer = express();
 // Avoid cors issues.
-// httpServer.use(cors());
+httpServer.use(cors());
 
 // Use JSON
 // $FlowFixMe -- For some reason, Flow can't handle express.json()
-// httpServer.use(express.json())
+httpServer.use(express.json())
 
-// const httpPort = config?.httpPort || 5000
+const httpPort = config?.httpPort || 5000
 
-/*
 const errorResponse = (response: Response, error: Error) => {
     response.status(404)
     response.json({message: error.toString()})
@@ -217,4 +217,3 @@ httpServer.post('/sort', (request, response) => {
         payload: arraySorted 
     });
 })
-*/
