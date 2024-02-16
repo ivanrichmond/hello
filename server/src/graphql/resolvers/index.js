@@ -1,28 +1,16 @@
-import { currentUser, users } from '../../db';
 import { User } from '../../classes/users'
-
-export const promiseInsertUser = (newUser => {
-    return new Promise((resolve) => {
-        users.insert(newUser, (error, docs) => {
-            const result = {
-                _id: docs?._id || '',
-                name: docs?.name || '',
-                username: docs?.username || '',
-                createdAt: docs?.createdAt || newUser.createdAt,
-                error: error || '',
-            }
-            resolve(result)
-        })
-    })
-})
+import { promiseInsertUser } from '../../helpers/dbPromises'
 
 export const resolvers = {
+    // In RTK Query: 
+    // addUser deleteCurrentUser deleteUser getCurrentUser getUser getUsers updateUser updateCurrentUser  
     Query: {
         apiStatus: (parent, args, context, info) => {
             return { status: 'The API is working correctly.' }
         }
     },
     Mutation: {
+        // RTK Query = addUser
         createUser: async (parent, args, context, info) => {
             const newUser = new User(
                 args.input?.name || '',
@@ -31,6 +19,6 @@ export const resolvers = {
             )
             const result = await promiseInsertUser(newUser)
             return(result)
-        }
+        },
     }
 }
