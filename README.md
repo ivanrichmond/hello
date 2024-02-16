@@ -71,7 +71,7 @@ This will install packages for the UI.
     
     - Prove out basic Apollo server working with basic query. **DONE**
     - Prove out non-DB test mutation. **DONE**
-    - Prove out one NeDB query or mutation.
+    - Prove out one NeDB query or mutation. **DONE**
     - Write all queries and mutations.
     - Test thoroughly in back-end.
 

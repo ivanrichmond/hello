@@ -12,16 +12,19 @@ export const typeDefs = `#graphql
         status: String
     }
 
+    type User {
+        _id: String,
+        name: String
+        username: String,
+        createdAt: Float,
+        error: String,
+    }
+    
     input UserInput {
-        firstName: String
-        lastName: String
-        email: String 
-        password: String 
+        name: String
+        username: String,
+        password: String,
+        createdAt: Float,
     }
 
-    type User {
-        firstName: String
-        lastName: String
-        email: String 
-    }
 `
