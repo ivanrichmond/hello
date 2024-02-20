@@ -72,7 +72,10 @@ This will install packages for the UI.
     - Prove out basic Apollo server working with basic query. **DONE**
     - Prove out non-DB test mutation. **DONE**
     - Prove out one NeDB query or mutation. **DONE**
-    - Write all queries and mutations.
+    - Write all queries and mutations. **DONE**
+    - Groom graphQL back-end code, such as...
+        - moving appropriate things under `payload`
+        - making some queries/mutations more generic, like deleting according to query, not id.
     - Test thoroughly in back-end.
 
 2. Write unit tests, where applicable.
@@ -91,5 +94,9 @@ advantage of that.
 3. Add a sort to `getUsers` in `apiSlice`.
 4. Login error message persists on new screen, if you try to create an account.
 ### Server
+1. Research a better GraphQL type for CreateAt, because Float shouldn't default to 0, if no CreatedAt
+ was passed in, because 0 is a valid datetime.  But it also can't be String, because it will come in
+as a number.  I wish GraphQL would allow Float | String, so I could put '' in as the default.
+It also won't allow a union of scalars.  There must be a package out there that would solve this.
 
 **NONE**
