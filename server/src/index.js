@@ -15,7 +15,6 @@
  */
 
 // External Modules
-import _ from 'lodash'
 import cors from 'cors';
 import express from 'express';
 
@@ -47,7 +46,8 @@ const errorResponse = (response: Response, error: Error) => {
 
 // Listen at httpPort.
 httpServer.listen(httpPort, () => {
-    console.info(`HTTP listening on port ${httpPort}...`);
+    // $FlowFixMe -- Flow can't find this even after I run flow-typed update.
+    console.log(`${'HTTP server is listening on port:'.red} ${httpPort.blue} (Ex. ${'http://localhost:5000'.blue})`)
 })
 
 httpServer.get('/', (request, response) => {
