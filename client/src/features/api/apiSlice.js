@@ -1,61 +1,147 @@
 // Import the RTK Query methods from the React-specific entry point
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi } from '@reduxjs/toolkit/query/react'
+import { request, gql } from 'graphql-request'
+
+import config from '../../config.json';
+
+const graphqlBaseQuery = ({ baseUrl }) => async ({ body }) => {
+    try {
+      const result = await request(baseUrl, body)
+      return { data: result }
+    } catch (error) {
+      console.error(`GRAPHQL ERROR: ${error}`)
+    }
+}
+
+const baseUrl = `${config?.httpProtocol || 'http'}://${config?.domain || 'localhost'}:${config?.graphQLPort || 4000}` // Ex. http://localhost:4000
 
 // Define our single API slice object
 export const apiSlice = createApi({
   reducerPath: 'api',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/' }),
+  baseQuery: graphqlBaseQuery({ baseUrl }),
   mode: "cors",
   tagTypes: ['CurrentUser', 'User'],
   endpoints: builder => ({
     addUser: builder.mutation({
       query: (user) => ({
-        url: '/users',
-        method: 'POST',
-        body: user,
+        body: gql`
+          mutation {
+              createUser(input: ${user}) {
+                _id
+                createdAt
+                error
+                name
+                username
+              }
+          }
+        `,
       }),
       invalidatesTags: ['User'],
     }),
     deleteCurrentUser: builder.mutation({
       query: () => ({
-        url: `/currentUser`,
-        method: 'DELETE',
+        body: gql`
+          mutation {
+            deleteCurrentUser {
+              error
+              id
+              removed
+            }
+          }
+        `,
       }),
       invalidatesTags: ['CurrentUser'],
     }),
     deleteUser: builder.mutation({
       query: id => ({
-        url: `/users/${id}`,
-        method: 'DELETE',
-        body: id,
+        body: gql`
+          mutation {
+            deleteUser(input: ${id}) {
+              error
+              id
+              removed
+            }
+          }
+        `,
       }),
       invalidatesTags: ['User'],
     }),
     getCurrentUser: builder.query({
-      query: () => '/currentUser',
+      query: () => ({
+        body: gql`
+          query {
+            getCurrentUser {
+              _id
+              createdAt
+              error
+              name
+              username
+            }
+          }
+        `
+      }),
       providesTags: ['CurrentUser'],
     }),
     getUser: builder.query({
-      query: id => `/users/${id}`,
+      query: (id) => ({
+        body: gql`
+          query($input) {
+            getUser(input: ${id}) {
+              _id
+              createdAt
+              error
+              name
+              username
+            }
+          }
+        `,
+      }),
       providesTags: ['User'],
     }),
     getUsers: builder.query({
-      query: () => '/users',
+      query: () => ({
+        body: gql`
+          query {
+            findUsers {
+              users {
+                error
+                name
+                username
+                createdAt
+              }
+            }
+          }
+        `
+      }),
       providesTags: ['User'],
     }),
     updateUser: builder.mutation({
       query: user => ({
-        url: `/users/${user._id}`,
-        method: 'PATCH',
-        body: user,
+        body: gql`
+          updateUser(input: ${user}) {
+            _id
+            createdAt
+            error
+            name
+            username
+          }
+        `
       }),
       invalidatesTags: ['User'],
     }),
     updateCurrentUser: builder.mutation({
       query: currentUser => ({
-        url: '/currentUser',
-        method: 'POST',
-        body: currentUser,
+        body: gql`
+          mutation {
+            updateCurrentUser(input: ${currentUser}) {
+              _id
+              createdAt
+              error
+              name
+              username
+            }
+          }
+        `,
       }),
       invalidatesTags: ['CurrentUser'],
     })

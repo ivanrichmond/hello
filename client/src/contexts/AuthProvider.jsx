@@ -20,11 +20,12 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const { createNotice } = useContext(NoticeContext)
   let { 
-    data: currentUser,
+    data: currentUserData,
     isLoading: isCurrentUserLoading,
     isError: isCurrentUserError,
     error: currentUserError, 
   } = useGetCurrentUserQuery()
+  const currentUser = currentUserData?.getCurrentUser
 
   useEffect(() => {
     if(!isCurrentUserLoading && isCurrentUserError && currentUserError) {
@@ -39,17 +40,19 @@ export const AuthProvider = ({ children }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCurrentUserError, currentUserError, isCurrentUserLoading])
 
-  const isLoggedIn = useMemo(() => !_.isEmpty(currentUser), [currentUser])
+  const isLoggedIn = useMemo(() => currentUser?._id, [currentUser])
 
   const [addUser, { isLoading: isAddUserLoading }] = useAddUserMutation()
   const [updateCurrentUser] = useUpdateCurrentUserMutation()
   const [deleteCurrentUser] = useDeleteCurrentUserMutation()
   const { 
-    data: users, 
+    data: usersData, 
     isLoading: isUsersLoading,
     isError: isUsersError,
     error: usersError, 
   } = useGetUsersQuery()
+  
+  const users = usersData?.findUsers?.users
 
   useEffect(() => {
     if(!isUsersLoading && isUsersError){
