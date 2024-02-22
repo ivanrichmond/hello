@@ -58,7 +58,7 @@ This will install packages for the UI.
 
 1. GraphQL
     
-    - Once back-end is ready, rewrite RTK Query, etc.
+    - Once back-end is ready, rewrite RTK Query, etc. **DONE**
     - Test thoroughly.
 
 2. Tech Debt.
