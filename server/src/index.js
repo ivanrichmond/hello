@@ -47,7 +47,7 @@ const errorResponse = (response: Response, error: Error) => {
 // Listen at httpPort.
 httpServer.listen(httpPort, () => {
     // $FlowFixMe -- Flow can't find this even after I run flow-typed update.
-    console.log(`${'HTTP server is listening on port:'.red} ${httpPort.blue} (Ex. ${'http://localhost:5000'.blue})`)
+    console.log(`${'HTTP server is listening on port:'.red} ${httpPort.blue} (Ex. ${'http://localhost:'.blue}$)`)
 })
 
 httpServer.get('/', (request, response) => {
