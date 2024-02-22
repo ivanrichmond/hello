@@ -14,3 +14,8 @@ export type UserReturn =  {
     createdAt?: Number | String,
     error?: String,
 }
+
+export type ValidateUserInput = {
+    username: String,
+    password: String,
+}

@@ -173,3 +173,19 @@ export const promiseUpdateUser = ((user: Types.UserInput): Promise<> => {
         })
     })
 })
+
+export const promiseValidateUser = ((user: Types.ValidateUserInput): Promise<> => {
+    return new Promise((resolve) => {
+        users.find({username: user?.username, password: user?.password}, function (error, docs) {
+            if(error){
+                resolve({ error })
+            } else {
+                if(docs?.length){
+                    resolve({error: '', payload: true})
+                } else {
+                    resolve({error: '', payload: false})
+                }
+            }
+        })
+    })
+})

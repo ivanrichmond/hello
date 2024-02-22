@@ -5,6 +5,7 @@ export const typeDefs = `#graphql
         findUsers(input: UserInput): Users,
         getCurrentUser: User,
         getUser(input: String): User,
+        validateUser(input: ValidateUserInput): ValidateUserReturn
     }
 
     type Mutation {
@@ -43,6 +44,16 @@ export const typeDefs = `#graphql
     type Users {
         users: [User],
         error: String,
+    }
+
+    input ValidateUserInput {
+        username: String!,
+        password: String!,
+    }
+
+    type ValidateUserReturn {
+        error: String,
+        payload: Boolean
     }
 
 `
