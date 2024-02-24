@@ -51,6 +51,8 @@ httpServer.listen(httpPort, () => {
     console.log(`${'HTTP server is listening at:'.cyan} ${'http://localhost:'.blue}${httpPort.blue})`)
 })
 
+// The HTTP server is available for whatever it might be needed for, in addition to GraphQL.
+// If you don't want it in your project, delete it and these endpoints.
 httpServer.get('/', (request, response) => {
     response.send("Hello!");
 })
@@ -65,17 +67,11 @@ httpServer.get('/count', (request, response) => {
     });
 })
 
+// The following will be commented out in production.
+// If commented in, they provide endpoints to peak at the DB, in testing.
+// WARNING: They may provide password data!  So, be sure to comment them out in production!!!
+
 // --- /currentUser
-
-// Get the currently logged in user.
-httpServer.delete('/currentUser', (request, response) => {
-    currentUser.remove({}, { multi: true }, (error, removed) => {
-        if(error){ errorResponse(response, error) } else {
-            response.json({message: `deleted ${removed} records.`})
-        }
-    })
-})
-
 httpServer.get('/currentUser', (request, response) => {
     currentUser.find({}, function (error, docs) {
         if(error){
@@ -89,47 +85,7 @@ httpServer.get('/currentUser', (request, response) => {
     });
 })
 
-// Essentially login / logout, by setting currentUser or resetting it to {}
-httpServer.post('/currentUser', (request, response) => {
-    currentUser.find({}, function (error, docs) {
-        if(error){
-            console.trace()
-            errorResponse(response, error)
-        } else {
-            if(docs?.length){
-                currentUser.update({}, request?.body, {}, (error, replaced) => {
-                    if(error){
-                        console.trace()
-                        errorResponse(response, error)
-                    } else {
-                        response.json({message: `Replaced ${replaced} records.`})
-                    }
-                })
-            } else {
-                currentUser.insert(request?.body, (error, doc) => {
-                    if(error){
-                        console.trace()
-                        errorResponse(response, error)
-                    } else {
-                        response.json({message: `New currentUser set`, data: doc})
-                    }
-                })
-            }
-        }
-    });
-})
-
 // --- /users
-
-// Delete a user, given userId as /users/:userId
-httpServer.delete('/users/:id', (request, response) => {
-    const id = request.params?.id
-    users.remove({_id: id}, (error, removed) => {
-        if(error){ errorResponse(response, error) } else {
-            response.json({message: `deleted ${removed} records with id ${id}.`})
-        }
-    })
-})
 
 // Get all users, or a filtered list.
 httpServer.get('/users', (request, response) => {
@@ -145,48 +101,6 @@ httpServer.get('/users', (request, response) => {
             }
         }
     });
-})
-
-// Get just one user.
-httpServer.get('/users/:id', (request, response) => {
-    const id = request.params?.id
-    users.find({_id: id}, function (error, docs) {
-        if(error){
-            errorResponse(response, error)
-        } else {
-            if(docs?.length){
-                response.json(docs[0]);
-            } else {
-                response.json({})
-            }
-        }
-    });
-})
-
-// Update a user, given /users/:userId
-httpServer.patch('/users/:id', (request, response) => {
-    const id = request.params?.id
-    if(!id){ errorResponse(response, new Error("No user to update."))}
-    users.update({_id: id}, request.body, error => {
-        if(error){ errorResponse(response, error) } else {
-            response.json({message: `Updated user ${id}`, data: request.body})
-        }
-    })
-})
-
-// Add a user, given request.body = user.
-httpServer.post('/users', (request, response) => {
-    if(!request.body){ errorResponse(response, new Error("No user to insert."))}
-    const newUser = new User(
-        request.body?.name || '',
-        request.body?.username || '',
-        request.body?.password || '',
-    )
-    users.insert(newUser, error => {
-        if(error){ errorResponse(response, error) } else {
-            response.json({message: "Added new user.", data: request.body})
-        }
-    })
 })
 
 // Sorter backend.
