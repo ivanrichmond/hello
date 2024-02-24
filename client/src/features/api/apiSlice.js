@@ -62,7 +62,7 @@ export const apiSlice = createApi({
       query: id => ({
         body: gql`
           mutation {
-            deleteUser(input: ${id}) {
+            deleteUser(input: \"${id}\") {
               error
               id
               removed
