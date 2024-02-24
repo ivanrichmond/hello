@@ -15,8 +15,9 @@ export default function User() {
     const { createNotice } = useNotice()
     const { id } = useParams()
     const { data: user, isLoading, isError, error  } = useGetUserQuery(id)
-    console.debug('user', user)
     const navigate = useNavigate()
+
+    // TODO: If I still need this file, user is coming in from graphql, so needs to be drilled into.
 
     if(isError){
       createNotice(`CANNOT GET USER ${id}: `+error?.message, 'error')
