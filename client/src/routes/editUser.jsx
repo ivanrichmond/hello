@@ -93,11 +93,11 @@ export default function EditUser({isNew}) {
         <h1>{heading}</h1>
         <AppGrid>
           <AppGrid.Row>
-            <AppGrid.Column>
+            <AppGrid.Column width = {2}>
               <label htmlFor={'name'}>Name: </label>
             </AppGrid.Column>
             
-            <AppGrid.Column>
+            <AppGrid.Column width = {2}>
               <AppInput
                 aria-label="Name"
                 defaultValue={user?.name || ''}
@@ -112,11 +112,11 @@ export default function EditUser({isNew}) {
             </AppGrid.Column>
           </AppGrid.Row>
           <AppGrid.Row>
-            <AppGrid.Column>
+            <AppGrid.Column width = {2}>
               <label htmlFor={'username'}>Username: </label>
             </AppGrid.Column>
             
-            <AppGrid.Column>
+            <AppGrid.Column width = {2}>
               <AppInput
                 aria-label="username"
                 defaultValue={user?.username || ''}
@@ -131,11 +131,11 @@ export default function EditUser({isNew}) {
             </AppGrid.Column>
           </AppGrid.Row>
           <AppGrid.Row>
-            <AppGrid.Column>
+            <AppGrid.Column width = {2}>
               <label htmlFor={'password'}> Password: </label>
             </AppGrid.Column>
             
-            <AppGrid.Column>
+            <AppGrid.Column width = {2}>
               <AppInput
                 aria-label="password"
                 defaultValue={''}
@@ -150,7 +150,7 @@ export default function EditUser({isNew}) {
             </AppGrid.Column>
           </AppGrid.Row>
           <AppGrid.Row>
-            <AppGrid.Column>
+            <AppGrid.Column width = {2}>
               <AppButton
               color = "green"
               type="submit"
@@ -159,7 +159,7 @@ export default function EditUser({isNew}) {
               </AppButton>
             </AppGrid.Column>
 
-            <AppGrid.Column>
+            <AppGrid.Column width = {2}>
               <AppButton 
               color = "red"
               type="button"
