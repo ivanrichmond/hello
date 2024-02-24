@@ -29,8 +29,7 @@ export const apiSlice = createApi({
               createUser(input: {
                     name: \"${user?.name}\",
                     username: \"${user?.username}\",
-                    createdAt: ${user?.createdAt},
-                    error: \"${user?.error}\",
+                    password: \"${user?.password}\",
               }) {
                 error
                 payload {
@@ -157,6 +156,7 @@ export const apiSlice = createApi({
         body: gql`
           mutation {
             updateUser(input: {
+                  _id: \"${user?._id}\",
                   name: \"${user?.name}\",
                   username: \"${user?.username}\",
                   password: \"${user?.password}\"
