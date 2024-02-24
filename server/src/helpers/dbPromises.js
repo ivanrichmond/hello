@@ -27,12 +27,9 @@ export const promiseGetCurrentUser = ((): Promise<> => {
             if(error){
                 resolve({ error })
             } else {
+                const currentUser = docs[0] || {}
                 const result = {
-                    _id: docs[0]?._id || '',
-                    name: docs[0]?.name || '',
-                    username: docs[0]?.username || '',
-                    //TODO: I need a better solution than Float for my GraphQL schema type.
-                    createdAt: docs[0]?.createdAt,
+                    payload: { currentUser },
                     error: '',
                 }
                 resolve(result)
@@ -56,10 +53,11 @@ export const promiseUpdateCurrentUser = ((user: Types.UserInput): Promise<>  => 
                             resolve({ error })
                         } else {
                             const result = {
-                                name: user?.name || '',
-                                username: user?.username || '',
-                                //TODO: I need a better solution than Float for my GraphQL schema type.
-                                createdAt: user?.createdAt,
+                                payload: {
+                                    name: user?.name || '',
+                                    username: user?.username || '',
+                                    createdAt: user?.createdAt,
+                                },
                                 error: '',
                             }
                             resolve(result)
@@ -72,10 +70,11 @@ export const promiseUpdateCurrentUser = ((user: Types.UserInput): Promise<>  => 
                             resolve({ error })
                         } else {
                             const result = {
-                                name: doc?.name || '',
-                                username: doc?.username || '',
-                                //TODO: I need a better solution than Float for my GraphQL schema type.
-                                createdAt: doc?.createdAt,
+                                payload: {
+                                    name: doc?.name || '',
+                                    username: doc?.username || '',
+                                    createdAt: doc?.createdAt,
+                                },
                                 error: '',
                             }
                             resolve(result)
@@ -111,8 +110,19 @@ export const promiseFindUsers = ((query: Types.UserInput): Promise<> => {
             if(error){
                 resolve({ error })
             } else {
+                let users = []
+                if(docs?.length){
+                    users = docs?.map((user) => {
+                        return {
+                            _id: user._id,
+                            name: user.name,
+                            username: user.username,
+                            createdAt: user.createdAt,
+                        }
+                    })
+                }
                 const result = {
-                    users: docs,
+                    payload: users,
                     error: '',
                 }
                 resolve(result)
@@ -128,11 +138,12 @@ export const promiseGetUser = ((id: String): Promise<> => {
                 resolve({ error })
             } else {
                 const result = {
-                    _id: docs[0]?._id || '',
-                    name: docs[0]?.name || '',
-                    username: docs[0]?.username || '',
-                    //TODO: I need a better solution than Float for my GraphQL schema type.
-                    createdAt: docs[0]?.createdAt,
+                    payload: {
+                        _id: docs[0]?._id || '',
+                        name: docs[0]?.name || '',
+                        username: docs[0]?.username || '',
+                        createdAt: docs[0]?.createdAt,
+                    },
                     error: error || '',
                 }
                 resolve(result)
@@ -148,11 +159,12 @@ export const promiseInsertUser = ((newUser: Types.UserInput): Promise<> => {
                 resolve({ error })
             } else {
                 const result = {
-                    _id: doc?._id || '',
-                    name: doc?.name || '',
-                    username: doc?.username || '',
-                    //TODO: I need a better solution than Float for my GraphQL schema type.
-                    createdAt: doc?.createdAt || newUser.createdAt,
+                    payload: {
+                        _id: doc?._id || '',
+                        name: doc?.name || '',
+                        username: doc?.username || '',
+                        createdAt: doc?.createdAt || newUser.createdAt,
+                    },
                     error: error || '',
                 }
                 resolve(result)
@@ -163,11 +175,16 @@ export const promiseInsertUser = ((newUser: Types.UserInput): Promise<> => {
 
 export const promiseUpdateUser = ((user: Types.UserInput): Promise<> => {
     return new Promise((resolve) => {
-        users.update({_id: user._id}, user, error => {
+        users.update({_id: user._id}, user, {}, (error, replaced) => {
+            const updatedUser = {...user}
+            delete updatedUser.password
             if(error){
                 resolve({ error })
             } else {
-                const result = user._id
+                const result = {
+                    error: '',
+                    payload: updatedUser,
+                }
                 resolve(result)
             }
         })

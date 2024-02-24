@@ -21,7 +21,6 @@ export const resolvers = {
             return { status: 'The API is working correctly.' }
         },
         findUsers: async (parent: any, args: {input: UserInput, ...}): Promise<> => {
-            // BUG: args is coming in as undefined, so there's no args.input.
             return(await promiseFindUsers(args?.input))
         }, 
         getCurrentUser: async (): Promise<> => {
@@ -63,7 +62,9 @@ export const resolvers = {
                 args.input?.username || '',
                 args.input?.password || '',
             )
-            return( await promiseUpdateCurrentUser(updatedUser) )
+            // But, by design, User does not include _id, since it is added laster, so add it back.
+            updatedUser._id = args.input?._id
+            return( await promiseUpdateUser(updatedUser) )
         },
     }
 }
