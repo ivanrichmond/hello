@@ -17,8 +17,8 @@ const startApolloServer = async function(){
     })
 
     // $FlowFixMe -- Flow can't find this even after I run flow-typed update.
-    console.log(`${'Apollo server is listening at:'.green} ${url.yellow}`)
+    console.log(`${'Apollo server is listening at:'.green} ${url.blue}`)
     // $FlowFixMe -- Flow can't find this even after I run flow-typed update.
-    console.log(`${'Query at:'.magenta} ${'https://studio.apollographql.com/sandbox/explorer'.yellow}`)
+    console.log(`${'Query Apollo Server at:'.magenta} ${'https://studio.apollographql.com/sandbox/explorer'.blue}`)
 }
 export default startApolloServer

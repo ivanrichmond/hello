@@ -15,6 +15,7 @@
  */
 
 // External Modules
+import 'colors'
 import cors from 'cors';
 import express from 'express';
 
@@ -47,7 +48,7 @@ const errorResponse = (response: Response, error: Error) => {
 // Listen at httpPort.
 httpServer.listen(httpPort, () => {
     // $FlowFixMe -- Flow can't find this even after I run flow-typed update.
-    console.log(`${'HTTP server is listening on port:'.red} ${httpPort.blue} (Ex. ${'http://localhost:'.blue}$)`)
+    console.log(`${'HTTP server is listening at:'.cyan} ${'http://localhost:'.blue}${httpPort.blue})`)
 })
 
 httpServer.get('/', (request, response) => {
