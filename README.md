@@ -23,9 +23,11 @@ and startup both separately.
 
 This will install packages for the API.
 
-4. `npm run build && npm run start` | `yarn build && yarn start`
+4. `npm run build`
 
-This will start the API on :5000
+5. `npm run start` | `yarn start`
+
+This will start the GraphQL API on port 4000, and an optional HTTP API on port 5000, in case HTTP is needed in your project.  (You can delete it, if it's not.)
 
 Now, in a separate tab, so as not to kill the API...
 
@@ -47,7 +49,7 @@ This will install packages for the UI.
 - React
 - React Router 6
 - Flow (in API, forthcoming for UI)
-- GraphQL (forthcoming)
+- GraphQL
 - Less (forthcoming)
 
 
