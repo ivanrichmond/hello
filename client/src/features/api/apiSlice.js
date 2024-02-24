@@ -1,64 +1,196 @@
 // Import the RTK Query methods from the React-specific entry point
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi } from '@reduxjs/toolkit/query/react'
+import { request, gql } from 'graphql-request'
+
+import config from '../../config.json';
+
+const graphqlBaseQuery = ({ baseUrl }) => async ({ body }) => {
+    try {
+      const result = await request(baseUrl, body)
+      return { data: result }
+    } catch (error) {
+      console.error(`GRAPHQL ERROR: ${error}`)
+    }
+}
+
+const baseUrl = `${config?.httpProtocol || 'http'}://${config?.domain || 'localhost'}:${config?.graphQLPort || 4000}` // Ex. http://localhost:4000
 
 // Define our single API slice object
 export const apiSlice = createApi({
   reducerPath: 'api',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/' }),
+  baseQuery: graphqlBaseQuery({ baseUrl }),
   mode: "cors",
   tagTypes: ['CurrentUser', 'User'],
   endpoints: builder => ({
     addUser: builder.mutation({
       query: (user) => ({
-        url: '/users',
-        method: 'POST',
-        body: user,
+        body: gql`
+          mutation {
+              createUser(input: {
+                    name: \"${user?.name}\",
+                    username: \"${user?.username}\",
+                    password: \"${user?.password}\",
+              }) {
+                error
+                payload {
+                  _id
+                  createdAt
+                  name
+                  username
+                }
+              }
+          }
+        `,
       }),
       invalidatesTags: ['User'],
     }),
     deleteCurrentUser: builder.mutation({
       query: () => ({
-        url: `/currentUser`,
-        method: 'DELETE',
+        body: gql`
+          mutation {
+            deleteCurrentUser {
+              error
+              id
+              removed
+            }
+          }
+        `,
       }),
       invalidatesTags: ['CurrentUser'],
     }),
     deleteUser: builder.mutation({
       query: id => ({
-        url: `/users/${id}`,
-        method: 'DELETE',
-        body: id,
+        body: gql`
+          mutation {
+            deleteUser(input: \"${id}\") {
+              error
+              id
+              removed
+            }
+          }
+        `,
       }),
       invalidatesTags: ['User'],
     }),
     getCurrentUser: builder.query({
-      query: () => '/currentUser',
+      query: () => ({
+        body: gql`
+          query {
+            getCurrentUser {
+              error
+              payload {
+                _id
+                createdAt
+                name
+                username
+              }
+            }
+          }
+        `
+      }),
       providesTags: ['CurrentUser'],
     }),
     getUser: builder.query({
-      query: id => `/users/${id}`,
+      query: (id) => ({
+        body: gql`
+          query($input) {
+            getUser(input: ${id}) {
+              error
+              payload {
+                _id
+                createdAt
+                name
+                username
+              }
+            }
+          }
+        `,
+      }),
       providesTags: ['User'],
     }),
     getUsers: builder.query({
-      query: () => '/users',
-      providesTags: ['User'],
-    }),
-    updateUser: builder.mutation({
-      query: user => ({
-        url: `/users/${user._id}`,
-        method: 'PATCH',
-        body: user,
+      query: () => ({
+        body: gql`
+          query {
+            findUsers {
+              error
+              payload {
+                _id
+                createdAt
+                name
+                username
+              }
+            }
+          }
+        `
       }),
-      invalidatesTags: ['User'],
+      providesTags: ['User'],
     }),
     updateCurrentUser: builder.mutation({
       query: currentUser => ({
-        url: '/currentUser',
-        method: 'POST',
-        body: currentUser,
+        // Unlike users, currentUser needs the _id, because it's a foreign key to users.
+        body: gql`
+          mutation {
+            updateCurrentUser(input: {
+                _id: \"${currentUser?._id}\",
+                createdAt: ${currentUser?.createdAt},
+                name: \"${currentUser?.name}\",
+                username: \"${currentUser?.username}\",
+            }) {
+              error
+              payload {
+                _id
+                createdAt
+                name
+                username
+              }
+            }
+          }
+        `,
       }),
       invalidatesTags: ['CurrentUser'],
-    })
+    }),
+    updateUser: builder.mutation({
+      query: user => ({
+        body: gql`
+          mutation {
+            updateUser(input: {
+                  _id: \"${user?._id}\",
+                  name: \"${user?.name}\",
+                  username: \"${user?.username}\",
+                  password: \"${user?.password}\"
+            }) {
+              error
+              payload {
+                _id
+                createdAt
+                name
+                username
+              }
+            }
+          }
+        `
+      }),
+      invalidatesTags: ['User'],
+    }),
+    //TODO: I had to make this as a mutation, because hooks can't be called conditionally.
+    // Queries happen instantly, but mutations can be received, via hooks, and then executed conditionally. 
+    isUserValid: builder.mutation({
+      query: (user) => ({
+        body: gql`
+          query {
+            validateUser(input: {
+              username: \"${user?.username}\", 
+              password: \"${user?.password}\"
+            } ) {
+              error
+              payload
+            }
+          }
+        `,
+      }),
+      invalidatesTags: ['User'],
+    }),
   })
 })
 
@@ -72,4 +204,5 @@ export const {
   useGetUsersQuery,
   useUpdateUserMutation,
   useUpdateCurrentUserMutation,
+  useIsUserValidMutation,
 } = apiSlice

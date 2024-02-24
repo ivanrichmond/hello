@@ -53,19 +53,32 @@ This will install packages for the UI.
 
 ### TODO
 
-**NEXT UP:** GraphQL
+**NEXT UP:** Tech Debt
 #### Front End
 
-1. Tech Debt.
-2. Add Flow (and continue to use going forward).
-3. Convert CSS to LESS.
-4. It would be nice to find something interesting to do with GraphQL, 
-thought it's honestly overkill for an app that only has a `users` DB.
+1. GraphQL
+    
+    - Once back-end is ready, rewrite RTK Query, etc. **DONE**
+    - Test thoroughly.
+
+2. Tech Debt.
+3. Add Flow (and continue to use going forward).
+4. Convert CSS to LESS.
+
 #### Back End
 
-1. Write unit tests, where applicable.
-2. Create a Postman test suite to test all endpoints.
+1. GraphQL
+    
+    - Prove out basic Apollo server working with basic query. **DONE**
+    - Prove out non-DB test mutation. **DONE**
+    - Prove out one NeDB query or mutation. **DONE**
+    - Write all queries and mutations. **DONE**
+    - Groom graphQL back-end code, such as...
+        - moving appropriate things under `payload` **DONE**
+        - making some queries/mutations more generic, like deleting according to query, not id.
+    - Test thoroughly in back-end. **DONE**
 
+2. Write unit tests, where applicable.
 ## Bugs and Fixes
 
 **NONE**
@@ -81,5 +94,9 @@ advantage of that.
 3. Add a sort to `getUsers` in `apiSlice`.
 4. Login error message persists on new screen, if you try to create an account.
 ### Server
+1. Research a better GraphQL type for CreateAt, because Float shouldn't default to 0, if no CreatedAt
+ was passed in, because 0 is a valid datetime.  But it also can't be String, because it will come in
+as a number.  I wish GraphQL would allow Float | String, so I could put '' in as the default.
+It also won't allow a union of scalars.  There must be a package out there that would solve this.
 
 **NONE**

@@ -20,8 +20,8 @@ export default function Login() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
-    function handleSubmit() {
-        const user = validateUser(username, password)
+    async function handleSubmit() {
+        const user = await validateUser(username, password)
         if( user ){
             login(user)
             deleteNotice()

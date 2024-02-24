@@ -39,10 +39,10 @@ export default function EditUser({isNew}) {
 
   // TODO: Not scalable.  I need a better way to scale this.
   // I can't use RTK Query directly, because I can't put hooks under 
-  // conditionals, and that might not help anyway.
+  // conditionals.  Look for a better way.
   const user = isNew ? {} : users.find(u => u._id === userId)
 
-  const [newUser, setNewUser] = useState(user)
+  let [newUser, setNewUser] = useState({password: '', ...user})
 
   // Whether you're editing yourself.
   const isYou = currentUser && currentUser?._id === user?._id
@@ -93,14 +93,14 @@ export default function EditUser({isNew}) {
         <h1>{heading}</h1>
         <AppGrid>
           <AppGrid.Row>
-            <AppGrid.Column>
+            <AppGrid.Column width = {2}>
               <label htmlFor={'name'}>Name: </label>
             </AppGrid.Column>
             
-            <AppGrid.Column>
+            <AppGrid.Column width = {2}>
               <AppInput
                 aria-label="Name"
-                defaultValue={user?.name || ''}
+                defaultValue={newUser?.name || ''}
                 id="name"
                 name="name"
                 onChange = {
@@ -112,14 +112,14 @@ export default function EditUser({isNew}) {
             </AppGrid.Column>
           </AppGrid.Row>
           <AppGrid.Row>
-            <AppGrid.Column>
+            <AppGrid.Column width = {2}>
               <label htmlFor={'username'}>Username: </label>
             </AppGrid.Column>
             
-            <AppGrid.Column>
+            <AppGrid.Column width = {2}>
               <AppInput
                 aria-label="username"
-                defaultValue={user?.username || ''}
+                defaultValue={newUser?.username || ''}
                 id="username"
                 name="username"
                 onChange = {
@@ -131,26 +131,28 @@ export default function EditUser({isNew}) {
             </AppGrid.Column>
           </AppGrid.Row>
           <AppGrid.Row>
-            <AppGrid.Column>
-              <label htmlFor={'password'}>Password: </label>
+            <AppGrid.Column width = {2}>
+              <label htmlFor={'password'}> 
+                {isNew ? 'Password:' : 'New Password:'}
+              </label>
             </AppGrid.Column>
             
-            <AppGrid.Column>
+            <AppGrid.Column width = {2}>
               <AppInput
                 aria-label="password"
-                defaultValue={user?.password || ''}
+                defaultValue={''}
                 id="password"
                 name="password"
                 onChange = {
                   e => setNewUser({...newUser, password: e.target.value})
                 }
-                placeholder="password"
+                placeholder={isNew ? "password" : "new password"}
                 type="password"
               /> 
             </AppGrid.Column>
           </AppGrid.Row>
           <AppGrid.Row>
-            <AppGrid.Column>
+            <AppGrid.Column width = {2}>
               <AppButton
               color = "green"
               type="submit"
@@ -159,7 +161,7 @@ export default function EditUser({isNew}) {
               </AppButton>
             </AppGrid.Column>
 
-            <AppGrid.Column>
+            <AppGrid.Column width = {2}>
               <AppButton 
               color = "red"
               type="button"

@@ -17,6 +17,8 @@ export default function User() {
     const { data: user, isLoading, isError, error  } = useGetUserQuery(id)
     const navigate = useNavigate()
 
+    // TODO: If I still need this file, user is coming in from graphql, so needs to be drilled into.
+
     if(isError){
       createNotice(`CANNOT GET USER ${id}: `+error?.message, 'error')
     }
