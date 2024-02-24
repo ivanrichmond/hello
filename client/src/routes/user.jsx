@@ -15,6 +15,7 @@ export default function User() {
     const { createNotice } = useNotice()
     const { id } = useParams()
     const { data: user, isLoading, isError, error  } = useGetUserQuery(id)
+    console.debug('user', user)
     const navigate = useNavigate()
 
     if(isError){

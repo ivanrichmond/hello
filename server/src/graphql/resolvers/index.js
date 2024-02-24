@@ -49,12 +49,7 @@ export const resolvers = {
             return( await promiseDeleteUser(args.input) )
         },
         updateCurrentUser: async (parent: any, args: {input: UserInput, ...}): Promise<> => {
-            const newUser = new User(
-                args.input?.name || '',
-                args.input?.username || '',
-                args.input?.password || '',
-            )
-            return( await promiseUpdateCurrentUser(newUser) )
+            return( await promiseUpdateCurrentUser(args.input) )
         },
         updateUser: async (parent: any, args: {input: UserInput, ...}): Promise<> => {
             const updatedUser = new User(

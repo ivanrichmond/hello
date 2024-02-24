@@ -39,7 +39,7 @@ export default function EditUser({isNew}) {
 
   // TODO: Not scalable.  I need a better way to scale this.
   // I can't use RTK Query directly, because I can't put hooks under 
-  // conditionals, and that might not help anyway.
+  // conditionals.  Look for a better way.
   const user = isNew ? {} : users.find(u => u._id === userId)
 
   const [newUser, setNewUser] = useState(user)
@@ -132,7 +132,8 @@ export default function EditUser({isNew}) {
           </AppGrid.Row>
           <AppGrid.Row>
             <AppGrid.Column>
-              <label htmlFor={'password'}>Password: </label>
+              <label htmlFor={'password'}>
+                {'Password:'} </label>
             </AppGrid.Column>
             
             <AppGrid.Column>
@@ -144,7 +145,7 @@ export default function EditUser({isNew}) {
                 onChange = {
                   e => setNewUser({...newUser, password: e.target.value})
                 }
-                placeholder="password"
+                placeholder={isNew ? "password" : "new password"}
                 type="password"
               /> 
             </AppGrid.Column>

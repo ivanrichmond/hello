@@ -129,13 +129,15 @@ export const apiSlice = createApi({
     }),
     updateCurrentUser: builder.mutation({
       query: currentUser => ({
+        // Unlike users, currentUser needs the _id, because it's a foreign key to users.
         body: gql`
           mutation {
             updateCurrentUser(input: {
-                  createdAt: ${currentUser?.createdAt},
-                  name: \"${currentUser?.name}\",
-                  username: \"${currentUser?.username}\",
-                  password: \"${currentUser?.password}\",
+                _id: \"${currentUser?._id}\",
+                createdAt: ${currentUser?.createdAt},
+                name: \"${currentUser?.name}\",
+                username: \"${currentUser?.username}\",
+                password: \"${currentUser?.password}\",
             }) {
               error
               payload {
@@ -157,7 +159,7 @@ export const apiSlice = createApi({
             updateUser(input: {
                   name: \"${user?.name}\",
                   username: \"${user?.username}\",
-                  paddword: \"${user?.paddword}\"
+                  password: \"${user?.password}\"
             }) {
               error
               payload {

@@ -59,6 +59,7 @@ export const promiseUpdateCurrentUser = ((user: Types.UserInput): Promise<>  => 
                         } else {
                             const result = {
                                 payload: {
+                                    name: user?._id || '',
                                     name: user?.name || '',
                                     username: user?.username || '',
                                     createdAt: user?.createdAt,
@@ -76,6 +77,7 @@ export const promiseUpdateCurrentUser = ((user: Types.UserInput): Promise<>  => 
                         } else {
                             const result = {
                                 payload: {
+                                    name: doc?._id || '',
                                     name: doc?.name || '',
                                     username: doc?.username || '',
                                     createdAt: doc?.createdAt,
