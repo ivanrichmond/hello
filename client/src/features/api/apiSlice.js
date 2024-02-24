@@ -136,7 +136,6 @@ export const apiSlice = createApi({
                 createdAt: ${currentUser?.createdAt},
                 name: \"${currentUser?.name}\",
                 username: \"${currentUser?.username}\",
-                password: \"${currentUser?.password}\",
             }) {
               error
               payload {
