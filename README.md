@@ -74,9 +74,9 @@ This will install packages for the UI.
     - Prove out one NeDB query or mutation. **DONE**
     - Write all queries and mutations. **DONE**
     - Groom graphQL back-end code, such as...
-        - moving appropriate things under `payload`
+        - moving appropriate things under `payload` **DONE**
         - making some queries/mutations more generic, like deleting according to query, not id.
-    - Test thoroughly in back-end.
+    - Test thoroughly in back-end. **DONE**
 
 2. Write unit tests, where applicable.
 ## Bugs and Fixes
