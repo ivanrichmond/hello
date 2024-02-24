@@ -100,11 +100,11 @@ export default function EditUser({isNew}) {
             <AppGrid.Column width = {2}>
               <AppInput
                 aria-label="Name"
-                defaultValue={user?.name || ''}
+                defaultValue={newUser?.name || ''}
                 id="name"
                 name="name"
                 onChange = {
-                  e => setNewUser({...user, name: e.target.value})
+                  e => setNewUser({...newUser, name: e.target.value})
                 }
                 placeholder="Name"
                 type="text"
@@ -119,11 +119,11 @@ export default function EditUser({isNew}) {
             <AppGrid.Column width = {2}>
               <AppInput
                 aria-label="username"
-                defaultValue={user?.username || ''}
+                defaultValue={newUser?.username || ''}
                 id="username"
                 name="username"
                 onChange = {
-                  e => setNewUser({...user, username: e.target.value})
+                  e => setNewUser({...newUser, username: e.target.value})
                 }
                 placeholder="username"
                 type="text"
@@ -132,7 +132,9 @@ export default function EditUser({isNew}) {
           </AppGrid.Row>
           <AppGrid.Row>
             <AppGrid.Column width = {2}>
-              <label htmlFor={'password'}> Password: </label>
+              <label htmlFor={'password'}> 
+                {isNew ? 'Password:' : 'New Password:'}
+              </label>
             </AppGrid.Column>
             
             <AppGrid.Column width = {2}>
@@ -142,7 +144,7 @@ export default function EditUser({isNew}) {
                 id="password"
                 name="password"
                 onChange = {
-                  e => setNewUser({...user, password: e.target.value})
+                  e => setNewUser({...newUser, password: e.target.value})
                 }
                 placeholder={isNew ? "password" : "new password"}
                 type="password"
