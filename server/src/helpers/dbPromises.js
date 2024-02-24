@@ -23,13 +23,18 @@ export const promiseDeleteCurrentUser = ((): Promise<> => {
 export const promiseGetCurrentUser = ((): Promise<> => {
     return new Promise((resolve) => {
         // There should only ever be 1 currentUser, but it's still in an array.
-        currentUser.find({}, function (error, docs) {
+        currentUser.find({}, function (error, doc) {
             if(error){
                 resolve({ error })
             } else {
-                const currentUser = docs[0] || {}
                 const result = {
-                    payload: { currentUser },
+                    payload: {
+                        createdAt: doc[0]?.createdAt,
+                        name: doc[0]?.name,
+                        password: doc[0]?.password,
+                        username: doc[0]?.username,
+                        _id: doc[0]?._id,
+                    },
                     error: '',
                 }
                 resolve(result)

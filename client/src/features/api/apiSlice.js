@@ -26,12 +26,19 @@ export const apiSlice = createApi({
       query: (user) => ({
         body: gql`
           mutation {
-              createUser(input: ${user}) {
-                _id
-                createdAt
+              createUser(input: {
+                    name: \"${user?.name}\",
+                    username: \"${user?.username}\",
+                    createdAt: ${user?.createdAt},
+                    error: \"${user?.error}\",
+              }) {
                 error
-                name
-                username
+                payload {
+                  _id
+                  createdAt
+                  name
+                  username
+                }
               }
           }
         `,
@@ -71,11 +78,13 @@ export const apiSlice = createApi({
         body: gql`
           query {
             getCurrentUser {
-              _id
-              createdAt
               error
-              name
-              username
+              payload {
+                _id
+                createdAt
+                name
+                username
+              }
             }
           }
         `
@@ -87,11 +96,13 @@ export const apiSlice = createApi({
         body: gql`
           query($input) {
             getUser(input: ${id}) {
-              _id
-              createdAt
               error
-              name
-              username
+              payload {
+                _id
+                createdAt
+                name
+                username
+              }
             }
           }
         `,
@@ -103,11 +114,12 @@ export const apiSlice = createApi({
         body: gql`
           query {
             findUsers {
-              users {
-                error
+              error
+              payload {
+                _id
+                createdAt
                 name
                 username
-                createdAt
               }
             }
           }
@@ -115,36 +127,69 @@ export const apiSlice = createApi({
       }),
       providesTags: ['User'],
     }),
-    updateUser: builder.mutation({
-      query: user => ({
-        body: gql`
-          updateUser(input: ${user}) {
-            _id
-            createdAt
-            error
-            name
-            username
-          }
-        `
-      }),
-      invalidatesTags: ['User'],
-    }),
     updateCurrentUser: builder.mutation({
       query: currentUser => ({
         body: gql`
           mutation {
-            updateCurrentUser(input: ${currentUser}) {
-              _id
-              createdAt
+            updateCurrentUser(input: {
+                  createdAt: ${currentUser?.createdAt},
+                  name: \"${currentUser?.name}\",
+                  username: \"${currentUser?.username}\",
+                  password: \"${currentUser?.password}\",
+            }) {
               error
-              name
-              username
+              payload {
+                _id
+                createdAt
+                name
+                username
+              }
             }
           }
         `,
       }),
       invalidatesTags: ['CurrentUser'],
-    })
+    }),
+    updateUser: builder.mutation({
+      query: user => ({
+        body: gql`
+          mutation {
+            updateUser(input: {
+                  name: \"${user?.name}\",
+                  username: \"${user?.username}\",
+                  paddword: \"${user?.paddword}\"
+            }) {
+              error
+              payload {
+                _id
+                createdAt
+                name
+                username
+              }
+            }
+          }
+        `
+      }),
+      invalidatesTags: ['User'],
+    }),
+    //TODO: I had to make this as a mutation, because hooks can't be called conditionally.
+    // Queries happen instantly, but mutations can be received, via hooks, and then executed conditionally. 
+    isUserValid: builder.mutation({
+      query: (user) => ({
+        body: gql`
+          query {
+            validateUser(input: {
+              username: \"${user?.username}\", 
+              password: \"${user?.password}\"
+            } ) {
+              error
+              payload
+            }
+          }
+        `,
+      }),
+      invalidatesTags: ['User'],
+    }),
   })
 })
 
@@ -158,4 +203,5 @@ export const {
   useGetUsersQuery,
   useUpdateUserMutation,
   useUpdateCurrentUserMutation,
+  useIsUserValidMutation,
 } = apiSlice

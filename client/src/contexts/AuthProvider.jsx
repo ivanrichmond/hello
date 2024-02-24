@@ -7,6 +7,7 @@ import {
   useDeleteUserMutation,
   useGetCurrentUserQuery, 
   useGetUsersQuery, 
+  useIsUserValidMutation,
   useUpdateCurrentUserMutation,
   useUpdateUserMutation,
 } from '../features/api/apiSlice'
@@ -25,7 +26,7 @@ export const AuthProvider = ({ children }) => {
     isError: isCurrentUserError,
     error: currentUserError, 
   } = useGetCurrentUserQuery()
-  const currentUser = currentUserData?.getCurrentUser
+  const currentUser = currentUserData?.getCurrentUser?.payload
 
   useEffect(() => {
     if(!isCurrentUserLoading && isCurrentUserError && currentUserError) {
@@ -51,8 +52,10 @@ export const AuthProvider = ({ children }) => {
     isError: isUsersError,
     error: usersError, 
   } = useGetUsersQuery()
+
+  const [isUserValid] = useIsUserValidMutation()
   
-  const users = usersData?.findUsers?.users
+  const users = usersData?.findUsers?.payload
 
   useEffect(() => {
     if(!isUsersLoading && isUsersError){
@@ -93,23 +96,13 @@ export const AuthProvider = ({ children }) => {
     await deleteCurrentUser()
   }
 
-  const validateUser = (username, password) => {
-    if(!username || !password) {
-      console.error(`Bad parameters passed to validateUser()`)
-      return false
-    }
-
-    if(_.isEmpty(users)){
-      // Error will already have been handled, above.
-      return false
-    }
-
-    // Find user with that username, or else return false.
-    // TODO: Redo this in apiSlice, so that RTK Query can handle this search.
-    const user = users?.find(e => e.username === username)
-  
-    if(user && user?.password === password){
-      return user
+  const validateUser = async (username, password) => {
+    const response = await isUserValid( {username, password} )
+    if(response?.data?.validateUser?.payload){
+      // TODO: Figure out a way to use getUser() without violating the rules of hooks.
+      // Or... have isUserValid / graphql validateUser return user object, if valid?
+      const validatedUser = users.find(u => u.username === username)
+      return validatedUser
     } else {
       return false
     }
