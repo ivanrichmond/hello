@@ -53,7 +53,7 @@ This will install packages for the UI.
 
 ### TODO
 
-**NEXT UP:** GraphQL
+**NEXT UP:** Tech Debt
 #### Front End
 
 1. GraphQL
