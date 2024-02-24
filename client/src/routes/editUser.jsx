@@ -42,7 +42,7 @@ export default function EditUser({isNew}) {
   // conditionals.  Look for a better way.
   const user = isNew ? {} : users.find(u => u._id === userId)
 
-  const [newUser, setNewUser] = useState(user)
+  let [newUser, setNewUser] = useState({password: '', ...user})
 
   // Whether you're editing yourself.
   const isYou = currentUser && currentUser?._id === user?._id
@@ -104,7 +104,7 @@ export default function EditUser({isNew}) {
                 id="name"
                 name="name"
                 onChange = {
-                  e => setNewUser({...newUser, name: e.target.value})
+                  e => setNewUser({...user, name: e.target.value})
                 }
                 placeholder="Name"
                 type="text"
@@ -123,7 +123,7 @@ export default function EditUser({isNew}) {
                 id="username"
                 name="username"
                 onChange = {
-                  e => setNewUser({...newUser, username: e.target.value})
+                  e => setNewUser({...user, username: e.target.value})
                 }
                 placeholder="username"
                 type="text"
@@ -132,18 +132,17 @@ export default function EditUser({isNew}) {
           </AppGrid.Row>
           <AppGrid.Row>
             <AppGrid.Column>
-              <label htmlFor={'password'}>
-                {'Password:'} </label>
+              <label htmlFor={'password'}> Password: </label>
             </AppGrid.Column>
             
             <AppGrid.Column>
               <AppInput
                 aria-label="password"
-                defaultValue={user?.password || ''}
+                defaultValue={''}
                 id="password"
                 name="password"
                 onChange = {
-                  e => setNewUser({...newUser, password: e.target.value})
+                  e => setNewUser({...user, password: e.target.value})
                 }
                 placeholder={isNew ? "password" : "new password"}
                 type="password"

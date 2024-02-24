@@ -182,6 +182,15 @@ export const promiseInsertUser = ((newUser: Types.UserInput): Promise<> => {
 
 export const promiseUpdateUser = ((user: Types.UserInput): Promise<> => {
     return new Promise((resolve) => {
+        // If password was blank, keep it as is.
+        if(!user?.password){
+            const originalUser = users.find({_id: user?._id}, {}, (error, docs) => {
+                if(docs?.length){
+                    user.password = docs[0]?.password
+                }
+            })
+        }
+
         users.update({_id: user._id}, user, {}, (error, replaced) => {
             const updatedUser = {...user}
             delete updatedUser.password
