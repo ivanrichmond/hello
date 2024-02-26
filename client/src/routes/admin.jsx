@@ -12,9 +12,11 @@ import { useNotice } from '../contexts/NoticeProvider'
 const Admin = () => {
     const { isAdmin } = useContext(AdminContext)
     const {
+        currentUser,
         deleteUser,
         isUsersError,
         isUsersLoading,
+        logout,
         users,
         usersError,
     } = useContext(AuthContext)
@@ -48,6 +50,12 @@ const Admin = () => {
                         onClick={(event) => {
                             event.preventDefault();
                             if ( window.confirm( "Please confirm you want to delete this record." ) ) {
+                                // If user is you, logout, too.
+                                if(user?.username === currentUser?.username){
+                                    logout()
+                                }
+
+                                // Delete use
                                 deleteUser(user._id)
                             }
                         }} 
