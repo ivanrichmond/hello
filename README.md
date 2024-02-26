@@ -23,25 +23,30 @@ and startup both separately.
 
 This will install packages for the API.
 
-4. `npm run build`
+4. `npm run build` | `yarn build`
 
-5. `npm run start` | `yarn start`
+5. Open a separate tab, but stay in the one you're in (we'll go back to the 2nd tab for the UI)
 
-This will start the GraphQL API on port 4000, and an optional HTTP API on port 5000, in case HTTP is needed in your project.  (You can delete it, if it's not.)
+6. `npm run start` | `yarn start`
+
+This will start the GraphQL API on port `4000`, and an optional HTTP API on port 5000, in case HTTP is needed in your project.  (You can delete it, if it's not.)
 
 Now, in a separate tab, so as not to kill the API...
 
-5. `cd ../client`
+7. `cd ../client`
 
-6. `npm install` | `yarn`
+8. `npm install` | `yarn`
 
 This will install packages for the UI.
 
-7. `npm run start` | `yarn start`
+9. `npm run build` | `yarn build`
 
-8. Go to `http://localhost:7777`, if it's not already up.
+10. `npm run start` | `yarn start`
 
-**NOTE:** To go to the Admin screen, go to `http://localhost:7777/admin` and enter `adminPassword` in `package.json`.  The default is `friend`, but you can change it.
+11. Go to `http://localhost:7777`, if it's not already up.
+
+**NOTE:** To go to the Admin screen, go to `http://localhost:7777/admin` and enter `adminPassword` in `package.json`.  The default is `friend`, but you can change it. 
+**KNOWN BUG:** If you edit a user from the Admin screen, then save or cancel, sometimes it takes you back to `/admin` and sometimes it takes you back to `/` or `/login`.
 ## Technologies
 
 - NeDB
