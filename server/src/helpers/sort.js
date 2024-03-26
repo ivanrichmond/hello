@@ -4,31 +4,25 @@
  * @param int | string - element to find
  * @return int - index of found element
  */
+const getMidpoint = (l,r) => { return Math.floor((l + r) / 2) }
 export const binarySearch = (array: Array < number | string >, search: number | string ) => {
-    let index = -1;
-    let found = false;
+    let index = -1
+    if(array.length === 1 && array[0] === search) return 0 // CASE: [n]
+    let l = 0
+    let r = array.length - 1
 
-    const getMidpoint = (l,r) => {
-        const midPoint = Math.floor((l + r) / 2)
-        return midPoint
-    }
-
-    let i = getMidpoint(0,array.length - 1)
-
-    while(!found && i >= 0 && i < array.length){
-        const element = array[i]
-        if(element === search){
-            index = i
-            found = true;
-        } else if(element > search) {
-            // element is too far right, so narrow to the left
-            i = getMidpoint(0,i)
-        } else if(element < search){
-            // element is too far left, so narrow to the right
-            i = getMidpoint(i + 1,array.length - 1)
-        } else {
-            // Something went wrong.
-            throw new Error("binarySearch: the array was not sorted or something else went wrong.")
+    while( l < r && array.length > 1 ){
+        let m = getMidpoint(l,r)
+        let num = array[m]
+        if(num === search){
+            index = m
+            break
+        } else if( search < num ){
+            r = m - 1
+            if(array[r] === search) return r // avoid not finding because l = r
+        } else if( search > num ){
+            l = m + 1
+            if(array[l] === search) return l // avoid not finding because l = r
         }
     }
 
