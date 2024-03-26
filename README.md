@@ -9,7 +9,8 @@
 **and then get on with building the main goal of _their_ application.**
 **Hello uses saying hello as a _placeholder_ for this goal.**
 
-**CURRENT STATUS: The UI and API are both ready @v1.0.**
+**CURRENT STATUS: The UI and API are both essentially ready @v0.9.**
+- Logging is next.
 # Installation and Setup
 
 There are two parts: UI (`/client`) and API (`/server`).  You'll need to install
@@ -19,29 +20,29 @@ and startup both separately.
 
 2. `cd hello/server`
 
-3. `npm install` | `yarn`
+3. `npm install` **OR** `yarn`
 
 This will install packages for the API.
 
-4. `npm run build` | `yarn build`
+4. `npm run build` **OR** `yarn build`
 
-5. Open a separate tab, but stay in the one you're in (we'll go back to the 2nd tab for the UI)
+5. Open a separate tab, **but stay in the one you're in for now** (we'll go back to the 2nd tab for the UI).
 
-6. `npm run start` | `yarn start`
+6. Still on the first tab... `npm run start` **OR** `yarn start`
 
 This will start the GraphQL API on port `4000`, and an optional HTTP API on port 5000, in case HTTP is needed in your project.  (You can delete it, if it's not.)
 
-Now, in a separate tab, so as not to kill the API...
+**Now, go to the 2nd tab**, so as not to kill the API...
 
 7. `cd ../client`
 
-8. `npm install` | `yarn`
+8. `npm install` **OR** `yarn`
 
 This will install packages for the UI.
 
-9. `npm run build` | `yarn build`
+9. `npm run build` **OR** `yarn build`
 
-10. `npm run start` | `yarn start`
+10. `npm run start` **OR** `yarn start`
 
 11. Go to `http://localhost:7777`, if it's not already up.
 
@@ -60,32 +61,22 @@ This will install packages for the UI.
 
 ### TODO
 
-**NEXT UP:** Tech Debt
+**NEXT UP:** Logging
 #### Front End
 
-1. GraphQL
-    
-    - Once back-end is ready, rewrite RTK Query, etc. **DONE**
-    - Test thoroughly.
-
+1. Logging
+    - Use logging endpoint once ready.
 2. Tech Debt.
 3. Add Flow (and continue to use going forward).
 4. Convert CSS to LESS.
 
 #### Back End
 
-1. GraphQL
-    
-    - Prove out basic Apollo server working with basic query. **DONE**
-    - Prove out non-DB test mutation. **DONE**
-    - Prove out one NeDB query or mutation. **DONE**
-    - Write all queries and mutations. **DONE**
-    - Groom graphQL back-end code, such as...
-        - moving appropriate things under `payload` **DONE**
-        - making some queries/mutations more generic, like deleting according to query, not id.
-    - Test thoroughly in back-end. **DONE**
-
-2. Write unit tests, where applicable.
+1. Logging
+    - Setup server-side logging and implement.
+    - Write endpoint, so client can also use it.
+2. Tech Debt
+3. Write unit tests, where applicable.
 ## Bugs and Fixes
 
 **NONE**
@@ -101,9 +92,8 @@ advantage of that.
 3. Add a sort to `getUsers` in `apiSlice`.
 4. Login error message persists on new screen, if you try to create an account.
 ### Server
-1. Research a better GraphQL type for CreateAt, because Float shouldn't default to 0, if no CreatedAt
+1. Research a better GraphQL type for `CreateAt`, because `Float` shouldn't default to 0, if no CreatedAt
  was passed in, because 0 is a valid datetime.  But it also can't be String, because it will come in
-as a number.  I wish GraphQL would allow Float | String, so I could put '' in as the default.
-It also won't allow a union of scalars.  There must be a package out there that would solve this.
+as a number.  I wish GraphQL would allow `Float | String`, so I could put '' in as the default.
+It also won't allow a union of scalars.  There must be a package out there that will help.  Research.
 
-**NONE**
