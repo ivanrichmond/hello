@@ -1,6 +1,6 @@
 {
     "domain": "localhost",
     "graphQLPort": "4000",
-    "httpPort": "5000",
+    "httpPort": "6666",
     "httpProtocol": "http"
 }

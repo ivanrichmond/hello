@@ -30,7 +30,7 @@ This will install packages for the API.
 
 6. Still on the first tab... `npm run start` **OR** `yarn start`
 
-This will start the GraphQL API on port `4000`, and an optional HTTP API on port 5000, in case HTTP is needed in your project.  (You can delete it, if it's not.)
+This will start the GraphQL API on port `4000`, and an optional HTTP API on port 6666, in case HTTP is needed in your project.  (You can delete it, if it's not.)
 
 **Now, go to the 2nd tab**, so as not to kill the API...
 
