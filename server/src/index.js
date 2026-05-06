@@ -20,9 +20,7 @@ import cors from 'cors';
 import express from 'express';
 
 // Internal Modules
-import { bubbleSort } from './helpers/sort';
 import * as config from '../config.json';
-import { count } from './helpers/count';
 import { currentUser, users } from './db.js';
 import startApolloServer from './graphql/server.js'
 import { User } from './classes/users'
@@ -38,7 +36,7 @@ httpServer.use(cors());
 // $FlowFixMe -- For some reason, Flow can't handle express.json()
 httpServer.use(express.json())
 
-const httpPort = config?.httpPort || 5000
+const httpPort = config?.httpPort || 6666
 
 const errorResponse = (response: Response, error: Error) => {
     response.status(404)
@@ -55,16 +53,6 @@ httpServer.listen(httpPort, () => {
 // If you don't want it in your project, delete it and these endpoints.
 httpServer.get('/', (request, response) => {
     response.send("Hello!");
-})
-
-// Counts how many times this endpoint has been hit.
-httpServer.get('/count', (request, response) => {
-    const trafficCount = count();
-    const counter = trafficCount.countUp();
-    response.send({
-        message: `This endpoint has been hit ${counter} times since the server started.`,
-        payload: counter
-    });
 })
 
 // The following will be commented out in production.
@@ -100,16 +88,5 @@ httpServer.get('/users', (request, response) => {
                 response.json({})
             }
         }
-    });
-})
-
-// Sorter backend.
-//TODO: Add additional sort types.
-httpServer.post('/sort', (request, response) => {
-    const array = request.body?.payload;
-    const arraySorted = bubbleSort(array);
-    response.send({ 
-        message: `Your array has been sorted.`, 
-        payload: arraySorted 
     });
 })
