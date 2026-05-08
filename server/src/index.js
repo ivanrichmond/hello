@@ -22,6 +22,7 @@ import express from 'express';
 // Internal Modules
 import * as config from '../config.json';
 import { currentUser, users } from './db.js';
+import { sayHello } from './helpers/hello'
 import startApolloServer from './graphql/server.js'
 import { User } from './classes/users'
 
@@ -46,13 +47,19 @@ const errorResponse = (response: Response, error: Error) => {
 // Listen at httpPort.
 httpServer.listen(httpPort, () => {
     // $FlowFixMe -- Flow can't find this even after I run flow-typed update.
-    console.log(`${'HTTP server is listening at:'.cyan} ${'http://localhost:'.blue}${httpPort.blue})`)
+    console.log(`${'HTTP server is listening at:'.cyan} ${'http://localhost:'.blue}${httpPort.blue}`)
 })
 
 // The HTTP server is available for whatever it might be needed for, in addition to GraphQL.
 // If you don't want it in your project, delete it and these endpoints.
-httpServer.get('/', (request, response) => {
-    response.send("Hello!");
+httpServer.get('/', async (request, response) => {
+    const result = await sayHello()
+    console.debug('result', result)
+    if(result.error){
+        errorResponse(response, result.error)
+    } else {
+        response.send(result.payload)
+    }
 })
 
 // The following will be commented out in production.
