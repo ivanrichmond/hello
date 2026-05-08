@@ -18,6 +18,7 @@
 import 'colors'
 import cors from 'cors';
 import express from 'express';
+import type { $Request, $Response } from 'express';
 
 // Internal Modules
 import * as config from '../config.json';
@@ -39,7 +40,7 @@ httpServer.use(express.json())
 
 const httpPort = config?.httpPort || 6666
 
-const errorResponse = (response: Response, error: Error) => {
+const errorResponse = (response: $Response, error: Error) => {
     response.status(404)
     response.json({message: error.toString()})
 }
