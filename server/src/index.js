@@ -55,7 +55,6 @@ httpServer.listen(httpPort, () => {
 // If you don't want it in your project, delete it and these endpoints.
 httpServer.get('/', async (request, response) => {
     const result = await sayHello()
-    console.debug('result', result)
     if(result.error){
         errorResponse(response, result.error)
     } else {
