@@ -4,7 +4,7 @@ import type { StandardReturn } from '../helpers/hello'
 import * as Types from '../types'
 
 // -- currentUser
-export const promiseDeleteCurrentUser = ((): Promise<StandardReturn> => {
+export const promiseDeleteCurrentUser = (): Promise<StandardReturn> => {
     return new Promise((resolve) => {
         // There should be only one record, so delete everything.
         currentUser.remove({}, { multi: true }, (error, removed) => {
@@ -15,7 +15,7 @@ export const promiseDeleteCurrentUser = ((): Promise<StandardReturn> => {
             }
         })
     })
-})
+}
 
 export const promiseGetCurrentUser = (): Promise<StandardReturn> => {
     return new Promise((resolve) => {
@@ -43,7 +43,7 @@ export const promiseGetCurrentUser = (): Promise<StandardReturn> => {
     });
 };
 
-export const promiseUpdateCurrentUser = ((user: Types.UserInput): Promise<StandardReturn>  => {
+export const promiseUpdateCurrentUser = (user: Types.UserInput): Promise<StandardReturn>  => {
     return new Promise((resolve) => {
         // First, see if currentUser has anything in it.
         currentUser.find({}, function (error, docs) {
@@ -91,10 +91,10 @@ export const promiseUpdateCurrentUser = ((user: Types.UserInput): Promise<Standa
             }
         })
     })
-})
+}
 
 // -- users
-export const promiseDeleteUser = ((id: String): Promise<StandardReturn> => {
+export const promiseDeleteUser = (id: String): Promise<StandardReturn> => {
     return new Promise((resolve) => {
         users.remove({_id: id}, (error, removed) => {
             if(error){
@@ -108,9 +108,9 @@ export const promiseDeleteUser = ((id: String): Promise<StandardReturn> => {
             }
         })
     })
-})
+}
 
-export const promiseFindUsers = ((query: Types.UserInput): Promise<StandardReturn> => {
+export const promiseFindUsers = (query: Types.UserInput): Promise<StandardReturn> => {
     return new Promise((resolve) => {
         users.find(query, function (error, docs) {
             if(error){
@@ -135,9 +135,9 @@ export const promiseFindUsers = ((query: Types.UserInput): Promise<StandardRetur
             }
         })
     })
-})
+}
 
-export const promiseGetUser = ((id: String): Promise<StandardReturn> => {
+export const promiseGetUser = (id: String): Promise<StandardReturn> => {
     return new Promise((resolve) => {
         users.find({_id: id}, function (error, docs) {
             if(error){
@@ -156,9 +156,9 @@ export const promiseGetUser = ((id: String): Promise<StandardReturn> => {
             }
         })
     })
-})
+}
 
-export const promiseInsertUser = ((newUser: Types.UserInput): Promise<StandardReturn> => {
+export const promiseInsertUser = (newUser: Types.UserInput): Promise<StandardReturn> => {
     return new Promise((resolve) => {
         users.insert(newUser, (error, doc) => {
             if(error){
@@ -177,9 +177,9 @@ export const promiseInsertUser = ((newUser: Types.UserInput): Promise<StandardRe
             }
         })
     })
-})
+}
 
-export const promiseUpdateUser = ((user: Types.UserInput): Promise<StandardReturn> => {
+export const promiseUpdateUser = (user: Types.UserInput): Promise<StandardReturn> => {
     return new Promise((resolve) => {
         // If password was blank, keep it as is.
         if(!user?.password){
@@ -204,9 +204,9 @@ export const promiseUpdateUser = ((user: Types.UserInput): Promise<StandardRetur
             }
         })
     })
-})
+}
 
-export const promiseValidateUser = ((user: Types.ValidateUserInput): Promise<StandardReturn> => {
+export const promiseValidateUser = (user: Types.ValidateUserInput): Promise<StandardReturn> => {
     return new Promise((resolve) => {
         users.find({username: user?.username, password: user?.password}, function (error, docs) {
             if(error){
@@ -220,4 +220,4 @@ export const promiseValidateUser = ((user: Types.ValidateUserInput): Promise<Sta
             }
         })
     })
-})
+}
