@@ -2,7 +2,6 @@
 // Used for sort functions.
 
 // Bubble Sort
-export type SortableArray = (number | string)[];
 export function bubbleSort<T: string | number>(array: Array<T>): Array<T> {
     let newArray = [...array] // Keep parameter immutable
     let swapped;
@@ -12,24 +11,14 @@ export function bubbleSort<T: string | number>(array: Array<T>): Array<T> {
         for (let i = 0; i < newArray.length; i++){
             let a = newArray[i]
             let b = newArray[i + 1]
-            // To keep Flow happy, we need 
-            if(typeof a === 'number' && typeof b === 'number'){
-                if(a > b){
-                    // swap
-                    const temp = a
-                    a = b
-                    b = temp
-                }
+            // Since > is polymorphic, we need to account for both number and string comparisons.
+            const shouldSwap = (typeof a === 'number' && typeof b === 'number' && a > b) ||
+                               (typeof a === 'string' && typeof b === 'string' && a > b);
+            if (shouldSwap) {
+                newArray[i] = b;
+                newArray[i + 1] = a;
+                swapped = true;
             }
-            if(typeof a === 'string' && typeof b === 'string'){
-                if(a > b){
-                    // swap
-                    const temp = a
-                    a = b
-                    b = temp
-                }
-            }
-            swapped = true
         }
     } while(swapped)
     return newArray
