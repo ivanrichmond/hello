@@ -27,6 +27,16 @@ describe('bubbleSort() numeric', () => {
         const sorted = bubbleSort([1,1,1])
         expect(sorted).toStrictEqual([1,1,1])
     })
+
+    test('sort ascending explicit', () => {
+        const sorted = bubbleSort([3,1,2,1,2,3], 'ascending')
+        expect(sorted).toStrictEqual([1,1,2,2,3,3])
+    })
+
+    test('sort descending', () => {
+        const sorted = bubbleSort([3,1,2,1,2,3], 'descending')
+        expect(sorted).toStrictEqual([3,3,2,2,1,1])
+    })
 })
 
 describe('bubbleSort() string', () => {
@@ -50,3 +60,4 @@ describe('bubbleSort() string', () => {
         expect(sorted).toStrictEqual(['a','a','a'])
     })
 })
+
