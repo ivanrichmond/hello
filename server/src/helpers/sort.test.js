@@ -1,5 +1,4 @@
-import { describe, test } from '@jest/globals'
-
+//@flow
 import { bubbleSort } from './sort'
 
 describe('bubbleSort() numeric', () => {
