@@ -58,5 +58,15 @@ describe('bubbleSort() string', () => {
         const sorted = bubbleSort(['a','a','a'])
         expect(sorted).toStrictEqual(['a','a','a'])
     })
+
+    test('sort ascending explicit', () => {
+        const sorted = bubbleSort(['c','a','b','a','b','c'], 'ascending')
+        expect(sorted).toStrictEqual(['a','a','b','b','c','c'])
+    })
+
+    test('sort descending', () => {
+        const sorted = bubbleSort(['c','a','b','a','b','c'], 'descending')
+        expect(sorted).toStrictEqual(['c','c','b','b','a','a'])
+    })
 })
 
