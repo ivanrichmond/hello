@@ -1,8 +1,13 @@
+//@flow
 export class User {
+  createdAt: number;
+  name: string;
+  username: string;
+  password: string; 
   constructor(
-    name = '',
-    username = '',
-    password = '',
+    name: string = '',
+    username: string = '',
+    password: string = '',
   ){
     this.createdAt = Date.now()
     this.name = name
