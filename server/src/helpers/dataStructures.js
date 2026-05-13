@@ -2,9 +2,9 @@
 
 // --- Linked List --- //
 export class LinkedListNode {
-    data: string; 
+    data: any; 
     next: LinkedListNode | null;
-    constructor(data: string){
+    constructor(data: any){
         this.data = data
         this.next = null
     }
@@ -14,7 +14,7 @@ export class LinkedListNode {
         let temp = this
         result += this.data
         while (temp !== null && temp !== undefined && temp.next) {
-            result += temp.next.data
+            result += String(temp.next.data)
             temp = temp?.next
         }
         return result
