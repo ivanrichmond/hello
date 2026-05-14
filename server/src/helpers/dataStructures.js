@@ -1,8 +1,6 @@
 //@flow
 
 // --- Linked List --- //
-import isNull from "lodash/fp/isNull";
-
 export class LinkedListNode {
     data: any; // Appropriate typing given that we don't know what data will be linked
     next: LinkedListNode | null;
@@ -23,10 +21,11 @@ export class LinkedListNode {
     }
 }
 
-export class TreeNode {
+// --- Tree --- //
+export class BinaryTreeNode {
     data: any;
-    left: TreeNode | null;
-    right: TreeNode | null;
+    left: BinaryTreeNode | null;
+    right: BinaryTreeNode | null;
     constructor(data: any){
         this.data = data
         this.left = null
