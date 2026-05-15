@@ -67,6 +67,7 @@ export class BinaryTree {
         return current
     }
 
+    // $FlowFixMe -- Flow doubts that this always returns something.
     insert(data: number): BinaryTree | null {
         const newNode = new BinaryTreeNode(data)
         // If we have no root, this is the root.  Done.
@@ -101,7 +102,5 @@ export class BinaryTree {
                 current = current.right
             }
         }
-        // This line should never get called, but it will keep Flow happy.
-        return this
     }
 }
